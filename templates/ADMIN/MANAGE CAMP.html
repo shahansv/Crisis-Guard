@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Untitled Document</title>
+  </head>
+
+  <body>
+    <form id="form1" name="form1" method="post" action="admin_search_camp">
+      <table border="1">
+        <tr>
+          <td colspan="9">
+            <label>
+              <input type="text" name="textfield" placeholder="Search by camp name" />
+            </label>
+            <label>
+              <input type="submit" name="Submit" value="SEARCH" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>CAMP NAME</td>
+          <td>DISTRICT</td>
+          <td>PLACE</td>
+          <td>POST</td>
+          <td>PIN</td>
+          <td>CONTACT NO</td>
+          <td>EMAIL</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+        {% for i in val %}
+        <tr>
+          <td>{{ i.campName}}</td>
+          <td>{{ i.district }}</td>
+          <td>{{ i.place }}</td>
+          <td>{{ i.post }}</td>
+          <td>{{ i.pin }}</td>
+          <td>{{ i.email }}</td>
+          <td>{{ i.contactno }}</td>
+          <td><a href="/admin_delete_camp/{{ i.id }}">DELETE</a></td>
+          <td><a href="/admin_edit_camp/{{ i.id }}">EDIT</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+      <p><a href="/admin_add_camp">ADD CAMP </a></p>
+    </form>
+  </body>
+</html>

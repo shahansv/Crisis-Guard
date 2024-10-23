@@ -13,6 +13,8 @@ class camp_table(models.Model):
     place = models.CharField(max_length=200)
     post = models.CharField(max_length=200)
     pin=models.BigIntegerField()
+    email=models.CharField(max_length=200)
+    contactno=models.BigIntegerField()
 
 class camp_coordinator_table(models.Model):
     LOGIN=models.ForeignKey(login_table,on_delete=models.CASCADE)

@@ -7,7 +7,7 @@ from app.models import *
 # Create your views here.
 
 
-
+# LOGIN PAGE
 
 def login(request):
     return render(request,'LOGIN PAGE.html')
@@ -30,8 +30,86 @@ def login_post(request):
 
     return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
 
+
+
+
+
+# ***** ADMIN *****
+
 def admin_home_page(request):
     return  render(request,'ADMIN/ADMIN HOME PAGE.html')
+
+# ADD & MANAGE CAMP
+
+def admin_add_camp(request):
+    return render (request,'ADMIN/ADD CAMP.html')
+
+
+def admin_add_camp_post(request):
+    camp=request.POST["camp"]
+    place=request.POST["place"]
+    pin=request.POST["pin"]
+    post=request.POST["post"]
+    district=request.POST["district"]
+    contactno=request.POST["contactno"]
+    email=request.POST["email"]
+    obj=camp_table()
+    obj.campName=camp
+    obj.place=place
+    obj.pin=pin
+    obj.post=post
+    obj.district=district
+    obj.contactno=contactno
+    obj.email=email
+    obj.save()
+    return HttpResponse('''<script> alert ('CAMP ADDED');window.location='/admin_manage_camp'</script>''')
+
+
+
+def admin_manage_camp(request):
+    ob=camp_table.objects.all()
+    return render (request,'ADMIN/MANAGE CAMP.html',{'val':ob})
+
+
+def admin_search_camp(request):
+    campName=request.POST['textfield']
+    ob=camp_table.objects.filter(campName__icontains=campName)
+    return render (request,'ADMIN/MANAGE CAMP.html',{'val':ob})
+
+
+def admin_edit_camp(request,id):
+    request.session["campid"]=id
+    ob=camp_table.objects.get(id=id)
+    return render(request, 'ADMIN/EDIT CAMP.html',{"ob":ob})
+
+
+def admin_edit_camp_post(request):
+    camp = request.POST["camp"]
+    place = request.POST["place"]
+    pin = request.POST["pin"]
+    post = request.POST["post"]
+    district = request.POST["district"]
+    obj = camp_table.objects.get(id=request.session["campid"])
+    obj.campName = camp
+    obj.place = place
+    obj.pin = pin
+    obj.post = post
+    obj.district = district
+    obj.save()
+    return HttpResponse('''<script> alert('CAMP EDITED');window.location='/admin_manage_camp';</script>''')
+
+
+
+def admin_delete_camp(request,id):
+    camp_table.objects.get(id=id).delete()
+    return HttpResponse('''<script> alert('CAMP DELETED');window.location='/admin_manage_camp';</script>''')
+
+
+
+
+# ADD & MANAGE CAMP COORDINATOR
+
+
 
 def coordinator_home_page(request):
     return  render(request,'CAMP COORDINATOR/HOME PAGE.html')
@@ -75,27 +153,7 @@ def admin_add_camp_coordinator_post(request):
     return HttpResponse('''<script> alert ('Inserted');window.location='/admin_manage_camp_coordinator'</script>''')
 
 
-def admin_add_camp(request):
-    return render (request,'ADMIN/ADD CAMP.html')
 
-def admin_add_camp_post(request):
-    camp=request.POST["camp"]
-    place=request.POST["place"]
-    pin=request.POST["pin"]
-    post=request.POST["post"]
-    district=request.POST["district"]
-    contact=request.POST["contact"]
-    email=request.POST["email"]
-    obj=camp_table()
-    obj.campName=camp
-    obj.place=place
-    obj.pin=pin
-    obj.post=post
-    obj.district=district
-    obj.contact=contact
-    obj.email=email
-    obj.save()
-    return HttpResponse('''<script> alert ('Inserted');window.location='/admin_view_camp'</script>''')
 
 def admin_add_emergency_team(request):
     return render (request,'ADMIN/ADD EMEMRGENCY TEAM.html')
@@ -136,9 +194,6 @@ def admin_view_notification(request):
     ob=notification_table.objects.all()
     return render(request, 'ADMIN/VIEW NOTIFICATION.html', {"val": ob})
 
-def admin_manage_camp_coordinator(request):
-    ob=camp_coordinator_table.objects.all()
-    return render (request,'ADMIN/MANAGE CAMP COORDINATOR.html',{"val":ob})
 
 def admin_delete_camp_coordinator(request,id):
     login_table.objects.get(id=id).delete()
@@ -162,14 +217,8 @@ def admin_verify_emergency_team(request):
     return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
 
 
-def admin_view_camp(request):
-    ob=camp_table.objects.all()
-    return render (request,'ADMIN/VIEW CAMP.html',{'val':ob})
 
-def search_camp(request):
-    campName=request.POST['textfield']
-    ob=camp_table.objects.filter(campName__icontains=campName)
-    return render (request,'ADMIN/VIEW CAMP.html',{'val':ob})
+
 
 def search_ERT(request):
     district=request.POST['textfield']
@@ -177,7 +226,7 @@ def search_ERT(request):
     return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
 
 
-def search_coordinator(request):
+def admin_search_camp_coordinator(request):
     name = request.POST['textfield']
     ob = camp_coordinator_table.objects.filter(name__icontains=name)
     return render(request, 'ADMIN/MANAGE CAMP COORDINATOR.html', {'val': ob})
@@ -213,20 +262,7 @@ def admin_reject_ERT(request,id):
 
 
 
-def admin_edit_camp_post(request):
-    camp = request.POST["camp"]
-    place = request.POST["place"]
-    pin = request.POST["pin"]
-    post = request.POST["post"]
-    district = request.POST["district"]
-    obj = camp_table.objects.get(id=request.session["campid"])
-    obj.campName = camp
-    obj.place = place
-    obj.pin = pin
-    obj.post = post
-    obj.district = district
-    obj.save()
-    return HttpResponse('''<script> alert('CAMP EDITED');window.location='/admin_view_camp';</script>''')
+
 
 def coordinator_edit_asset_registration(request,id):
     request.session["assetid"] = id
@@ -277,10 +313,7 @@ def admin_edit_camp_coordinator_post(request):
     obj.save()
     return HttpResponse('''<script> alert ('EDITED');window.location='/admin_manage_camp_coordinator'</script>''')
 
-def admin_edit_camp(request,id):
-    request.session["campid"]=id
-    ob=camp_table.objects.get(id=id)
-    return render(request, 'ADMIN/EDIT CAMP.html',{"ob":ob})
+
 
 def coordinator_edit_member(request,id):
     request.session["memberid"]=id
@@ -317,9 +350,6 @@ def coordinator_edit_member_post(request):
 
 
 
-def admin_delete_camp(request,id):
-    camp_table.objects.get(id=id).delete()
-    return HttpResponse('''<script> alert('CAMP DELETED');window.location='/admin_view_camp';</script>''')
 
 
 
@@ -332,7 +362,7 @@ def admin_view_camplaint(request):
     ob=complaint_table.objects.all()
     return render (request,'ADMIN/VIEW COMPLAINT.html',{'val':ob})
 
-def admin_view_guideline(request):
+def admin_manage_guideline(request):
     ob = Guidelines_table.objects.all()
     return render (request,'ADMIN/VIEW GUIDElLINE.html',{"val":ob})
 
