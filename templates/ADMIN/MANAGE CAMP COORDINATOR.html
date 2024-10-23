@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="search_coordinator">
+  <table width="365" height="146" border="1">
+    <tr>
+      <td height="36" colspan="6"><label>
+        <input type="text" name="textfield" />
+      </label>
+        <label>
+        <input type="submit" name="Submit" value="SEARCH" />
+      </label></td>
+    </tr>
+    <tr>
+        <td width="51">CAMP NAME</td>
+        <td width="35" height="36">NAME</td>
+        <td width="40">GENDER</td>
+        <td width="34">DATE OF BIRTH</td>
+        <td width="51">CONTACT NO</td>
+        <td width="171">EMAIL</td>
+    </tr>
+    <tr>
+         {% for i in val %}
+             <td>&nbsp;{{ i.CAMP.campName }}</td>
+             <td>&nbsp;{{ i.name }}</td>
+             <td>&nbsp;{{ i.gender }}</td>
+             <td>&nbsp;{{ i.dob }}</td>
+             <td>&nbsp;{{ i.contactNo }}</td>
+             <td>{{ i.email }}&nbsp;</td>
+
+            <td><p><a href="/admin_edit_camp_coordinator/{{ i.id }}">edit</a></p>
+      <p><a href="/admin_delete_camp_coordinator/{{ i.LOGIN.id }}">delete</a></p></td>
+    </tr>
+      {% endfor %}
+  </table>
+  <p><a href="admin_add_camp_coordinator">ADD CAMP COORDINATOR</a></p>
+</form>
+</body>
+</html>
