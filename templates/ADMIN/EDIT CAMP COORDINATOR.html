@@ -23,7 +23,8 @@
                     <option value="{{ i.id }}" {% if i.id == ob.CAMP.id %} selected {% endif %}> {{ i.campName }} </option>
                 {% endfor %}
             </select>
-            </label>          </td>
+            </label>
+          </td>
         </tr>
         <tr>
           <td>NAME</td>
@@ -56,7 +57,7 @@
           <td>CONTACT NO</td>
           <td>
             <label>
-              <input type="text" name="contactNo" value={{ ob.contactNo }}/>
+              <input type="text" name="contactNo" value="{{ ob.contactNo }}"/>
             </label>          </td>
         </tr>
         <tr>
@@ -77,7 +78,7 @@
           <td>PLACE</td>
           <td>
             <label>
-              <input type="text" name="place" value={{ ob.place }}/>
+              <input type="text" name="place" value="{{ ob.place }}"/>
             </label>          </td>
         </tr>
         <tr>
@@ -92,14 +93,6 @@
           <td>
             <label>
               <input type="text" name="pin"  value="{{ ob.pin }}"/>
-            </label>          </td>
-        </tr>
-        <tr>
-          <td>PHOTO</td>
-          <td>
-            <label>
-            <img src="{{ ob.photo.url }}" style="height: 100px ;width: auto" alt="" /></br>
-            <input type="file" name="photo" />
             </label>          </td>
         </tr>
         <tr>

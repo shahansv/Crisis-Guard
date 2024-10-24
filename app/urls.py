@@ -35,13 +35,17 @@ urlpatterns = [
 # ADD & MANAGE GUIDELINES
     path('admin_add_guideline',views.admin_add_guideline),
     path('admin_add_guideline_post', views.admin_add_guideline_post),
-
     path('admin_manage_guideline',views.admin_manage_guideline),
+    path('admin_search_guideline',views.admin_search_guideline),
+    path('admin_delete_guideline/<id>',views.admin_delete_guideline),
+    
+
 
 
 # VERIFY EMERGENCY TEAM
     path('admin_verify_emergency_team',views.admin_verify_emergency_team),
-    path('search_ERT',views.search_ERT),
+    path('admin_manage_emergency_team',views.admin_manage_emergency_team),
+    # path('search_ERT',views.search_ERT),
     path('admin_accept_ERT/<id>',views.admin_accept_ERT),
     path('admin_reject_ERT/<id>',views.admin_reject_ERT),
 
@@ -49,7 +53,7 @@ urlpatterns = [
 
 # MANAGE COMPLAINT
 
-    path('admin_view_camplaint',views.admin_view_camplaint),
+    path('admin_manage_camplaint',views.admin_manage_camplaint),
      path('admin_reply_complaint',views.admin_reply_complaint),
     path('search_complaint',views.search_complaint),
 
@@ -60,8 +64,8 @@ urlpatterns = [
     path('admin_add_notification',views.admin_add_notification),
     path('admin_add_notification_post',views.admin_add_notification_post),
     path('admin_view_notification',views.admin_view_notification),
-    path('admin_delete_notification/<id>',views.admin_delete_notification),
     path('admin_manage_notification',views.admin_manage_notification),
+    path('admin_delete_notification/<id>',views.admin_delete_notification),
    
 
 

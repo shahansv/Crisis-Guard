@@ -182,9 +182,6 @@ def admin_edit_camp_coordinator_post(request):
     place=request.POST["place"]
     post=request.POST["post"]
     pin=request.POST["pin"]
-    fs=FileSystemStorage( )
-    photo = request.FILES["photo"]
-    fsave = fs.save(photo.name, photo)
     obj = camp_coordinator_table.objects.get(id=request.session["coordinatorid"])
     obj.CAMP_id = camp
     obj.name=name
@@ -196,24 +193,8 @@ def admin_edit_camp_coordinator_post(request):
     obj.place=place
     obj.post=post
     obj.pin=pin
-    obj.photo = fsave
     obj.save()
     return HttpResponse('''<script> alert ('CAMP COORDINATOR EDITED');window.location='/admin_manage_camp_coordinator'</script>''')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def admin_delete_camp_coordinator(request,id):
@@ -224,23 +205,12 @@ def admin_delete_camp_coordinator(request,id):
 
 
 
-# ADD & MANAGE 
-
-
-
-
-
-
-
-
-
-
-def admin_add_emergency_team(request):
-    return render (request,'ADMIN/ADD EMEMRGENCY TEAM.html')
+# ADD & MANAGE GUIDELINES
 
 def admin_add_guideline(request):
     ob = camp_coordinator_table.objects.all()
     return render (request,'ADMIN/ADD GUIDELINE.html',{"data":ob})
+
 
 def admin_add_guideline_post(request):
     camp=request.POST["camp"]
@@ -253,7 +223,70 @@ def admin_add_guideline_post(request):
     obj.date=datetime.datetime.now().date()
     obj.time=datetime.datetime.now().time()
     obj.save()
-    return HttpResponse('''<script> alert ('Inserted');window.location='/admin_view_guideline'</script>''')
+    return HttpResponse('''<script> alert ('GUIDELINE ADDED');window.location='/admin_manage_guideline'</script>''')
+
+
+def admin_manage_guideline(request):
+    ob = Guidelines_table.objects.all()
+    return render (request,'ADMIN\MANAGE GUIDELINE.html',{"val":ob})
+
+
+def admin_delete_guideline(request,id):
+    Guidelines_table.objects.get(id=id).delete()
+    return HttpResponse('''<script> alert('GUIDELINE DELETED');window.location='/admin_manage_guideline';</script>''')
+
+
+def admin_search_guideline(request):
+    name = request.POST['textfield']
+    ob = Guidelines_table.objects.filter(name__icontains=name)
+    return render(request, 'ADMIN/MANAGE GUIDELINE.html', {'val': ob})
+
+
+
+
+
+
+# VERIFY EMERGENCY TEAM
+
+def admin_verify_emergency_team(request):
+    ob=emergency_team_table.objects.filter(LOGIN__type='pending')
+    return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
+
+def admin_manage_emergency_team(request):
+    ob1=emergency_team_table.objects.filter(LOGIN__type='ert')
+    ob2=emergency_team_table.objects.filter(LOGIN__type='reject')
+    return render(request, 'ADMIN/MANAGE EMERGENCY TEAM.html', {'val1': ob1 ,'val2':ob2})
+
+def admin_accept_ERT(request,id):
+    request.session["ERTid"]=id
+    ob=login_table.objects.get(id=id)
+    ob.type="ert"
+    ob.save()
+    return HttpResponse('''<script> alert ('ACCEPTED');window.location='/admin_manage_emergency_team'</script>''')
+
+def admin_reject_ERT(request,id):
+    request.session["ERTid"]=id
+    ob=login_table.objects.get(id=id)
+    ob.type="reject"
+    ob.save()
+    return HttpResponse('''<script> alert ('REJECTED');window.location='/admin_manage_emergency_team'</script>''')
+
+
+# def search_ERT(request):
+#     district=request.POST['textfield']
+#     ob = emergency_team_table.objects.filter(district__icontains=district)
+#     return render(request, 'ADMIN/ EMERGENCY TEAM.html', {'val': ob})
+
+
+# MANAGE COMPLAINT
+
+def admin_manage_camplaint(request):
+    ob=complaint_table.objects.all()
+    return render (request,'ADMIN/VIEW COMPLAINT.html',{'val':ob})
+
+
+# MANAGE NOTIFICATION
+
 
 def admin_add_notification(request):
     return render (request,'ADMIN/ADD NOTIFICATION.html')
@@ -289,18 +322,10 @@ def admin_reply_complaint(request):
     return render (request,'ADMIN/REPLY COMPLAINT.html')
 
 
-def admin_verify_emergency_team(request):
-    ob=emergency_team_table.objects.filter(LOGIN__type='pending')
-    return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
 
 
 
 
-
-def search_ERT(request):
-    district=request.POST['textfield']
-    ob = emergency_team_table.objects.filter(district__icontains=district)
-    return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
 
 
 
@@ -318,20 +343,6 @@ def search_member(request):
 
 
 
-
-def admin_accept_ERT(request,id):
-    request.session["ERTid"]=id
-    ob=login_table.objects.get(id=id)
-    ob.type="ert"
-    ob.save()
-    return HttpResponse('''<script> alert ('ACCEPTED');window.location='/admin_verify_emergency_team'</script>''')
-
-def admin_reject_ERT(request,id):
-    request.session["ERTid"]=id
-    ob=login_table.objects.get(id=id)
-    ob.type="reject"
-    ob.save()
-    return HttpResponse('''<script> alert ('rejected');window.location='/admin_verify_emergency_team'</script>''')
 
 
 
@@ -403,13 +414,6 @@ def admin_delete_notification(request,id):
     notification_table.objects.get(id=id).delete()
     return HttpResponse('''<script> alert('NOTIFICATION DELETED');window.location='/admin_view_notification';</script>''')
 
-def admin_view_camplaint(request):
-    ob=complaint_table.objects.all()
-    return render (request,'ADMIN/VIEW COMPLAINT.html',{'val':ob})
-
-def admin_manage_guideline(request):
-    ob = Guidelines_table.objects.all()
-    return render (request,'ADMIN/VIEW GUIDElLINE.html',{"val":ob})
 
 def coordinator_add_member(request):
     return render (request,'CAMP COORDINATOR/ADD MEMBER.html')
