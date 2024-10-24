@@ -1,96 +1,144 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Untitled Document</title>
+  </head>
 
-<body>
-<form action="admin_add_camp_coordinator_post" method="post" enctype="multipart/form-data" name="form1" id="form1">
-  <table width="200" border="1">
-    <tr>
-      <td>CAMP</td>
-      <td><label>
-        <select name="camp" size="1">
-            {% for i in data %}
+  <body>
+    <form
+      action="admin_add_camp_coordinator_post"
+      method="post"
+      enctype="multipart/form-data"
+      name="form1"
+      id="form1"
+    >
+      <table border="1">
+        <tr>
+          <td>CAMP</td>
+          <td>
+            <label>
+              <select name="camp" size="1">
+                {% for i in data %}
                 <option value="{{ i.id }}">{{ i.campName }}</option>
-            {% endfor %}
-        </select>
-      </label></td>
-    </tr>
-    <tr>
-      <td>NAME</td>
-      <td><label>
-        <input type="text" name="name" />
-      </label></td>
-    </tr>
+                {% endfor %}
+              </select>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>NAME</td>
+          <td>
+            <label>
+              <input type="text" name="name" />
+            </label>
+          </td>
+        </tr>
 
-  <tr>
-      <td>GENDER</td>
-      <td><label>
-        <input name="gender" type="radio" value="Male" />
-      MALE
-      <input name="gender" type="radio" value="Female" />
-      FEMALE</label></td>
-    </tr>
+        <tr>
+          <td>GENDER</td>
+          <td>
+            <label>
+              <input name="gender" type="radio" value="Male" />
+              MALE
+              <input name="gender" type="radio" value="Female" />
+              FEMALE</label
+            >
+          </td>
+        </tr>
 
-  <tr>
-      <td>DATE OF BIRTH</td>
-      <td><label>
-        <input type="date" name="dob" />
-      </label></td>
-    </tr>
+        <tr>
+          <td>DATE OF BIRTH</td>
+          <td>
+            <label>
+              <input type="date" name="dob" />
+            </label>
+          </td>
+        </tr>
 
-    <tr>
-      <td>CONTACT NO</td>
-      <td><label>
-        <input type="text" name="contactNo" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>EMAIL</td>
-      <td><label>
-        <input type="text" name="email" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>PLACE</td>
-      <td><label>
-        <input type="text" name="place" />
-      </label></td>
-    </tr>
-  <tr>
-      <td>POST</td>
-      <td><label>
-        <input type="text" name="post" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>PIN </td>
-      <td><label>
-        <input type="text" name="pin" />
-      </label></td>
-    </tr>
-<tr>
-      <td>USERNAME </td>
-      <td><label>
-        <input type="text" name="username" />
-      </label></td>
-    </tr>
-  <tr>
-      <td>PASSWORD </td>
-      <td><label>
-        <input type="text" name="password" />
-      </label></td>
-    </tr>
-    <tr>
-      <td colspan="2"><label>
-        <div align="center">
-          <input type="submit" name="Submit" value="ADD" />
-          </div>
-      </label></td>
-    </tr>
-  </table>
-</form>
-</body>
+        <tr>
+          <td>CONTACT NO</td>
+          <td>
+            <label>
+              <input type="text" name="contactNo" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>EMAIL</td>
+          <td>
+            <label>
+              <input type="text" name="email" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>DISTRICT</td>
+          <td>
+            <label>
+              <input type="text" name="district" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>PLACE</td>
+          <td>
+            <label>
+              <input type="text" name="place" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>
+            <label>
+              <input type="text" name="post" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>PIN</td>
+          <td>
+            <label>
+              <input type="text" name="pin" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>USERNAME</td>
+          <td>
+            <label>
+              <input type="text" name="username" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>PASSWORD</td>
+          <td>
+            <label>
+              <input type="text" name="password" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>PHOTO</td>
+          <td>
+            <label>
+              <img src="{{ ob.photo.url }}" style="height: 100px ;width: auto" alt="" />
+              <input type="file" name="photo" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <label>
+              <div align="center">
+                <input type="submit" name="Submit" value="ADD" />
+              </div>
+            </label>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
 </html>

@@ -46,6 +46,7 @@ def admin_home_page(request):
 def admin_add_camp(request):
     return render (request,'ADMIN/ADD CAMP.html')
 
+
 def admin_add_camp_post(request):
     camp=request.POST["camp"]
     place=request.POST["place"]
@@ -65,19 +66,23 @@ def admin_add_camp_post(request):
     obj.save()
     return HttpResponse('''<script> alert ('CAMP ADDED');window.location='/admin_manage_camp'</script>''')
 
+
 def admin_manage_camp(request):
     ob=camp_table.objects.all()
     return render (request,'ADMIN/MANAGE CAMP.html',{'val':ob})
+
 
 def admin_search_camp(request):
     campName=request.POST['textfield']
     ob=camp_table.objects.filter(campName__icontains=campName)
     return render (request,'ADMIN/MANAGE CAMP.html',{'val':ob})
 
+
 def admin_edit_camp(request,id):
     request.session["campid"]=id
     ob=camp_table.objects.get(id=id)
     return render(request, 'ADMIN/EDIT CAMP.html',{"ob":ob})
+
 
 def admin_edit_camp_post(request):
     camp = request.POST["camp"]
@@ -94,6 +99,7 @@ def admin_edit_camp_post(request):
     obj.save()
     return HttpResponse('''<script> alert('CAMP EDITED');window.location='/admin_manage_camp';</script>''')
 
+
 def admin_delete_camp(request,id):
     camp_table.objects.get(id=id).delete()
     return HttpResponse('''<script> alert('CAMP DELETED');window.location='/admin_manage_camp';</script>''')
@@ -108,18 +114,23 @@ def admin_add_camp_coordinator(request):
     ob=camp_table.objects.all()
     return render(request,'ADMIN/ADD CAMP COORDINATOR.html',{"data":ob})
 
+
 def admin_add_camp_coordinator_post(request):
     camp=request.POST["camp"]
     name=request.POST["name"]
+    gender=request.POST["gender"]
+    dob=request.POST["dob"]
     contactno = request.POST["contactNo"]
     email=request.POST["email"]
+    district = request.POST["district"]
     place=request.POST["place"]
-    pin=request.POST["pin"]
     post=request.POST["post"]
-    gender=request.POST["gender"]
+    pin=request.POST["pin"]
     username=request.POST["username"]
     password=request.POST["password"]
-    dob=request.POST["dob"]
+    fs=FileSystemStorage( )
+    photo = request.FILES["photo"]
+    fsave = fs.save(photo.name, photo)
     ob=login_table()
     ob.username=username
     ob.password=password
@@ -129,54 +140,81 @@ def admin_add_camp_coordinator_post(request):
     obj.LOGIN=ob
     obj.CAMP_id=camp
     obj.name=name
-    obj.contactNo=contactno
-    obj.email=email
-    obj.place=place
-    obj.pin=pin
-    obj.post=post
     obj.gender=gender
     obj.dob=dob
+    obj.contactNo=contactno
+    obj.email=email
+    obj.district=district
+    obj.place=place
+    obj.post=post
+    obj.pin=pin
+    obj.photo = fsave
     obj.save()
     return HttpResponse('''<script> alert ('CAMP COORDINATOR ADDED');window.location='/admin_manage_camp_coordinator'</script>''')
+
 
 def admin_manage_camp_coordinator(request):
     ob=camp_coordinator_table.objects.all()
     return render (request,'ADMIN/MANAGE CAMP COORDINATOR.html',{'val':ob})
+
 
 def admin_search_camp_coordinator(request):
     name = request.POST['textfield']
     ob = camp_coordinator_table.objects.filter(name__icontains=name)
     return render(request, 'ADMIN/MANAGE CAMP COORDINATOR.html', {'val': ob})
 
+
 def admin_edit_camp_coordinator(request,id):
     request.session["coordinatorid"]=id
     ob=camp_coordinator_table.objects.get(id=id)
     cam=camp_table.objects.all()
-    # print(cam,"--------------")
     return render(request, 'ADMIN/EDIT CAMP COORDINATOR.html', {"ob": ob,"camp":cam})
 
+
 def admin_edit_camp_coordinator_post(request):
-    camp = request.POST["camp"]
-    name = request.POST["name"]
+    camp=request.POST["camp"]
+    name=request.POST["name"]
+    gender=request.POST["gender"]
+    dob=request.POST["dob"]
     contactno = request.POST["contactNo"]
-    email = request.POST["email"]
-    place = request.POST["place"]
-    pin = request.POST["pin"]
-    post = request.POST["post"]
-    gender = request.POST["gender"]
-    dob = request.POST["dob"]
+    email=request.POST["email"]
+    district = request.POST["district"]
+    place=request.POST["place"]
+    post=request.POST["post"]
+    pin=request.POST["pin"]
+    fs=FileSystemStorage( )
+    photo = request.FILES["photo"]
+    fsave = fs.save(photo.name, photo)
     obj = camp_coordinator_table.objects.get(id=request.session["coordinatorid"])
     obj.CAMP_id = camp
-    obj.name = name
-    obj.contactNo = contactno
-    obj.email = email
-    obj.place = place
-    obj.pin = pin
-    obj.post = post
-    obj.gender = gender
-    obj.dob = dob
+    obj.name=name
+    obj.gender=gender
+    obj.dob=dob
+    obj.contactNo=contactno
+    obj.email=email
+    obj.district=district
+    obj.place=place
+    obj.post=post
+    obj.pin=pin
+    obj.photo = fsave
     obj.save()
-    return HttpResponse('''<script> alert ('EDITED');window.location='/admin_manage_camp_coordinator'</script>''')
+    return HttpResponse('''<script> alert ('CAMP COORDINATOR EDITED');window.location='/admin_manage_camp_coordinator'</script>''')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def admin_delete_camp_coordinator(request,id):
     login_table.objects.get(id=id).delete()
@@ -209,7 +247,6 @@ def admin_add_guideline_post(request):
     guideline=request.FILES["guideline"]
     fs=FileSystemStorage( )
     fsave=fs.save(guideline.name,guideline)
-
     obj=Guidelines_table()
     obj.CAMP_COORDINATOR=camp_coordinator_table.objects.get(id=camp)
     obj.guideline=fsave
@@ -322,11 +359,11 @@ def coordinator_edit_asset_registration_post(request):
 
 
 
-
 def coordinator_edit_member(request,id):
     request.session["memberid"]=id
     ob=member_table.objects.get(id=id)
     return render(request,'CAMP COORDINATOR/EDIT MEMBER.html',{"ob":ob})
+
 
 def coordinator_edit_member_post(request):
     name = request.POST["name"]

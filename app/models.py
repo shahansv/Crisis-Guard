@@ -3,23 +3,23 @@ from django.db import models
 # Create your models here.
 
 class login_table(models.Model):
-    username=models.CharField(max_length=200)
-    password=models.CharField(max_length=200)
-    type=models.CharField(max_length=200)
+    username = models.CharField(max_length=200)
+    password = models.CharField(max_length=200)
+    type = models.CharField(max_length=200)
 
 class camp_table(models.Model):
-    campName=models.CharField(max_length=200)
-    district=models.CharField(max_length=200)
+    campName = models.CharField(max_length=200)
+    district = models.CharField(max_length=200)
     place = models.CharField(max_length=200)
     post = models.CharField(max_length=200)
-    pin=models.BigIntegerField()
-    email=models.CharField(max_length=200)
-    contactno=models.BigIntegerField()
+    pin = models.BigIntegerField()
+    email = models.CharField(max_length=200)
+    contactno = models.BigIntegerField()
 
 class camp_coordinator_table(models.Model):
-    LOGIN=models.ForeignKey(login_table,on_delete=models.CASCADE)
-    CAMP=models.ForeignKey(camp_table,on_delete=models.CASCADE)
-    name=models.CharField(max_length=200)
+    LOGIN = models.ForeignKey(login_table,on_delete=models.CASCADE)
+    CAMP = models.ForeignKey(camp_table,on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
     gender = models.CharField(max_length=200)
     dob=models.CharField(max_length=100)
     contactNo = models.BigIntegerField()
@@ -28,7 +28,7 @@ class camp_coordinator_table(models.Model):
     place = models.CharField(max_length=200)
     post = models.CharField(max_length=200)
     pin = models.BigIntegerField()
-    photo=models.FileField()
+    photo = models.FileField()
 
 class Guidelines_table(models.Model):
     CAMP_COORDINATOR = models.ForeignKey(camp_coordinator_table, on_delete=models.CASCADE)
