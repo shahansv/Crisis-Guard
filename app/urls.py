@@ -26,8 +26,8 @@ urlpatterns = [
 # ADD & MANAGE CAMP COORDINATOR
     path('admin_add_camp_coordinator',views.admin_add_camp_coordinator),
     path('admin_add_camp_coordinator_post',views.admin_add_camp_coordinator_post),
+    path('admin_manage_camp_coordinator',views.admin_manage_camp_coordinator),
     path('admin_search_camp_coordinator',views.admin_search_camp_coordinator),
-    # path('admin_manage_camp_coordinator',views.admin_manage_camp_coordinator),
     path('admin_edit_camp_coordinator/<id>', views.admin_edit_camp_coordinator),
     path('admin_edit_camp_coordinator_post', views.admin_edit_camp_coordinator_post),
     path('admin_delete_camp_coordinator/<id>',views.admin_delete_camp_coordinator),
