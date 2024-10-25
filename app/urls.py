@@ -54,7 +54,7 @@ urlpatterns = [
 # MANAGE COMPLAINT
 
     path('admin_manage_camplaint',views.admin_manage_camplaint),
-     path('admin_reply_complaint',views.admin_reply_complaint),
+    path('admin_reply_complaint',views.admin_reply_complaint),
     path('search_complaint',views.search_complaint),
 
 
@@ -63,27 +63,46 @@ urlpatterns = [
 
     path('admin_add_notification',views.admin_add_notification),
     path('admin_add_notification_post',views.admin_add_notification_post),
-    path('admin_view_notification',views.admin_view_notification),
     path('admin_manage_notification',views.admin_manage_notification),
     path('admin_delete_notification/<id>',views.admin_delete_notification),
+    path('admin_edit_notification/<id>',views.admin_edit_notification),
+    path('admin_edit_notification_post',views.admin_edit_notification_post),
    
+
 
 
 # ***** CAMP COORDINATOR *****
 
     path ('coordinator_home_page',views.coordinator_home_page),
-    path('coordinator_add_member', views.coordinator_add_member),
-    path('coordinator_view_members',views.coordinator_view_members),
-    path('coordinator_add_member_post',views.coordinator_add_member_post),
-    path('coordinator_add_volunteer_post',views.coordinator_add_volunteer_post),
-    path('coordinator_view_volunteer',views.coordinator_view_volunteer),
+
+
+# ADD AND MANAGE STOCK
+
     path('coordinator_add_stock', views.coordinator_add_stock),
     path('coordinator_add_stock_post',views.coordinator_add_stock_post),
-    path('coordinator_view_stock',views.coordinator_view_stock),
+    path('coordinator_manage_stock',views.coordinator_manage_stock),
+
+
+# ADD AND MANAGE MEMBER
+
+    path('coordinator_add_member', views.coordinator_add_member),
+    path('coordinator_add_member_post',views.coordinator_add_member_post),
+    path('coordinator_manage_members',views.coordinator_manage_members),
     path('coordinator_edit_member/<id>',views.coordinator_edit_member),
     path('coordinator_edit_member_post',views.coordinator_edit_member_post),
     path('coordinator_delete_member/<id>',views.coordinator_delete_member),
-    path('search_member',views.search_member),
+    path('coordinator_search_member',views.coordinator_search_member),
+
+
+
+
+
+
+
+
+
+    path('coordinator_add_volunteer_post',views.coordinator_add_volunteer_post),
+    path('coordinator_view_volunteer',views.coordinator_view_volunteer),
     path('coordinator_register_missing_asset',views.coordinator_register_missing_asset),
     path('coordinator_register_missing_asset_post',views.coordinator_register_missing_asset_post),
     path('coordinator_view_missing_asset_registration', views.coordinator_view_missing_asset_registration),

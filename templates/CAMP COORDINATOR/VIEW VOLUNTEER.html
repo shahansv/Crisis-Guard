@@ -1,49 +1,51 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Untitled Document</title>
+  </head>
 
-<body>
-<form id="form1" name="form1" method="post" action="search_volunteer">
-  <table width="200" border="1">
-    <tr>
-      <td colspan="12"><label>
-        <input type="text" name="name" />
-        <input type="submit" name="Submit" value="SEARCH" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>NAME</td>
-      <td>GENDER</td>
-      <td>DOB</td>
-      <td>DISTRICT</td>
-        <td>PLACE</td>
-        <td>POST</td>
-        <td>PIN</td>
-        <td>CONTACTNO</td>
-        <td>EMAIL</td>
-        <td>PHOTO</td>
-        <td colspan="2">&nbsp;</td>
-    </tr>
-      {% for i in val %}
-    <tr>
-      <td>{{ i.name }}</td>
-      <td>&nbsp;{{ i.gender }}</td>
-      <td>{{ i.dob }}&nbsp;</td>
-      <td>{{ i.district }}</td>
-        <td>{{ i.place}}</td>
-         <td>{{ i.post}}</td>
-        <td>{{ i.pin}}</td>
-        <td>{{ i.ContactNo}}</td>
-        <td>{{ i.email}}</td>
-        <td><img src="{{ ob.photo.url }}" style="height: 50px;width: auto" alt="{{ i.photo}}"/></td>
-    <td><a href="/#/{{ i.id }}">EDIT</a></td>
-    <td><a href="/#/{{ i.id }}">DELETE</a></td>
-    </tr>
-      {% endfor %}
-  </table>
-</form>
-</body>
+  <body>
+    <form id="form1" name="form1" method="post" action="search_volunteer">
+      <table border="1">
+        <tr>
+          <td colspan="12">
+            <label>
+              <input type="text" name="name" />
+              <input type="submit" name="Submit" value="SEARCH" />
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>NAME</td>
+          <td>GENDER</td>
+          <td>DOB</td>
+          <td>DISTRICT</td>
+          <td>PLACE</td>
+          <td>POST</td>
+          <td>PIN</td>
+          <td>CONTACTNO</td>
+          <td>EMAIL</td>
+          <td>PHOTO</td>
+          <td colspan="2">&nbsp;</td>
+        </tr>
+        {% for i in val %}
+        <tr>
+          <td>{{ i.name }}</td>
+          <td>{{ i.gender }}</td>
+          <td>{{ i.dob }}&nbsp;</td>
+          <td>{{ i.district }}</td>
+          <td>{{ i.place}}</td>
+          <td>{{ i.post}}</td>
+          <td>{{ i.pin}}</td>
+          <td>{{ i.ContactNo}}</td>
+          <td>{{ i.email}}</td>
+          <td><img src="{{ i.photo.url }}" style="height: 100px;width: auto" alt="" /></td>
+          <td><a href="/#/{{ i.id }}">EDIT</a></td>
+          <td><a href="/#/{{ i.id }}">DELETE</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </form>
+  </body>
 </html>

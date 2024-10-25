@@ -85,17 +85,21 @@ def admin_edit_camp(request,id):
 
 
 def admin_edit_camp_post(request):
-    camp = request.POST["camp"]
-    place = request.POST["place"]
-    pin = request.POST["pin"]
-    post = request.POST["post"]
-    district = request.POST["district"]
+    camp=request.POST["camp"]
+    place=request.POST["place"]
+    pin=request.POST["pin"]
+    post=request.POST["post"]
+    district=request.POST["district"]
+    contactno=request.POST["contactno"]
+    email=request.POST["email"]
     obj = camp_table.objects.get(id=request.session["campid"])
-    obj.campName = camp
-    obj.place = place
-    obj.pin = pin
-    obj.post = post
-    obj.district = district
+    obj.campName=camp
+    obj.place=place
+    obj.pin=pin
+    obj.post=post
+    obj.district=district
+    obj.contactno=contactno
+    obj.email=email
     obj.save()
     return HttpResponse('''<script> alert('CAMP EDITED');window.location='/admin_manage_camp';</script>''')
 
@@ -244,8 +248,6 @@ def admin_search_guideline(request):
 
 
 
-
-
 # VERIFY EMERGENCY TEAM
 
 def admin_verify_emergency_team(request):
@@ -284,6 +286,14 @@ def admin_manage_camplaint(request):
     ob=complaint_table.objects.all()
     return render (request,'ADMIN/VIEW COMPLAINT.html',{'val':ob})
 
+def admin_reply_complaint(request):
+    return render (request,'ADMIN/REPLY COMPLAINT.html')
+
+def search_complaint(request):
+    date=request.POST['textfield']
+    ob = complaint_table.objects.filter(date__exact=date)
+    return render(request, 'ADMIN/VIEW COMPLAINT.html', {'val': ob})
+
 
 # MANAGE NOTIFICATION
 
@@ -300,74 +310,115 @@ def admin_add_notification_post(request):
    obj.date = datetime.datetime.now().date()
    obj.time = datetime.datetime.now().time()
    obj.save()
-   return HttpResponse('''<script> alert ('NOTIFICATION ADDED');window.location='/admin_view_notification'</script>''')
-
-def admin_view_notification(request):
-    ob=notification_table.objects.all()
-    return render(request, 'ADMIN/VIEW NOTIFICATION.html', {"val": ob})
-
-
-
-
-def coordinator_delete_member(request,id):
-    member_table.objects.get(id=id).delete()
-    return HttpResponse('''<script> alert ('MEMBER DELETED');window.location='/coordinator_view_members'</script>''')
-
+   return HttpResponse('''<script> alert ('NOTIFICATION ADDED');window.location='/admin_manage_notification'</script>''')
 
 
 def admin_manage_notification(request):
-    return render (request,'ADMIN/MANAGE NOTIFICATION.html')
+    ob=notification_table.objects.all()
+    return render (request,'ADMIN/MANAGE NOTIFICATION.html', {"val": ob})
 
-def admin_reply_complaint(request):
-    return render (request,'ADMIN/REPLY COMPLAINT.html')
-
-
-
-
+def admin_delete_notification(request,id):
+    notification_table.objects.get(id=id).delete()
+    return HttpResponse('''<script> alert('NOTIFICATION DELETED');window.location='/admin_manage_notification';</script>''')
 
 
+def admin_edit_notification(request,id):
+    request.session["notificationid"]=id
+    ob=notification_table.objects.get(id=id)
+    return render(request, 'ADMIN/EDIT NOTIFICATION.html',{"ob":ob})
+
+
+def admin_edit_notification_post(request):
+    title=request.POST["title"]
+    subject=request.POST["subject"]
+    obj = notification_table.objects.get(id=request.session["notificationid"])
+    obj.title=title
+    obj.subject=subject
+    obj.date = datetime.datetime.now().date()
+    obj.time = datetime.datetime.now().time()
+    obj.save()
+    return HttpResponse('''<script> alert('NOTIFICATION EDITED');window.location='/admin_manage_notification';</script>''')
 
 
 
 
 
-def search_complaint(request):
-    date=request.POST['textfield']
-    ob = complaint_table.objects.filter(date__exact=date)
-    return render(request, 'ADMIN/VIEW COMPLAINT.html', {'val': ob})
 
-def search_member(request):
+# ***** CAMP COORDINATOR *****
+
+def coordinator_home_page(request):
+    return  render(request,'CAMP COORDINATOR/HOME PAGE.html')
+
+# ADD & MANAGE STOCK
+
+def coordinator_add_stock(request):
+    return render(request, 'CAMP COORDINATOR/ADD STOCK.html')
+
+def coordinator_add_stock_post(request):
+    category = request.POST["category"]
+    product = request.POST["product"]
+    quantity = request.POST["quantity"]
+    date = request.POST["date"]
+    obj = stock_table()
+    obj.category= category
+    obj.product=product
+    obj.quantity=quantity
+    obj.date=date
+    obj.save()
+    return HttpResponse('''<script> alert ('STOCK ADDED');window.location='/coordinator_view_stock'</script>''')
+
+def coordinator_manage_stock(request):
+    ob = stock_table.objects.all()
+    return render(request, 'CAMP COORDINATOR/VIEW STOCK.html', {"val": ob})
+
+
+
+# ADD & MANAGE MEMBER
+
+def coordinator_add_member(request):
+    return render (request,'CAMP COORDINATOR/ADD MEMBER.html')
+
+
+def coordinator_add_member_post(request):
+    name = request.POST["name"]
+    gender = request.POST["gender"]
+    dob = request.POST["dob"]
+    district = request.POST["district"]
+    place = request.POST["place"]
+    post = request.POST["post"]
+    pin = request.POST["pin"]
+    contactNo = request.POST["contactNo"]
+    email = request.POST["email"]
+    photo = request.FILES["file"]
+    fs=FileSystemStorage( )
+    fsave=fs.save(photo.name,photo)
+    obj=member_table()
+    obj.name = name
+    obj.gender = gender
+    obj.dob = dob
+    obj.district = district
+    obj.place = place
+    obj.post = post
+    obj.pin = pin
+    obj.contactNo = contactNo
+    obj.email = email
+    obj.photo = fsave
+    obj.COORDINATOR = camp_coordinator_table.objects.get(LOGIN__id=request.session['lid'])
+    obj.save()
+    return HttpResponse('''<script> alert ('MEMBER ADDED');window.location='/coordinator_manage_members'</script>''')
+
+def coordinator_manage_members(request):
+    ob = member_table.objects.all()
+    return render (request,'CAMP COORDINATOR/VIEW MEMBERS.html', {"val": ob})
+
+def coordinator_search_member(request):
     name=request.POST['name']
     ob=member_table.objects.filter(name__icontains=name)
     return render (request,'CAMP COORDINATOR/VIEW MEMBERS.html',{'val':ob})
 
-
-
-
-
-
-
-
-
-def coordinator_edit_asset_registration(request,id):
-    request.session["assetid"] = id
-    ob = asset_table.objects.get(id=id)
-    return render(request, 'CAMP COORDINATOR/EDIT ASSET REGISTRATION.html', {"ob": ob})
-
-def coordinator_edit_asset_registration_post(request):
-    category = request.POST["category"]
-    asset = request.POST["asset"]
-    description = request.POST["description"]
-    date = request.POST["date"]
-    obj = asset_table.objects.get(id=request.session["assetid"])
-    obj.category = category
-    obj.asset = asset
-    obj.description = description
-    obj.date = date
-    obj.save()
-    return HttpResponse('''<script> alert('ASSET REGISTRATION EDITED');window.location='/coordinator_view_missing_asset_registration';</script>''')
-
-
+def coordinator_delete_member(request,id):
+    member_table.objects.get(id=id).delete()
+    return HttpResponse('''<script> alert ('MEMBER DELETED');window.location='/coordinator_view_members'</script>''')
 
 
 def coordinator_edit_member(request,id):
@@ -407,111 +458,7 @@ def coordinator_edit_member_post(request):
 
 
 
-
-
-
-def admin_delete_notification(request,id):
-    notification_table.objects.get(id=id).delete()
-    return HttpResponse('''<script> alert('NOTIFICATION DELETED');window.location='/admin_view_notification';</script>''')
-
-
-def coordinator_add_member(request):
-    return render (request,'CAMP COORDINATOR/ADD MEMBER.html')
-
-
-
-def coordinator_add_member_post(request):
-    name = request.POST["name"]
-    gender = request.POST["gender"]
-    dob = request.POST["dob"]
-    district = request.POST["district"]
-    place = request.POST["place"]
-    post = request.POST["post"]
-    pin = request.POST["pin"]
-    contactNo = request.POST["contactNo"]
-    email = request.POST["email"]
-    photo = request.FILES["file"]
-    fs=FileSystemStorage( )
-    fsave=fs.save(photo.name,photo)
-    obj=member_table()
-    obj.name = name
-    obj.gender = gender
-    obj.dob = dob
-    obj.district = district
-    obj.place = place
-    obj.post = post
-    obj.pin = pin
-    obj.contactNo = contactNo
-    obj.email = email
-    obj.photo = fsave
-    obj.COORDINATOR = camp_coordinator_table.objects.get(LOGIN__id=request.session['lid'])
-    obj.save()
-    return HttpResponse('''<script> alert ('MEMBER ADDED');window.location='/coordinator_view_members'</script>''')
-
-
-
-def coordinator_home_page(request):
-    return  render(request,'CAMP COORDINATOR/HOME PAGE.html')
-
-
-
-
-
-
-
-
-
-
-def camp_coordinator_view_medical_request(request):
-    return render (request,'CAMP COORDINATOR/VIEW MEDICAL REQUEST.html')
-
-def coordinator_view_members(request):
-    ob = member_table.objects.all()
-    return render (request,'CAMP COORDINATOR/VIEW MEMBERS.html', {"val": ob})
-
-
-
-def camp_coordinator_view_needs(request):
-    return render (request,'CAMP COORDINATOR/VIEW NEEDS.html')
-
-def coordinator_add_stock(request):
-    return render(request, 'CAMP COORDINATOR/ADD STOCK.html')
-
-def coordinator_add_stock_post(request):
-    category = request.POST["category"]
-    product = request.POST["product"]
-    quantity = request.POST["quantity"]
-    date = request.POST["date"]
-    obj = stock_table()
-    obj.category= category
-    obj.product=product
-    obj.quantity=quantity
-    obj.date=date
-    obj.save()
-    return HttpResponse('''<script> alert ('STOCK ADDED');window.location='/coordinator_view_stock'</script>''')
-
-def coordinator_view_stock(request):
-    ob = stock_table.objects.all()
-    return render(request, 'CAMP COORDINATOR/VIEW STOCK.html', {"val": ob})
-
-
-def camp_coordinator_add_needs(request):
-    return render (request,'CAMP COORDINATOR/ADD NEEDS.html')
-
-
-def emergency_response_team_home_page(request):
-    return render (request,'EMERGENCY RESPONSE TEAM/ERT HOME PAGE.html')
-
-def emergency_response_tean_add_emergency_request(request):
-    return render (request,'EMERGENCY RESPONSE TEAM/ADD EMERGENCY REQUEST.html')
-
-
-def emergency_response_tean_view_emergency_request(request):
-    return render (request,'EMERGENCY RESPONSE TEAM/VIEW EMERGENCY REQUEST.html')
-
-
-
-
+# MISSING ASSET
 
 def coordinator_register_missing_asset(request):
     name=member_table.objects.filter(COORDINATOR__LOGIN_id=request.session['lid'])
@@ -531,20 +478,43 @@ def coordinator_register_missing_asset_post(request):
     obj.description = assetdescription
     obj.date =date
     obj.status=status
-
     obj.save()
-
     return HttpResponse('''<script> alert (' MISSING ASSET REGISTERED');window.location='/coordinator_view_missing_asset_registration'</script>''')
+
 
 def coordinator_view_missing_asset_registration(request):
     ob = asset_table.objects.all()
     return render(request, 'CAMP COORDINATOR/VIEW ASSET REGISTRATION.html', {'val': ob})
 
 
-
 def coordinator_delete_asset_registration(request,id):
     asset_table.objects.get(id=id).delete()
     return HttpResponse('''<script> alert('ASSET REGISTRATION DELETED');window.location='/coordinator_view_missing_asset_registration';</script>''')
+
+
+def coordinator_edit_asset_registration(request,id):
+    request.session["assetid"] = id
+    ob = asset_table.objects.get(id=id)
+    return render(request, 'CAMP COORDINATOR/EDIT ASSET REGISTRATION.html', {"ob": ob})
+
+def coordinator_edit_asset_registration_post(request):
+    category = request.POST["category"]
+    asset = request.POST["asset"]
+    description = request.POST["description"]
+    date = request.POST["date"]
+    obj = asset_table.objects.get(id=request.session["assetid"])
+    obj.category = category
+    obj.asset = asset
+    obj.description = description
+    obj.date = date
+    obj.save()
+    return HttpResponse('''<script> alert('ASSET REGISTRATION EDITED');window.location='/coordinator_view_missing_asset_registration';</script>''')
+
+
+
+
+# ADD AND MANAGE NEEDS
+
 
 def coordinator_add_needs(request):
     ob=camp_coordinator_table.objects.get(LOGIN=request.session["lid"])
@@ -590,6 +560,13 @@ def coordinator_delete_needs(request,id):
     return HttpResponse('''<script> alert('NEED DELETED');window.location='/coordinator_view_needs';</script>''')
 
 
+# MEDICAL SUPPORT REQUEST
+
+def camp_coordinator_view_medical_request(request):
+    return render (request,'CAMP COORDINATOR/VIEW MEDICAL REQUEST.html')
+
+
+# ADD AND MANAGE VOLUNTEER
 
 def coordinator_add_volunteer(request):
     return render(request,'CAMP COORDINATOR/ADD VOLUNTEER.html')
@@ -626,6 +603,23 @@ def coordinator_add_volunteer_post(request):
 def coordinator_view_volunteer(request):
     ob = volunteer_table.objects.all()
     return render (request,'CAMP COORDINATOR/VIEW VOLUNTEER.html', {"val": ob})
+
+
+
+# ***** EMERGENCY RESPONCE TEAM *****
+
+
+def emergency_response_team_home_page(request):
+    return render (request,'EMERGENCY RESPONSE TEAM/ERT HOME PAGE.html')
+
+def emergency_response_tean_add_emergency_request(request):
+    return render (request,'EMERGENCY RESPONSE TEAM/ADD EMERGENCY REQUEST.html')
+
+def emergency_response_tean_view_emergency_request(request):
+    return render (request,'EMERGENCY RESPONSE TEAM/VIEW EMERGENCY REQUEST.html')
+
+
+
 
 
 
