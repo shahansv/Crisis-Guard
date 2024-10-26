@@ -6,8 +6,8 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="/coordinator_search_needs">
-  <table  border="1">
+<form id="form1" name="form1" method="post" action="/coordinator_search_stock">
+  <table border="1">
     <tr>
       <td colspan="6"><label>
         <select name="select">
@@ -24,25 +24,25 @@
       </label></td>
     </tr>
     <tr>
-      <td>CATEGORY</td>
-      <td>PRODUCT NAME </td>
-      <td>QUANTITY</td>
-      <td>DATE</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
+        <td>CATEGORY </td>
+        <td>PRODUCT </td>
+        <td>QUANTITY</td>
+        <td>DATE</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
     </tr>
       {% for i in val %}
     <tr>
-      <td>{{ i.category }}</td>
-      <td>{{ i.product }}</td>
-      <td>{{ i.quantity }}&nbsp;</td>
-      <td>&nbsp;{{ i.date }}</td>
-     <td><a href="/coordinator_edit_needs/{{ i.id }}">EDIT</a></td>
-    <td><a href="/coordinator_delete_needs/{{ i.id }}">DELETE</a></td>
+      <td>{{ i.category}}</td>
+      <td>{{ i.product}}&nbsp;</td>
+      <td>{{ i.quantity}}&nbsp;</td>
+     <td>{{ i.date}}&nbsp;</td>
+     <td><a href="/coordinator_edit_stock/{{ i.id }}">EDIT</a></td>
+     <td><a href="/coordinator_delete_stock/{{ i.id }}">DELETE</a></td>
     </tr>
       {% endfor %}
   </table>
-  <p><a href="/coordinator_add_needs">ADD NEEDS </a></p>
+  <p><a href="/coordinator_add_stock">ADD STOCK </a></p>
 </form>
 </body>
 </html>

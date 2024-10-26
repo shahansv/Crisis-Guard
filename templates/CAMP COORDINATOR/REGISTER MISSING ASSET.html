@@ -10,15 +10,11 @@
   <table width="200" border="1">
 
     <tr>
-      <td>CAMP NAME </td>
-      <td><label>{{ name.COORDINATOR.CAMP.campName }}</label></td>
-    </tr>
-    <tr>
       <td>MEMBER NAME </td>
       <td><label>
         <select name="membername" >
 
-            {%  for i in name %}
+            {%  for i in names %}
             <option value="{{ i.id }}">{{ i.name }}</option>
             {% endfor %}
         </select>

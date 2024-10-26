@@ -68,8 +68,8 @@ class emergency_team_table(models.Model):
     department= models.CharField(max_length=200)
     district = models.CharField(max_length=200)
     place = models.CharField(max_length=200)
-    post = models.CharField(max_length=200)
     pin = models.BigIntegerField()
+    post = models.CharField(max_length=200)
     ContactNo = models.BigIntegerField()
     email = models.CharField(max_length=200)
 
@@ -116,15 +116,16 @@ class member_table(models.Model):
 
 class volunteer_table(models.Model):
     COORDINATOR = models.ForeignKey(camp_coordinator_table, on_delete=models.CASCADE)
+    LOGIN = models.ForeignKey(login_table,on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     gender = models.CharField(max_length=200)
-    dob = models.DateField()
+    dob=models.CharField(max_length=100)
+    contactNo = models.BigIntegerField()
+    email = models.CharField(max_length=200)
     district = models.CharField(max_length=200)
     place = models.CharField(max_length=200)
     post = models.CharField(max_length=200)
     pin = models.BigIntegerField()
-    ContactNo = models.BigIntegerField()
-    email = models.CharField(max_length=200)
     photo = models.FileField()
 
 class asset_table(models.Model):

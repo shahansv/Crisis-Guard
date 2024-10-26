@@ -6,17 +6,18 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="coordinator_add_stock_post">
+<form id="form1" name="form1" method="post" action="/coordinator_edit_stock_post">
   <table border="1">
     <tr>
       <td>CATEGORY</td>
       <td><label>
         <select name="category">
+          <option value="{{ob.category}}" selected>{{ ob.category }}</option>
             <option value="FOOD">FOOD</option>
             <option value="WATER">WATER</option>
             <option value="CLOTH">CLOTH</option>
             <option value="FRUITS">FRUITS</option>
-            <option value="VEGETABLES">VEGETABLES</option>
+            <option value="VEGITABLES">VEGITABLES</option>
             <option value="OTHER">OTHER</option>
         </select>
       </label></td>
@@ -24,23 +25,23 @@
     <tr>
       <td>PRODUCT</td>
       <td><label>
-        <input type="text" name="product" />
+        <input type="text" name="product" value="{{ ob.product }}"  />
       </label></td>
     </tr>
     <tr>
       <td>QUANTITY</td>
       <td><label>
-        <input type="text" name="quantity" />
+        <input type="text" name="quantity" value="{{ ob.quantity }}"  />
       </label></td>
     </tr>
         <tr>
       <td>DATE</td>
       <td><label>
-        <input type="date" name="date" />
+        <input type="date" name="date" value="{{ ob.date|date:'Y-m-d' }}"  />
       </label></td>
     </tr>
       <td colspan="2"><label>
-        <input type="submit" name="Submit" value="Submit" />
+        <input type="submit" name="Submit" value="EDIT" />
       </label></td>
     </tr>
   </table>

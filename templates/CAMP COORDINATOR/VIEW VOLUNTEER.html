@@ -17,6 +17,7 @@
           </td>
         </tr>
         <tr>
+          <td>CAMP NAME</td>
           <td>NAME</td>
           <td>GENDER</td>
           <td>DOB</td>
@@ -31,6 +32,7 @@
         </tr>
         {% for i in val %}
         <tr>
+          <td>{{i.COORDINATOR.CAMP.campName}}</td>
           <td>{{ i.name }}</td>
           <td>{{ i.gender }}</td>
           <td>{{ i.dob }}&nbsp;</td>
@@ -40,7 +42,13 @@
           <td>{{ i.pin}}</td>
           <td>{{ i.ContactNo}}</td>
           <td>{{ i.email}}</td>
-          <td><img src="{{ i.photo.url }}" style="height: 100px;width: auto" alt="" /></td>
+          <td>
+            <img
+              src="{{ i.photo.url }}"
+              style="height: 100px; width: auto"
+              alt=""
+            />
+          </td>
           <td><a href="/#/{{ i.id }}">EDIT</a></td>
           <td><a href="/#/{{ i.id }}">DELETE</a></td>
         </tr>

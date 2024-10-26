@@ -85,6 +85,11 @@ urlpatterns = [
     path('coordinator_add_stock', views.coordinator_add_stock),
     path('coordinator_add_stock_post',views.coordinator_add_stock_post),
     path('coordinator_manage_stock',views.coordinator_manage_stock),
+    path('coordinator_edit_stock/<id>',views.coordinator_edit_stock),
+    path('coordinator_edit_stock_post',views.coordinator_edit_stock_post),
+    path('coordinator_delete_stock/<id>',views.coordinator_delete_stock),
+    path('coordinator_search_stock',views.coordinator_search_stock),
+
 
 
 # ADD AND MANAGE MEMBER
@@ -99,33 +104,35 @@ urlpatterns = [
 
 
 
-
-
-
-
-
-
-    path('coordinator_add_volunteer_post',views.coordinator_add_volunteer_post),
-    path('coordinator_view_volunteer',views.coordinator_view_volunteer),
     path('coordinator_register_missing_asset',views.coordinator_register_missing_asset),
     path('coordinator_register_missing_asset_post',views.coordinator_register_missing_asset_post),
     path('coordinator_view_missing_asset_registration', views.coordinator_view_missing_asset_registration),
     path('coordinator_edit_asset_registration/<id>',views.coordinator_edit_asset_registration),
     path('coordinator_edit_asset_registration_post', views.coordinator_edit_asset_registration_post),
     path('coordinator_delete_asset_registration/<id>',views.coordinator_delete_asset_registration),
+    path('coordinator_search_asset_registration',views.coordinator_search_asset_registration),
+
+
     path('coordinator_add_needs',views.coordinator_add_needs),
     path('coordinator_add_needs_post',views.coordinator_add_needs_post),
     path('coordinator_view_needs', views.coordinator_view_needs),
     path('coordinator_edit_needs/<id>',views.coordinator_edit_needs),
     path('coordinator_edit_needs_post', views.coordinator_edit_needs_post),
     path('coordinator_delete_needs/<id>', views.coordinator_delete_needs),
+    path('coordinator_search_needs', views.coordinator_search_needs),
+
+
+
     path('coordinator_add_volunteer',views.coordinator_add_volunteer),
+    path('coordinator_add_volunteer_post',views.coordinator_add_volunteer_post),
+    path('coordinator_view_volunteer',views.coordinator_view_volunteer),
     path('coordinator_add_volunteer_post',views.coordinator_add_volunteer_post),
 
 
 
 # ***** EMERGENCY RESPONCE TEAM *****
     
+    path('register_emergency_responce_team',views.register_emergency_responce_team),
     path('emergency_response_team_home_page',views.emergency_response_team_home_page),
     path('emergency_response_tean_add_emergency_request',views.emergency_response_tean_add_emergency_request),
     path('emergency_response_tean_view_emergency_request',views.emergency_response_tean_view_emergency_request),

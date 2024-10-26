@@ -30,7 +30,7 @@
         <td>DATE OF BIRTH</td>
         <td>
           <label>
-            <input type="date" name="dob" value="{{ ob.dob }}" />
+            <input type="date" name="dob" value="{{ ob.dob|date:'Y-m-d' }}" />
           </label> 
          </td>
       </tr>
@@ -78,8 +78,8 @@
       <tr>
         <td>PHOTO</td>
         <td><label>
-            <img src="{{ ob.photo.url }}" style="height: 50px;width: auto" alt="" />
-            <input type="file" name="files" value="" />
+            <img src="{{ ob.photo.url }}" style="height: 200px;width: auto" alt="" />
+            <input type="file" name="files" value="{{ ob.photo }}" />
           </label></td>
       </tr>
       <tr>
