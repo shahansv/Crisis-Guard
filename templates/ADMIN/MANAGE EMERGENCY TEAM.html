@@ -6,10 +6,10 @@
 </head>
 
 <body>
-<form id="form1" name="form1" method="post" action="">
+<form id="form1" name="form1" method="post" action="admin_search_accept_emergency_team">
   <p>ACCEPTED EMERGENCY TEAM</p>
 <table  border="1">
-  {% comment %} <tr>
+  <tr>
     <td colspan="8">
       <label>
         <input type="text" name="textfield" />
@@ -18,7 +18,7 @@
         <input type="submit" name="Submit2" value="SEARCH" />
       </label>
     </td>
-  </tr> {% endcomment %}
+  </tr> 
   <tr>
     <td>DEPARTMENT</td>
     <td>DISTRICT</td>
@@ -43,18 +43,18 @@
   {% endfor %}
 </table>
 </form>
-<form id="form2" name="form2" method="post" action="">
+<form id="form2" name="form2" method="post" action="admin_search_reject_emergency_team">
   <p>REJECTED EMERGENCY TEAM</p>
   <table  border="1">
-    {% comment %} <tr>
+   <tr>
       <td colspan="8"><label>
-        <input type="text" name="textfield3" />
+        <input type="text" name="textfield" />
         </label>
           <label>
           <input type="submit" name="Submit3" value="SEARCH" />
           </label>
       </td>
-    </tr> {% endcomment %}
+    </tr> 
     <tr>
       <td>DEPARTMENT</td>
       <td>DISTRICT</td>

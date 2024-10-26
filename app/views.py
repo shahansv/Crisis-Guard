@@ -242,7 +242,7 @@ def admin_delete_guideline(request,id):
 
 def admin_search_guideline(request):
     name = request.POST['textfield']
-    ob = Guidelines_table.objects.filter(name__icontains=name)
+    ob = Guidelines_table.objects.filter(CAMP_COORDINATOR__name__icontains=name)
     return render(request, 'ADMIN/MANAGE GUIDELINE.html', {'val': ob})
 
 
@@ -259,6 +259,22 @@ def admin_manage_emergency_team(request):
     ob2=emergency_team_table.objects.filter(LOGIN__type='reject')
     return render(request, 'ADMIN/MANAGE EMERGENCY TEAM.html', {'val1': ob1 ,'val2':ob2})
 
+def admin_search_verify_emergency_team(request):
+    district = request.POST['textfield']
+    ob = emergency_team_table.objects.filter(district__icontains=district,LOGIN__type='pending')
+    return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
+
+def admin_search_accept_emergency_team(request):
+    district = request.POST['textfield']
+    ob = emergency_team_table.objects.filter(district__icontains=district,LOGIN__type='ert')
+    return render(request, 'ADMIN/MANAGE EMERGENCY TEAM.html', {'val1': ob})
+
+def admin_search_reject_emergency_team(request):
+    district = request.POST['textfield']
+    ob = emergency_team_table.objects.filter(district__icontains=district,LOGIN__type='reject')
+    return render(request, 'ADMIN/MANAGE EMERGENCY TEAM.html', {'val2': ob})
+
+
 def admin_accept_ERT(request,id):
     request.session["ERTid"]=id
     ob=login_table.objects.get(id=id)
@@ -272,12 +288,6 @@ def admin_reject_ERT(request,id):
     ob.type="reject"
     ob.save()
     return HttpResponse('''<script> alert ('REJECTED');window.location='/admin_manage_emergency_team'</script>''')
-
-
-# def search_ERT(request):
-#     district=request.POST['textfield']
-#     ob = emergency_team_table.objects.filter(district__icontains=district)
-#     return render(request, 'ADMIN/ EMERGENCY TEAM.html', {'val': ob})
 
 
 # MANAGE COMPLAINT
@@ -340,6 +350,12 @@ def admin_edit_notification_post(request):
     return HttpResponse('''<script> alert('NOTIFICATION EDITED');window.location='/admin_manage_notification';</script>''')
 
 
+def admin_search_notification(request):
+    fdate = request.POST['textfield1']
+    tdate = request.POST['textfield2']
+    ob = notification_table.objects.filter(date__range=(fdate, tdate))
+    return render(request, 'ADMIN/MANAGE NOTIFICATION.html', {'val': ob})
+
 
 
 
@@ -365,7 +381,7 @@ def coordinator_add_stock_post(request):
     obj.quantity=quantity
     obj.date=date
     obj.save()
-    return HttpResponse('''<script> alert ('STOCK ADDED');window.location='/coordinator_view_stock'</script>''')
+    return HttpResponse('''<script> alert ('STOCK ADDED');window.location='/coordinator_manage_stock'</script>''')
 
 def coordinator_manage_stock(request):
     ob = stock_table.objects.all()

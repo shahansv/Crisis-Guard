@@ -6,8 +6,14 @@
   </head>
 
   <body>
-    <form id="form1" name="form1" method="post" action="">
+    <form id="form1" name="form1" method="post" action="/admin_search_verify_emergency_team">
       <table border="1">
+        <tr>
+          <td colspan="13"><label>
+            <input type="text" name="textfield" placeholder="Search by district" />
+            <input type="submit" name="Submit" value="SEARCH" />
+          </label></td>
+        </tr>
         <tr>
           <td>DEPARTMENT</td>
           <td>DISTRICT</td>
@@ -16,7 +22,8 @@
           <td>PIN</td>
           <td>CONTACT NO</td>
           <td>EMAIL</td>
-          <td>&nbsp;</td>
+          <td></td>
+          <td></td>
         </tr>
         <tr>
           {% for i in val %}
@@ -27,13 +34,12 @@
           <td>{{ i.pin }}</td>
           <td>&nbsp;{{ i.ContactNo }}</td>
           <td>{{ i.email }}</td>
-          <td>
-            <a href="/admin_accept_ERT/{{ i.LOGIN.id }}">ACCEPT</a>
-            <a href="/admin_reject_ERT/{{ i.LOGIN.id }}">REJECT</a>
-          </td>
+          <td><a href="/admin_accept_ERT/{{ i.LOGIN.id }}">ACCEPT</a></td>
+          <td><a href="/admin_reject_ERT/{{ i.LOGIN.id }}">REJECT</a></td>
         </tr>
         {% endfor %}
       </table>
+      <p><a href="/admin_manage_emergency_team">MANAGE EMERGENCY TEAM </a></p>
     </form>
   </body>
 </html>

@@ -45,7 +45,9 @@ urlpatterns = [
 # VERIFY EMERGENCY TEAM
     path('admin_verify_emergency_team',views.admin_verify_emergency_team),
     path('admin_manage_emergency_team',views.admin_manage_emergency_team),
-    # path('search_ERT',views.search_ERT),
+    path('admin_search_verify_emergency_team',views.admin_search_verify_emergency_team),
+    path('admin_search_accept_emergency_team',views.admin_search_accept_emergency_team),
+    path('admin_search_reject_emergency_team',views.admin_search_reject_emergency_team),
     path('admin_accept_ERT/<id>',views.admin_accept_ERT),
     path('admin_reject_ERT/<id>',views.admin_reject_ERT),
 
@@ -67,6 +69,8 @@ urlpatterns = [
     path('admin_delete_notification/<id>',views.admin_delete_notification),
     path('admin_edit_notification/<id>',views.admin_edit_notification),
     path('admin_edit_notification_post',views.admin_edit_notification_post),
+    path('admin_search_notification',views.admin_search_notification),
+    
    
 
 
