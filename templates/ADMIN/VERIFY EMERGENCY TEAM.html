@@ -2,17 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Untitled Document</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>VERIFY EMERGENCY RESPONSE TEAM - CRISIS GUARD</title>
   </head>
 
   <body>
-    <form id="form1" name="form1" method="post" action="/admin_search_verify_emergency_team">
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="/admin_search_verify_emergency_team"
+    >
       <table border="1">
         <tr>
-          <td colspan="13"><label>
-            <input type="text" name="textfield" placeholder="Search by district" />
+          <td colspan="13">
+            <input
+              type="text"
+              name="textfield"
+              placeholder="Search by district"
+            />
             <input type="submit" name="Submit" value="SEARCH" />
-          </label></td>
+          </td>
         </tr>
         <tr>
           <td>DEPARTMENT</td>
@@ -28,11 +39,11 @@
         <tr>
           {% for i in val %}
           <td>{{ i.department }}</td>
-          <td>&nbsp;{{ i.district }}</td>
+          <td>{{ i.district }}</td>
           <td>{{ i.place }}</td>
-          <td>&nbsp;{{ i.post }}</td>
+          <td>{{ i.post }}</td>
           <td>{{ i.pin }}</td>
-          <td>&nbsp;{{ i.ContactNo }}</td>
+          <td>{{ i.ContactNo }}</td>
           <td>{{ i.email }}</td>
           <td><a href="/admin_accept_ERT/{{ i.LOGIN.id }}">ACCEPT</a></td>
           <td><a href="/admin_reject_ERT/{{ i.LOGIN.id }}">REJECT</a></td>

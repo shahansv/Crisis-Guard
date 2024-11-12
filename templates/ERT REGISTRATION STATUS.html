@@ -4,48 +4,52 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>MANAGE CAMP - CRISIS GUARD</title>
+    <title>EMERGENCY RESPONESE TEAM REGISTRATION STATUS - CRISIS GUARD</title>
   </head>
 
   <body>
-    <form id="form1" name="form1" method="post" action="admin_search_camp">
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="search_emergency_team_status"
+    >
       <table border="1">
         <tr>
           <td colspan="9">
             <input
               type="text"
               name="textfield"
-              placeholder="Search by camp name"
+              placeholder="Search by district"
             />
             <input type="submit" name="Submit" value="SEARCH" />
           </td>
         </tr>
         <tr>
-          <td>CAMP NAME</td>
+          <td>SNo</td>
+          <td>DEPARTMENT</td>
           <td>DISTRICT</td>
           <td>PLACE</td>
           <td>POST</td>
           <td>PIN</td>
           <td>CONTACT NO</td>
           <td>EMAIL</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
+          <td>STATUS</td>
         </tr>
-        {% for i in val %}
         <tr>
-          <td>{{ i.campName}}</td>
+          {% for i in val %}
+          <td>{{ forloop.counter }}</td>
+          <td>{{ i.department }}</td>
           <td>{{ i.district }}</td>
           <td>{{ i.place }}</td>
           <td>{{ i.post }}</td>
           <td>{{ i.pin }}</td>
+          <td>{{ i.ContactNo }}</td>
           <td>{{ i.email }}</td>
-          <td>{{ i.contactno }}</td>
-          <td><a href="/admin_delete_camp/{{ i.id }}">DELETE</a></td>
-          <td><a href="/admin_edit_camp/{{ i.id }}">EDIT</a></td>
+          <td>{{ i.LOGIN.type }}</td>
         </tr>
         {% endfor %}
       </table>
-      <p><a href="/admin_add_camp">ADD CAMP </a></p>
     </form>
   </body>
 </html>

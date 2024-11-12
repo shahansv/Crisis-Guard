@@ -10,6 +10,12 @@ urlpatterns = [
     path('',views.login),
     path('login_post',views.login_post,name='login_post'),
    
+    
+    path('register_emergency_response_team',views.register_emergency_response_team),
+    path('register_emergency_response_team_post',views.register_emergency_response_team_post),
+    path('ert_registration_status',views.ert_registration_status),
+    path('search_emergency_team_status',views.search_emergency_team_status),
+
 
 # ***** ADMIN *****
     path('admin_home_page',views.admin_home_page,name='admin_home_page'),
@@ -56,7 +62,8 @@ urlpatterns = [
 # MANAGE COMPLAINT
 
     path('admin_manage_camplaint',views.admin_manage_camplaint),
-    path('admin_reply_complaint',views.admin_reply_complaint),
+    path('admin_reply_complaint/<id>',views.admin_reply_complaint),
+    path('admin_reply_complaint_post',views.admin_reply_complaint_post),
     path('search_complaint',views.search_complaint),
 
 
@@ -131,8 +138,6 @@ urlpatterns = [
 
 
 # ***** EMERGENCY RESPONCE TEAM *****
-    
-    path('register_emergency_responce_team',views.register_emergency_responce_team),
     path('emergency_response_team_home_page',views.emergency_response_team_home_page),
     path('emergency_response_tean_add_emergency_request',views.emergency_response_tean_add_emergency_request),
     path('emergency_response_tean_view_emergency_request',views.emergency_response_tean_view_emergency_request),

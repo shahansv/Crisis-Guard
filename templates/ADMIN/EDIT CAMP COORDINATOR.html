@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Untitled Document</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>EDIT CAMP COORDINATOR - CRISIS GUARD</title>
   </head>
 
   <body>
@@ -16,93 +18,120 @@
       <table border="1">
         <tr>
           <td>CAMP</td>
-          <td>
-            <label>
-              <select name="camp" size="1">
-                {% for i in camp %}
-                    <option value="{{ i.id }}" {% if i.id == ob.CAMP.id %} selected {% endif %}> {{ i.campName }} </option>
-                {% endfor %}
-            </select>
-            </label>
-          </td>
+          <td>  <select name="camp" size="1">
+            {% for i in camp %}
+                <option value="{{ i.id }}" {% if i.id == ob.CAMP.id %} selected {% endif %} > {{ i.campName }} </option> 
+                
+            {% endfor %}
+        </select>
+      </td>
         </tr>
         <tr>
           <td>NAME</td>
           <td>
-            <label>
-              <input type="text" name="name" value="{{ ob.name }}"/>
-            </label>          
+            <input
+              type="text"
+              name="name"
+              value="{{ ob.name }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
           </td>
         </tr>
 
         <tr>
           <td>GENDER</td>
-          <td><label>
-            <input name="gender" type="radio" value="Male" {% if ob.gender == "Male" %}checked{% endif %}/>
-          MALE
-          <input name="gender" type="radio" value="Female" {% if ob.gender == "Female" %}checked{% endif %} />
-          FEMALE</label></td>
+          <td>
+            <input name="gender" type="radio" value="Male" {% if ob.gender == "Male" %}checked{% endif %}/> MALE 
+            <input name="gender" type="radio" value="Female" {% if ob.gender == "Female" %}checked{% endif %} />
+            FEMALE
+          </td>
         </tr>
-    
 
         <tr>
           <td>DATE OF BIRTH</td>
           <td>
-            <label>
-              <input type="date" name="dob" value="{{ ob.dob }}" />
-            </label> 
-           </td>
+            <input
+              type="date"
+              name="dob"
+              value="{{ ob.dob }}"
+              required
+              min="1965-01-01"
+              max="2007-12-31"
+            />
+          </td>
         </tr>
 
         <tr>
           <td>CONTACT NO</td>
           <td>
-            <label>
-              <input type="text" name="contactNo" value="{{ ob.contactNo }}"/>
-            </label>          </td>
+            <input
+              type="text"
+              name="contactNo"
+              value="{{ ob.contactNo }}"
+              required
+              pattern="[6789][0-9]{9}"
+            />
+          </td>
         </tr>
         <tr>
           <td>EMAIL</td>
           <td>
-            <label>
-              <input type="text" name="email" value="{{ ob.email }}" />
-            </label>          </td>
+            <input type="email" name="email" value="{{ ob.email }}" required />
+          </td>
         </tr>
         <tr>
           <td>DISTRICT</td>
           <td>
-            <label>
-              <input type="text" name="district" value="{{ ob.district }}" />
-            </label>          </td>
+            <input
+              type="text"
+              name="district"
+              value="{{ ob.district }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
+          </td>
         </tr>
         <tr>
           <td>PLACE</td>
           <td>
-            <label>
-              <input type="text" name="place" value="{{ ob.place }}"/>
-            </label>          </td>
+            <input
+              type="text"
+              name="place"
+              value="{{ ob.place }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
+          </td>
         </tr>
         <tr>
           <td>POST</td>
           <td>
-            <label>
-              <input type="text" name="post" value="{{ ob.post }}" />
-            </label>          </td>
+            <input
+              type="text"
+              name="post"
+              value="{{ ob.post }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
+          </td>
         </tr>
         <tr>
           <td>PIN</td>
           <td>
-            <label>
-              <input type="text" name="pin"  value="{{ ob.pin }}"/>
-            </label>          </td>
+            <input
+              type="text"
+              name="pin"
+              value="{{ ob.pin }}"
+              required
+              pattern="[0-9]{6}"
+            />
+          </td>
         </tr>
         <tr>
           <td colspan="2">
-            <label>
-              <div align="center">
-                <input type="submit" name="Submit" value="EDIT" />
-              </div>
-            </label>          </td>
+            <input type="submit" name="Submit" value="EDIT" />
+          </td>
         </tr>
       </table>
     </form>

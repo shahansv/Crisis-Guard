@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>CRISIS GUARD</title>
+    <title>LOGIN - CRISIS GUARD</title>
   </head>
 
   <body>
@@ -13,44 +13,41 @@
         <tr>
           <td>username</td>
           <td>
-            <label>
-              <input
-                type="text"
-                name="textfield"
-                required
-                pattern="[A-Z a-z.]{3,25}"
-              />
-            </label>
+            <input
+              type="text"
+              name="textfield"
+              required
+              pattern="[a-zA-Z0-9]{5,15}"
+              title="Username should be 5-15 characters long and contain only letters and numbers."
+            />
           </td>
         </tr>
         <tr>
           <td>password</td>
           <td>
-            <label>
-              <input
-                type="password"
-                name="textfield2"
-                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                title="Must contain at least one number  and one uppercase and lowercase letter, and at least 8 or more characters"
-                required
-              />
-            </label>
+            <input
+              type="password"
+              name="textfield2"
+              required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number  and one uppercase and lowercase letter, and at least 8 or more characters"
+            />
           </td>
         </tr>
         <tr>
           <td colspan="2">
-            <label>
-              <div align="center"></div>
-              <div align="center">
-                <input type="submit" name="Submit" value="Login" />
-              </div>
-            </label>
+            <input type="submit" name="Submit" value="Login" />
           </td>
         </tr>
       </table>
       <p>
-        <a href="/register_emergency_responce_team"
+        <a href="/register_emergency_response_team"
           >REGISTER AS EMERGENCY RESPONCE TEAM
+        </a>
+      </p>
+      <p>
+        <a href="/ert_registration_status"
+          >EMERGENCY RESPONSE TEAM REGISTRATION STATUS
         </a>
       </p>
     </form>

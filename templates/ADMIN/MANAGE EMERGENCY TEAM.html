@@ -1,82 +1,90 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>MANAGE EMERGENCY RESPONSE TEAM - CRISIS GUARD</title>
+  </head>
 
-<body>
-<form id="form1" name="form1" method="post" action="admin_search_accept_emergency_team">
-  <p>ACCEPTED EMERGENCY TEAM</p>
-<table  border="1">
-  <tr>
-    <td colspan="8">
-      <label>
-        <input type="text" name="textfield" />
-      </label>
-      <label>
-        <input type="submit" name="Submit2" value="SEARCH" />
-      </label>
-    </td>
-  </tr> 
-  <tr>
-    <td>DEPARTMENT</td>
-    <td>DISTRICT</td>
-    <td>PLACE</td>
-    <td>POST</td>
-    <td>PIN</td>
-    <td>CONTACT NO</td>
-    <td>EMAIL</td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    {% for i in val1 %}
-    <td>{{ i.department }}</td>
-    <td>&nbsp;{{ i.district }}</td>
-    <td>{{ i.place }}</td>
-    <td>&nbsp;{{ i.post }}</td>
-    <td>{{ i.pin }}</td>
-    <td>&nbsp;{{ i.ContactNo }}</td>
-    <td>{{ i.email }}</td>
-    <td><a href="/admin_reject_ERT/{{ i.LOGIN.id }}">REJECT</a></td>
-  </tr>
-  {% endfor %}
-</table>
-</form>
-<form id="form2" name="form2" method="post" action="admin_search_reject_emergency_team">
-  <p>REJECTED EMERGENCY TEAM</p>
-  <table  border="1">
-   <tr>
-      <td colspan="8"><label>
-        <input type="text" name="textfield" />
-        </label>
-          <label>
-          <input type="submit" name="Submit3" value="SEARCH" />
-          </label>
-      </td>
-    </tr> 
-    <tr>
-      <td>DEPARTMENT</td>
-      <td>DISTRICT</td>
-      <td>PLACE</td>
-      <td>POST</td>
-      <td>PIN</td>
-      <td>CONTACT NO</td>
-      <td>EMAIL</td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr> {% for i in val2 %}
-      <td>{{ i.department }}</td>
-      <td>&nbsp;{{ i.district }}</td>
-      <td>{{ i.place }}</td>
-      <td>&nbsp;{{ i.post }}</td>
-      <td>{{ i.pin }}</td>
-      <td>&nbsp;{{ i.ContactNo }}</td>
-      <td>{{ i.email }}</td>
-      <td><a href="/admin_accept_ERT/{{ i.LOGIN.id }}">ACCEPT</a></td>
-    </tr>
-    {% endfor %}
-  </table>
-</form>
-</body>
+  <body>
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="admin_search_accept_emergency_team"
+    >
+      <p>ACCEPTED EMERGENCY RESPONSE TEAM</p>
+      <table border="1">
+        <tr>
+          <td colspan="8">
+            <input type="text" name="textfield" />
+
+            <input type="submit" name="Submit2" value="SEARCH" />
+          </td>
+        </tr>
+        <tr>
+          <td>DEPARTMENT</td>
+          <td>DISTRICT</td>
+          <td>PLACE</td>
+          <td>POST</td>
+          <td>PIN</td>
+          <td>CONTACT NO</td>
+          <td>EMAIL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          {% for i in val1 %}
+          <td>{{ i.department }}</td>
+          <td>&nbsp;{{ i.district }}</td>
+          <td>{{ i.place }}</td>
+          <td>&nbsp;{{ i.post }}</td>
+          <td>{{ i.pin }}</td>
+          <td>&nbsp;{{ i.ContactNo }}</td>
+          <td>{{ i.email }}</td>
+          <td><a href="/admin_reject_ERT/{{ i.LOGIN.id }}">REJECT</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </form>
+    <form
+      id="form2"
+      name="form2"
+      method="post"
+      action="admin_search_reject_emergency_team"
+    >
+      <p>REJECTED EMERGENCY RESPONSE TEAM</p>
+      <table border="1">
+        <tr>
+          <td colspan="8">
+            <input type="text" name="textfield" />
+
+            <input type="submit" name="Submit3" value="SEARCH" />
+          </td>
+        </tr>
+        <tr>
+          <td>DEPARTMENT</td>
+          <td>DISTRICT</td>
+          <td>PLACE</td>
+          <td>POST</td>
+          <td>PIN</td>
+          <td>CONTACT NO</td>
+          <td>EMAIL</td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr>
+          {% for i in val2 %}
+          <td>{{ i.department }}</td>
+          <td>&nbsp;{{ i.district }}</td>
+          <td>{{ i.place }}</td>
+          <td>&nbsp;{{ i.post }}</td>
+          <td>{{ i.pin }}</td>
+          <td>&nbsp;{{ i.ContactNo }}</td>
+          <td>{{ i.email }}</td>
+          <td><a href="/admin_accept_ERT/{{ i.LOGIN.id }}">ACCEPT</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </form>
+  </body>
 </html>

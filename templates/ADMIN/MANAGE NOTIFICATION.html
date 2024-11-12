@@ -4,7 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>MANAGE NOTIFICATION</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>MANAGE NOTIFICATION - CRISIS GUARD</title>
   </head>
 
   <body>
@@ -17,15 +19,12 @@
       <table border="1">
         <tr>
           <td colspan="7">
-            <label>
-              FROM :
-              <input type="date" name="textfield1" />
-              TO:
-              <input type="date" name="textfield2" />
-            </label>
-            <label>
-              <input type="submit" name="Submit3" value="SEARCH" />
-            </label>
+            FROM :
+            <input type="date" name="textfield1" />
+            TO:
+            <input type="date" name="textfield2" />
+
+            <input type="submit" name="Submit3" value="SEARCH" />
           </td>
         </tr>
         <tr>

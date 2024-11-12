@@ -20,13 +20,58 @@ def login_post(request):
             if user.type == 'admin':
                 return HttpResponse('''<script> alert ('Admin Logged In');window.location='/admin_home_page';</script>''')
             elif user.type =='coordinator':
-                return HttpResponse('''<script> alert ('Camp Coordinator Logged In');window.location='coordinator_home_page';</script>''')
+                return HttpResponse('''<script> alert ('Camp Coordinator Logged In');window.location='/coordinator_home_page';</script>''')
+            elif user.type =='ERT':
+                return HttpResponse('''<script> alert ('Emergency Team Logged In');window.location='/emergency_response_team_home_page';</script>''')
         else:
             return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
     else:
         return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
 
     return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
+
+
+def register_emergency_response_team(request):
+    return render (request,'EMERGENCY RESPONSE TEAM REGISTRATION.html')
+
+def register_emergency_response_team_post(request):
+    department=request.POST["department"]
+    district=request.POST["district"]
+    place=request.POST["place"]
+    post=request.POST["post"]
+    pin = request.POST["pin"]
+    contactno=request.POST["contactno"]
+    email = request.POST["email"]
+    username=request.POST["username"]
+    password=request.POST["password"]
+    ob=login_table()
+    ob.username=username
+    ob.password=password
+    ob.type="Pending"
+    ob.save()
+    obj=emergency_team_table()
+    obj.LOGIN=ob
+    obj.department=department
+    obj.district=district
+    obj.place=place
+    obj.post=post
+    obj.pin=pin
+    obj.ContactNo=contactno
+    obj.email=email
+    obj.save()
+    return HttpResponse('''<script> alert ('EMERGENCY RESPONSE TEAM REGISTERED');window.location='/'</script>''')
+
+
+def ert_registration_status(request):
+    ob=emergency_team_table.objects.all()
+    return render(request,'ERT REGISTRATION STATUS.html', {'val': ob})
+
+def search_emergency_team_status(request):
+    district = request.POST['textfield']
+    ob = emergency_team_table.objects.filter(district__icontains=district)
+    return render(request,'ERT REGISTRATION STATUS.html', {'val': ob})
+
+
 
 
 
@@ -249,7 +294,7 @@ def admin_search_guideline(request):
 # VERIFY EMERGENCY TEAM
 
 def admin_verify_emergency_team(request):
-    ob=emergency_team_table.objects.filter(LOGIN__type='pending')
+    ob=emergency_team_table.objects.filter(LOGIN__type='Pending')
     return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
 
 def admin_manage_emergency_team(request):
@@ -276,14 +321,14 @@ def admin_search_reject_emergency_team(request):
 def admin_accept_ERT(request,id):
     request.session["ERTid"]=id
     ob=login_table.objects.get(id=id)
-    ob.type="ert"
+    ob.type="ERT"
     ob.save()
     return HttpResponse('''<script> alert ('ACCEPTED');window.location='/admin_manage_emergency_team'</script>''')
 
 def admin_reject_ERT(request,id):
     request.session["ERTid"]=id
     ob=login_table.objects.get(id=id)
-    ob.type="reject"
+    ob.type="Reject"
     ob.save()
     return HttpResponse('''<script> alert ('REJECTED');window.location='/admin_manage_emergency_team'</script>''')
 
@@ -294,12 +339,23 @@ def admin_manage_camplaint(request):
     ob=complaint_table.objects.all()
     return render (request,'ADMIN/VIEW COMPLAINT.html',{'val':ob})
 
-def admin_reply_complaint(request):
-    return render (request,'ADMIN/REPLY COMPLAINT.html')
+def admin_reply_complaint(request,id):
+    request.session["complaintid"]=id
+    ob=complaint_table.objects.get(id=id)
+    return render(request, 'ADMIN/REPLY COMPLAINT.html',{"ob":ob})
+
+def admin_reply_complaint_post(request):
+    status=request.POST["status"]
+    reply=request.POST["reply"]
+    obj = complaint_table.objects.get(id=request.session["complaintid"])
+    obj.status=status
+    obj.reply=reply
+    obj.save()
+    return HttpResponse('''<script> alert('COMPLAINT REPLIED');window.location='/admin_manage_camplaint';</script>''')
 
 def search_complaint(request):
-    date=request.POST['textfield']
-    ob = complaint_table.objects.filter(date__exact=date)
+    status = request.POST['select'] 
+    ob = complaint_table.objects.filter(status__icontains=status)
     return render(request, 'ADMIN/VIEW COMPLAINT.html', {'val': ob})
 
 
@@ -685,8 +741,7 @@ def coordinator_view_volunteer(request):
 
 # ***** EMERGENCY RESPONCE TEAM *****
 
-def register_emergency_responce_team(request):
-    return render (request,'EMERGENCY RESPONSE TEAM REGISTRATION.html')
+
 
 def emergency_response_team_home_page(request):
     return render (request,'EMERGENCY RESPONSE TEAM/ERT HOME PAGE.html')

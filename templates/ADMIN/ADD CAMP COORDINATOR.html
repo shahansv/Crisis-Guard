@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Untitled Document</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>ADD CAMP COORDINATOR - CRISIS GUARD</title>
   </head>
 
   <body>
@@ -17,125 +19,147 @@
         <tr>
           <td>CAMP</td>
           <td>
-            <label>
-              <select name="camp" size="1">
-                {% for i in data %}
-                <option value="{{ i.id }}">{{ i.campName }}</option>
-                {% endfor %}
-              </select>
-            </label>
+            <select name="camp" size="1">
+              {% for i in data %}
+              <option value="{{ i.id }}">{{ i.campName }}</option>
+              {% endfor %}
+            </select>
           </td>
         </tr>
         <tr>
           <td>NAME</td>
           <td>
-            <label>
-              <input type="text" name="name" />
-            </label>
+            <input
+              type="text"
+              name="name"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
           </td>
         </tr>
 
         <tr>
           <td>GENDER</td>
           <td>
-            <label>
-              <input name="gender" type="radio" value="Male" />
-              MALE
-              <input name="gender" type="radio" value="Female" />
-              FEMALE</label
-            >
+            <input name="gender" type="radio" value="Male" checked />
+            MALE
+            <input name="gender" type="radio" value="Female" />
+            FEMALE
           </td>
         </tr>
 
         <tr>
           <td>DATE OF BIRTH</td>
           <td>
-            <label>
-              <input type="date" name="dob" />
-            </label>
+            <input
+              type="date"
+              name="dob"
+              required
+              min="1965-01-01"
+              max="2007-12-31"
+            />
           </td>
         </tr>
 
         <tr>
           <td>CONTACT NO</td>
           <td>
-            <label>
-              <input type="text" name="contactNo" />
-            </label>
+            <input
+              type="text"
+              name="contactNo"
+              required
+              pattern="[6789][0-9]{9}"
+            />
           </td>
         </tr>
         <tr>
           <td>EMAIL</td>
           <td>
-            <label>
-              <input type="text" name="email" />
-            </label>
+            <input type="email" name="email" required />
           </td>
         </tr>
         <tr>
           <td>DISTRICT</td>
           <td>
-            <label>
-              <input type="text" name="district" />
-            </label>
+            <input
+              type="text"
+              name="district"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
           </td>
         </tr>
         <tr>
           <td>PLACE</td>
           <td>
-            <label>
-              <input type="text" name="place" />
-            </label>
+            <input
+              type="text"
+              name="place"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
           </td>
         </tr>
         <tr>
           <td>POST</td>
           <td>
-            <label>
-              <input type="text" name="post" />
-            </label>
+            <input
+              type="text"
+              name="post"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
           </td>
         </tr>
         <tr>
           <td>PIN</td>
           <td>
-            <label>
-              <input type="text" name="pin" />
-            </label>
+            <input type="text" name="pin" required pattern="[0-9]{6}" />
           </td>
         </tr>
         <tr>
           <td>USERNAME</td>
           <td>
-            <label>
-              <input type="text" name="username" />
-            </label>
+            <input
+              type="text"
+              name="username"
+              required
+              pattern="[a-zA-Z0-9]{5,15}"
+              title="Username should be 5-15 characters long and contain only letters and numbers."
+            />
           </td>
         </tr>
         <tr>
           <td>PASSWORD</td>
           <td>
-            <label>
-              <input type="text" name="password" />
-            </label>
+            <input
+              type="password"
+              name="password"
+              required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+            />
           </td>
         </tr>
         <tr>
           <td>PHOTO</td>
           <td>
-            <label>
-              <img src="{{ ob.photo.url }}" style="height: 100px ;width: auto" alt="" />
-              <input type="file" name="photo" />
-            </label>
+            <img
+              src="{{ ob.photo.url }}"
+              style="height: 100px; width: auto"
+              alt=""
+            />
+            <input
+              type="file"
+              name="photo"
+              required
+              accept=".jpg, .jpeg, .png, .gif"
+            />
           </td>
         </tr>
         <tr>
           <td colspan="2">
-            <label>
-              <div align="center">
-                <input type="submit" name="Submit" value="ADD" />
-              </div>
-            </label>
+            <input type="submit" name="Submit" value="ADD" />
           </td>
         </tr>
       </table>

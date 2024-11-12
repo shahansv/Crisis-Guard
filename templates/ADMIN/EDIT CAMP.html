@@ -13,64 +13,79 @@
         <tr>
           <td>CAMP NAME</td>
           <td>
-            <label>
-                <input type="text" name="camp" value="{{ ob.campName }}" />
-            </label>
+            <input type="text" name="camp" value="{{ ob.campName }}" required />
           </td>
         </tr>
         <tr>
           <td>DISTRICT</td>
           <td>
-            <label>
-                <input type="text" name="district"  value="{{ ob.district }}" />
-            </label>
+            <input
+              type="text"
+              name="district"
+              value="{{ ob.district }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
           </td>
         </tr>
         <tr>
           <td>PLACE</td>
           <td>
-            <label>
-                <input type="text" name="place" value="{{ ob.place }}" />
-            </label>
+            <input
+              type="text"
+              name="place"
+              value="{{ ob.place }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
           </td>
         </tr>
         <tr>
           <td>POST</td>
           <td>
-            <label>
-                <input type="text" name="post"  value="{{ ob.post }}" />
-            </label>
+            \
+            <input
+              type="text"
+              name="post"
+              value="{{ ob.post }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+            />
           </td>
         </tr>
         <tr>
           <td>PIN</td>
           <td>
-            <label>
-                <input type="text" name="pin"  value="{{ ob.pin }}" />
-            </label>
+            <input
+              type="text"
+              name="pin"
+              value="{{ ob.pin }}"
+              required
+              pattern="[0-9]{6}"
+            />
           </td>
         </tr>
         <tr>
           <td>CONTACT No.</td>
           <td>
-            <label>
-                <input type="text" name="contactno"  value="{{ ob.contactno }}"/>
-            </label>
+            <input
+              type="text"
+              name="contactno"
+              value="{{ ob.contactno }}"
+              required
+              pattern="[6789][0-9]{9}"
+            />
           </td>
         </tr>
         <tr>
           <td>EMAIL</td>
           <td>
-            <label>
-                <input type="text" name="email"  value="{{ ob.email }}" />
-            </label>
+            <input type="email" name="email" value="{{ ob.email }}" required />
           </td>
         </tr>
         <tr>
           <td colspan="2">
-            <label>
-                <input type="submit" name="Submit" value="EDIT" />
-            </label>
+            <input type="submit" name="Submit" value="EDIT" />
           </td>
         </tr>
       </table>

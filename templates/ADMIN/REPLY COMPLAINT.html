@@ -1,32 +1,144 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>REPLY COMPLAINT - CRISIS GUARD</title>
+  </head>
 
-<body>
-<form id="form1" name="form1" method="post" action="">
-  <table width="200" border="1">
-    <tr>
-      <td>SUBJECT</td>
-    </tr>
-    <tr>
-      <td>DATE</td>
-    </tr>
-    <tr>
-      <td><label>
-        <textarea name="textarea"></textarea>
-      </label></td>
-    </tr>
-    <tr>
-      <td><label>
-        <div align="center">
-          <input type="submit" name="Submit" value="SEND" />
-          </div>
-      </label></td>
-    </tr>
-  </table>
-</form>
-</body>
+  <body>
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="/admin_reply_complaint_post"
+    >
+      <table border="1">
+        <tr>
+          <td>NAME</td>
+          <td>
+            <input
+              type="text"
+              name="name"
+              disabled
+              value="{{ ob.PUBLIC.name }}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>DISTRICT</td>
+          <td>
+            <input
+              type="text"
+              name="district"
+              disabled
+              value="{{ ob.PUBLIC.district }}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>PLACE</td>
+          <td>
+            <input
+              type="text"
+              name="place"
+              disabled
+              value="{{ ob.PUBLIC.place }}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>
+            <input
+              type="text"
+              name="post"
+              disabled
+              value="{{ ob.PUBLIC.post }}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>PIN</td>
+          <td>
+            \
+            <input
+              type="text"
+              name="pin"
+              disabled
+              value="{{ ob.PUBLIC.pin }}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>CONTACT NO</td>
+          <td>
+            <input
+              type="text"
+              name="contactno"
+              disabled
+              value="{{ ob.PUBLIC.contactNo }}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>EMAIL</td>
+          <td>
+            <input
+              type="text"
+              name="email"
+              disabled
+              value="{{ ob.PUBLIC.email }}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>COMPLAINT</td>
+          <td>
+            <input
+              type="text"
+              name="complaint"
+              disabled
+              value="{{ ob.complaint }}"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>DATE</td>
+          <td>
+            <input type="date" name="date" disabled value="{{ ob.date }}" />
+          </td>
+        </tr>
+        <tr>
+          <td>TIME</td>
+          <td>
+            <input type="text" name="time" disabled value="{{ ob.time }}" />
+          </td>
+        </tr>
+        <tr>
+          <td>STATUS</td>
+          <td>
+            <select name="status">
+              <option value="{{ob.status}}" selected>{{ ob.status }}</option>
+              <option value="PENDING">PENDING</option>
+              <option value="WORKING ON">WORKING ON</option>
+              <option value="RESOLVED">RESOLVED</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>REPLY</td>
+          <td>
+            <textarea name="reply"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" name="Submit" value="REPLY" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
 </html>
