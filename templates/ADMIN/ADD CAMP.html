@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Untitled Document</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>ADD CAMP - CRISIS GUARD</title>
   </head>
 
   <body>
@@ -12,7 +14,7 @@
           <td>CAMP NAME</td>
           <td>
             <label>
-                <input type="text" name="camp" />
+              <input type="text" name="camp" />
             </label>
           </td>
         </tr>
@@ -20,7 +22,7 @@
           <td>DISTRICT</td>
           <td>
             <label>
-                <input type="text" name="district" />
+              <input type="text" name="district" />
             </label>
           </td>
         </tr>
@@ -28,7 +30,7 @@
           <td>PLACE</td>
           <td>
             <label>
-                <input type="text" name="place" />
+              <input type="text" name="place" />
             </label>
           </td>
         </tr>
@@ -36,7 +38,7 @@
           <td>POST</td>
           <td>
             <label>
-                <input type="text" name="post" />
+              <input type="text" name="post" />
             </label>
           </td>
         </tr>
@@ -44,7 +46,7 @@
           <td>PIN</td>
           <td>
             <label>
-                <input type="text" name="pin" />
+              <input type="text" name="pin" />
             </label>
           </td>
         </tr>
@@ -52,7 +54,7 @@
           <td>CONTACT No.</td>
           <td>
             <label>
-                <input type="text" name="contactno" />
+              <input type="text" name="contactno" />
             </label>
           </td>
         </tr>
@@ -60,14 +62,14 @@
           <td>EMAIL</td>
           <td>
             <label>
-                <input type="text" name="email" />
+              <input type="text" name="email" />
             </label>
           </td>
         </tr>
         <tr>
           <td colspan="2">
             <label>
-                <input type="submit" name="Submit" value="ADD" />
+              <input type="submit" name="Submit" value="ADD" />
             </label>
           </td>
         </tr>

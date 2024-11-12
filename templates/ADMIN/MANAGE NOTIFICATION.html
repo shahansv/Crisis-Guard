@@ -2,24 +2,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Untitled Document</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>MANAGE NOTIFICATION</title>
   </head>
 
   <body>
-    <form id="form1" name="form1" method="post" action="/admin_search_notification">
-      <table  border="1">
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="/admin_search_notification"
+    >
+      <table border="1">
         <tr>
-          <td colspan="6"><label>
-            FROM : 
-            <input type="date" name="textfield1" />
-            TO:
-            <input type="date" name="textfield2" />
-          </label>
-          <label>
-            <input type="submit" name="Submit3" value="SEARCH" />
-            </label></td>
+          <td colspan="7">
+            <label>
+              FROM :
+              <input type="date" name="textfield1" />
+              TO:
+              <input type="date" name="textfield2" />
+            </label>
+            <label>
+              <input type="submit" name="Submit3" value="SEARCH" />
+            </label>
+          </td>
         </tr>
         <tr>
+          <td>SNo.</td>
           <td>TITLE</td>
           <td>SUBJECT</td>
           <td>DATE</td>
@@ -29,6 +39,7 @@
         </tr>
         <tr>
           {% for i in val %}
+          <td>{{ forloop.counter }}</td>
           <td>{{ i.title }}</td>
           <td>{{ i.subject }}</td>
           <td>&nbsp;{{ i.date }}</td>

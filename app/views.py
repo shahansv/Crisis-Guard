@@ -39,8 +39,6 @@ def admin_home_page(request):
 
 
 
-
-
 # ADD & MANAGE CAMP
 
 def admin_add_camp(request):
