@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>EDIT MEDICAL REQUEST STATUS - CRISIS GUARD</title>
+  </head>
+
+  <body>
+    <form id="form1" name="form1" method="post" action="/coordinator_edit_medical_request_status_post">
+      <table border="1">
+        <tr>
+          <td>CAMP</td>
+          <td>
+            <input
+              type="text"
+              name="camp"
+              value="{{ ob.VOLUNTEER.COORDINATOR.CAMP.campName }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>VOLUNTEER</td>
+          <td>
+            <input
+              type="text"
+              name="volunteer"
+              value="{{ ob.VOLUNTEER.name }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>VOLUNTEER's NUMBER</td>
+          <td>
+            <input
+              type="text"
+              name="contactno"
+              value="{{ ob.VOLUNTEER.contactNo }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>VOLUNTEER's EMAIL</td>
+          <td>
+            <input
+              type="text"
+              name="email"
+              value="{{ ob.VOLUNTEER.email }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>DATE</td>
+          <td>
+            <input type="text" name="date" value="{{ ob.date }}" disabled />
+          </td>
+        </tr>
+        <tr>
+          <td>TIME</td>
+          <td>
+            <input type="text" name="time" value="{{ ob.time }}" disabled />
+          </td>
+        </tr>
+        <tr>
+          <td>REQUEST</td>
+          <td>
+            <input
+              type="text"
+              name="request"
+              value="{{ ob.request }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>STATUS</td>
+          <td>
+            <select name="status">
+              <option value="{{ob.category}}" selected>{{ ob.status }}</option>
+              <option value="PENDING">PENDING</option>
+              <option value="ON THE WAY">ON THE WAY</option>
+              <option value="RESOLVED">RESOLVED</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" name="Submit" value="EDIT" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>

@@ -130,10 +130,18 @@ urlpatterns = [
 
 
 
-    path('coordinator_add_volunteer',views.coordinator_add_volunteer),
-    path('coordinator_add_volunteer_post',views.coordinator_add_volunteer_post),
-    path('coordinator_view_volunteer',views.coordinator_view_volunteer),
-    path('coordinator_add_volunteer_post',views.coordinator_add_volunteer_post),
+    path('coordinator_volunteer_registration',views.coordinator_volunteer_registration),
+    path('coordinator_volunteer_registration_post',views.coordinator_volunteer_registration_post),
+    path('coordinator_manage_volunteer',views.coordinator_manage_volunteer),
+    path('coordinator_search_volunteer',views.coordinator_search_volunteer),
+    path('coordinator_edit_volunteer/<id>',views.coordinator_edit_volunteer),
+    path('coordinator_edit_volunteer_post', views.coordinator_edit_volunteer_post),
+    path('coordinator_delete_volunteer/<id>', views.coordinator_delete_volunteer),
+    path('coordinator_manage_medical_request', views.coordinator_manage_medical_request),
+    path('coordinator_search_medical_request', views.coordinator_search_medical_request),
+    path('coordinator_edit_medical_request_status/<id>', views.coordinator_edit_medical_request_status),
+    path('coordinator_edit_medical_request_status_post', views.coordinator_edit_medical_request_status_post),
+   
 
 
 

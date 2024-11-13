@@ -1,48 +1,54 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>VIEW NEEDS - CRISIS GUARD</title>
+  </head>
 
-<body>
-<form id="form1" name="form1" method="post" action="/coordinator_search_needs">
-  <table  border="1">
-    <tr>
-      <td colspan="6"><label>
-        <select name="select">
-          <option value="FOOD">FOOD</option>
-          <option value="WATER">WATER</option>
-          <option value="CLOTH">CLOTH</option>
-          <option value="FRUITS">FRUITS</option>
-          <option value="VEGETABLES">VEGETABLES</option>
-          <option value="OTHER">OTHER</option>
-        </select>
-      </label>
-        <label>
-        <input type="submit" name="Submit" value="SEARCH" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>CATEGORY</td>
-      <td>PRODUCT NAME </td>
-      <td>QUANTITY</td>
-      <td>DATE</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
-      {% for i in val %}
-    <tr>
-      <td>{{ i.category }}</td>
-      <td>{{ i.product }}</td>
-      <td>{{ i.quantity }}&nbsp;</td>
-      <td>&nbsp;{{ i.date }}</td>
-     <td><a href="/coordinator_edit_needs/{{ i.id }}">EDIT</a></td>
-    <td><a href="/coordinator_delete_needs/{{ i.id }}">DELETE</a></td>
-    </tr>
-      {% endfor %}
-  </table>
-  <p><a href="/coordinator_add_needs">ADD NEEDS </a></p>
-</form>
-</body>
+  <body>
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="/coordinator_search_needs"
+    >
+      <table border="1">
+        <tr>
+          <td colspan="6">
+            <select name="select">
+              <option value="FOOD">FOOD</option>
+              <option value="WATER">WATER</option>
+              <option value="CLOTH">CLOTH</option>
+              <option value="FRUITS">FRUITS</option>
+              <option value="VEGETABLES">VEGETABLES</option>
+              <option value="OTHER">OTHER</option>
+            </select>
+
+            <input type="submit" name="Submit" value="SEARCH" />
+          </td>
+        </tr>
+        <tr>
+          <td>CATEGORY</td>
+          <td>PRODUCT NAME</td>
+          <td>QUANTITY</td>
+          <td>DATE</td>
+          <td></td>
+          <td></td>
+        </tr>
+        {% for i in val %}
+        <tr>
+          <td>{{ i.category }}</td>
+          <td>{{ i.product }}</td>
+          <td>{{ i.quantity }}&nbsp;</td>
+          <td>{{ i.date }}</td>
+          <td><a href="/coordinator_edit_needs/{{ i.id }}">EDIT</a></td>
+          <td><a href="/coordinator_delete_needs/{{ i.id }}">DELETE</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+      <p><a href="/coordinator_add_needs">ADD NEEDS </a></p>
+    </form>
+  </body>
 </html>

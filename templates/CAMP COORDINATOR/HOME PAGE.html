@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Untitled Document</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>CAMP COORDINATOR HOME PAGE - CRISIS GUARD</title>
   </head>
 
   <body>
@@ -30,7 +32,7 @@
         <tr>
           <td>
             <a href="/coordinator_view_missing_asset_registration"
-              >VIEW MISSING ASSET REGISTRATION
+              >MANAGE MISSING ASSET REGISTRATION
             </a>
           </td>
         </tr>
@@ -42,14 +44,21 @@
         </tr>
         <tr>
           <td>
-            <a href="../CAMP COORDINATOR/VIEW MEDICAL REQUEST.html"
-              >MEDICAL SUPPORT REQUEST
+            <a href="/coordinator_manage_medical_request"
+              >MANAGE MEDICAL SUPPORT REQUEST
             </a>
           </td>
         </tr>
         <tr>
           <td>
-            <a href="coordinator_add_volunteer">VOLUNTEER REGISTRATION </a>
+            <a href="coordinator_volunteer_registration"
+              >VOLUNTEER REGISTRATION
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <a href="coordinator_manage_volunteer">MANAGE VOLUNTEER </a>
           </td>
         </tr>
       </table>

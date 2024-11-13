@@ -491,7 +491,7 @@ def coordinator_add_member_post(request):
     pin = request.POST["pin"]
     contactNo = request.POST["contactNo"]
     email = request.POST["email"]
-    photo = request.FILES["file"]
+    photo = request.FILES["photo"]
     fs=FileSystemStorage( )
     fsave=fs.save(photo.name,photo)
     obj=member_table()
@@ -511,12 +511,12 @@ def coordinator_add_member_post(request):
 
 def coordinator_manage_members(request):
     ob = member_table.objects.all()
-    return render (request,'CAMP COORDINATOR/VIEW MEMBERS.html', {"val": ob})
+    return render (request,'CAMP COORDINATOR/MANAGE MEMBERS.html', {"val": ob})
 
 
 def coordinator_delete_member(request,id):
     member_table.objects.get(id=id).delete()
-    return HttpResponse('''<script> alert ('MEMBER DELETED');window.location='/coordinator_view_members'</script>''')
+    return HttpResponse('''<script> alert ('MEMBER DELETED');window.location='/coordinator_manage_members'</script>''')
 
 
 def coordinator_edit_member(request,id):
@@ -535,15 +535,7 @@ def coordinator_edit_member_post(request):
     pin = request.POST["pin"]
     contactNo = request.POST["contactNo"]
     email = request.POST["email"]
-
     obj = member_table.objects.get(id=request.session["memberid"])
-
-    fs = FileSystemStorage()
-    if 'files' in request.FILES:
-        photo = request.FILES["files"]
-        fsave = fs.save(photo.name, photo)
-        obj.photo = fsave
-
     obj.name = name
     obj.gender = gender
     obj.dob = dob
@@ -560,7 +552,7 @@ def coordinator_edit_member_post(request):
 def coordinator_search_member(request):
     name=request.POST['name']
     ob=member_table.objects.filter(name__icontains=name)
-    return render (request,'CAMP COORDINATOR/VIEW MEMBERS.html',{'val':ob})
+    return render (request,'CAMP COORDINATOR/MANAGE MEMBERS.html',{'val':ob})
 
 
 
@@ -685,11 +677,11 @@ def camp_coordinator_view_medical_request(request):
 
 # ADD AND MANAGE VOLUNTEER
 
-def coordinator_add_volunteer(request):
-    return render(request,'CAMP COORDINATOR/ADD VOLUNTEER.html')
+def coordinator_volunteer_registration(request):
+    return render(request,'CAMP COORDINATOR/REGISTER VOLUNTEER.html')
 
 
-def coordinator_add_volunteer_post(request):
+def coordinator_volunteer_registration_post(request):
     coid=camp_coordinator_table.objects.get(LOGIN=request.session['lid'])
     name=request.POST["name"]
     gender=request.POST["gender"]
@@ -702,17 +694,14 @@ def coordinator_add_volunteer_post(request):
     pin=request.POST["pin"]
     username=request.POST["username"]
     password=request.POST["password"]
-
     fs=FileSystemStorage( )
     photo = request.FILES["photo"]
     fsave = fs.save(photo.name, photo)
-
     ob=login_table()
     ob.username=username
     ob.password=password
     ob.type="volunteer"
     ob.save()
-
     obj=volunteer_table()
     obj.LOGIN=ob
     obj.name=name
@@ -727,16 +716,74 @@ def coordinator_add_volunteer_post(request):
     obj.photo = fsave
     obj.COORDINATOR=coid
     obj.save()
-    return HttpResponse('''<script> alert ('VOLUNTEER ADDED');window.location='/coordinator_view_volunteer'</script>''')
+    return HttpResponse('''<script> alert ('VOLUNTEER ADDED');window.location='/coordinator_manage_volunteer'</script>''')
 
 
 
 
-
-def coordinator_view_volunteer(request):
+def coordinator_manage_volunteer(request):
     ob = volunteer_table.objects.all()
-    return render (request,'CAMP COORDINATOR/VIEW VOLUNTEER.html', {"val": ob})
+    return render (request,'CAMP COORDINATOR/MANAGE VOLUNTEER.html', {"val": ob})
 
+
+def coordinator_search_volunteer(request):
+    name = request.POST['name']
+    ob = volunteer_table.objects.filter(name__icontains=name)
+    return render(request, 'CAMP COORDINATOR/MANAGE VOLUNTEER.html', {"val": ob})
+
+def coordinator_edit_volunteer(request,id):
+    request.session["volunteerid"] = id
+    ob = volunteer_table.objects.get(id=id)
+    return render(request, 'CAMP COORDINATOR/EDIT VOLUNTEER.html', {"ob": ob})
+
+def coordinator_edit_volunteer_post(request):
+    name=request.POST["name"]
+    gender=request.POST["gender"]
+    dob=request.POST["dob"]
+    contactno = request.POST["contactNo"]
+    email=request.POST["email"]
+    district = request.POST["district"]
+    place=request.POST["place"]
+    post=request.POST["post"]
+    pin=request.POST["pin"]
+    obj = volunteer_table.objects.get(id=request.session["volunteerid"])
+    obj.name=name
+    obj.gender=gender
+    obj.dob=dob
+    obj.contactNo=contactno
+    obj.email=email
+    obj.district=district
+    obj.place=place
+    obj.post=post
+    obj.pin=pin
+    obj.save()
+    return HttpResponse('''<script> alert('VOLUNTEER EDITED');window.location='/coordinator_manage_volunteer';</script>''')
+
+def coordinator_delete_volunteer(request,id):
+    volunteer_table.objects.get(id=id).delete()
+    return HttpResponse('''<script> alert('VOLUNTEER DELETED');window.location='/coordinator_manage_volunteer';</script>''')
+
+def coordinator_manage_medical_request(request):
+    ob = medical_request_table.objects.all()
+    return render (request,'CAMP COORDINATOR/MANAGE MEDICAL REQUEST.html', {"val": ob})
+
+def coordinator_search_medical_request(request):
+    status = request.POST['status']
+    ob = medical_request_table.objects.filter(status__icontains=status)
+    return render(request, 'CAMP COORDINATOR/MANAGE MEDICAL REQUEST.html', {"val": ob})
+
+
+def coordinator_edit_medical_request_status(request,id):
+    request.session["medicalrequestid"] = id
+    ob = medical_request_table.objects.get(id=id)
+    return render(request, 'CAMP COORDINATOR/EDIT MEDICAL REQUEST STATUS.html', {"ob": ob})
+
+def coordinator_edit_medical_request_status_post(request):
+    status = request.POST["status"]
+    obj = medical_request_table.objects.get(id=request.session["medicalrequestid"])
+    obj.status = status
+    obj.save()
+    return HttpResponse('''<script> alert('STATUS UPDATED');window.location='/coordinator_manage_medical_request';</script>''')
 
 
 # ***** EMERGENCY RESPONCE TEAM *****

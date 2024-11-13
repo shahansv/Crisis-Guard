@@ -137,10 +137,12 @@ class asset_table(models.Model):
     status = models.CharField(max_length=200)
 
 class medical_request_table(models.Model):
-    CAMP = models.ForeignKey(camp_table, on_delete=models.CASCADE)
-    request = models.CharField(max_length=200)
+    VOLUNTEER = models.ForeignKey(volunteer_table, on_delete=models.CASCADE)
     date = models.DateField()
     time = models.TimeField()
+    request = models.CharField(max_length=200)
+    status = models.CharField(max_length=200)
+    
 
 class services_table(models.Model):
     VOLUNTEER = models.ForeignKey(volunteer_table, on_delete=models.CASCADE)

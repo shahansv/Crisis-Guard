@@ -1,44 +1,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>MANAGE MISSING ASSET - CRISIS GUARD</title>
+  </head>
 
-<body>
-<form id="form1" name="form1" method="post" action="coordinator_search_asset_registration">
-  <table width="200" border="1">
-    <tr>
-      <td colspan="8"><label>
-        <input type="text" name="textfield" />
-      </label>
-        <label>
-        <input type="submit" name="Submit" value="SEARCH" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>MEMBER NAME </td>
-      <td>CATEGORY</td>
-      <td>ASSET NAME </td>
-      <td>ASSET DESCRIPTION </td>
-      <td>DATE</td>
-      <td>STATUS</td>
-      <td colspan="2">&nbsp;</td>
-    </tr>
-         {% for i in val %}
-    <tr>
-        <td>{{ i.MEMBER.name }}</td>
-        <td>&nbsp;{{ i.category }}</td>
-        <td>&nbsp;{{ i.asset }}</td>
-        <td>&nbsp;{{ i.description }}</td>
-        <td>{{ i.date }}</td>
-        <td>&nbsp;{{ i.status }}</td>
-        <td><a href="/coordinator_delete_asset_registration/{{ i.id }}">DELETE</a></td>
-        <td><a href="/coordinator_edit_asset_registration/{{ i.id }}">EDIT</a></td>
-    </tr>
-      {% endfor %}
-  </table>
-  <p><a href="/coordinator_register_missing_asset">REGISTER MISSING ASSET </a></p>
-</form>
-</body>
+  <body>
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="coordinator_search_asset_registration"
+    >
+      <table width="200" border="1">
+        <tr>
+          <td colspan="8">
+            <input
+              type="text"
+              name="textfield"
+              placeholder="Search by member name"
+            />
+
+            <input type="submit" name="Submit" value="SEARCH" />
+          </td>
+        </tr>
+        <tr>
+          <td>MEMBER NAME</td>
+          <td>CATEGORY</td>
+          <td>ASSET NAME</td>
+          <td>ASSET DESCRIPTION</td>
+          <td>DATE</td>
+          <td>STATUS</td>
+          <td colspan="2"></td>
+        </tr>
+        {% for i in val %}
+        <tr>
+          <td>{{ i.MEMBER.name }}</td>
+          <td>&nbsp;{{ i.category }}</td>
+          <td>&nbsp;{{ i.asset }}</td>
+          <td>&nbsp;{{ i.description }}</td>
+          <td>{{ i.date }}</td>
+          <td>&nbsp;{{ i.status }}</td>
+          <td>
+            <a href="/coordinator_delete_asset_registration/{{ i.id }}"
+              >DELETE</a
+            >
+          </td>
+          <td>
+            <a href="/coordinator_edit_asset_registration/{{ i.id }}">EDIT</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <p>
+        <a href="/coordinator_register_missing_asset"
+          >REGISTER MISSING ASSET
+        </a>
+      </p>
+    </form>
+  </body>
 </html>

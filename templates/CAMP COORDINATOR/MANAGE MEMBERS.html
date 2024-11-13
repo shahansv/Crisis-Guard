@@ -2,21 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Untitled Document</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>MANAGE MEMBER - CRISIS GUARD</title>
   </head>
 
   <body>
-    <form id="form1" name="form1" method="post" action="coordinator_search_member">
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="coordinator_search_member"
+    >
       <table border="1">
         <tr>
           <td colspan="12">
-            <label>
-              <input type="text" name="name" />
-              <input type="submit" name="Submit" value="SEARCH" />
-            </label>
+            <input type="text" name="name" />
+            <input type="submit" name="Submit" value="SEARCH" />
           </td>
         </tr>
         <tr>
+          <td>SNo</td>
           <td>NAME</td>
           <td>GENDER</td>
           <td>DOB</td>
@@ -31,6 +37,7 @@
         </tr>
         {% for i in val %}
         <tr>
+          <td>{{ forloop.counter }}</td>
           <td>{{ i.name }}</td>
           <td>{{ i.gender }}</td>
           <td>{{ i.dob }}</td>
@@ -40,7 +47,13 @@
           <td>{{ i.pin}}</td>
           <td>{{ i.contactNo}}</td>
           <td>{{ i.email}}</td>
-          <td><img src="{{ i.photo.url }}" style="height: 100px;width: auto" alt="" /></td>
+          <td>
+            <img
+              src="{{ i.photo.url }}"
+              style="height: 100px; width: auto"
+              alt=""
+            />
+          </td>
           <td><a href="/coordinator_edit_member/{{ i.id }}">EDIT</a></td>
           <td><a href="/coordinator_delete_member/{{ i.id }}">DELETE</a></td>
         </tr>

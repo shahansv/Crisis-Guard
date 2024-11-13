@@ -4,12 +4,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>REGISTER MEMBER - CRISIS GUARD</title>
+    <title>EDIT VOLUNTEER - CRISIS GUARD</title>
   </head>
 
   <body>
     <form
-      action="coordinator_add_member_post"
+      action="/coordinator_edit_volunteer_post"
       method="post"
       enctype="multipart/form-data"
       name="form1"
@@ -22,6 +22,7 @@
             <input
               type="text"
               name="name"
+              value="{{ob.name}}"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
@@ -31,15 +32,43 @@
         <tr>
           <td>GENDER</td>
           <td>
-            <input name="gender" type="radio" value="Male" checked /> MALE
-            <input name="gender" type="radio" value="Female" />FEMALE
+            <input name="gender" type="radio" value="Male" {% if ob.gender == "Male" %}checked{% endif %}/> MALE 
+            <input name="gender" type="radio" value="Female" {% if ob.gender == "Female" %}checked{% endif %} />
+            FEMALE
           </td>
         </tr>
 
         <tr>
-          <td>DOB</td>
+          <td>DATE OF BIRTH</td>
           <td>
-            <input type="date" name="dob" required />
+            <input
+              type="date"
+              name="dob"
+              value="{{ ob.dob }}"
+              min="1965-01-01"
+              max="2007-12-31"
+              required
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>CONTACT NO</td>
+          <td>
+            <input
+              type="text"
+              name="contactNo"
+              value="{{ ob.contactNo }}"
+              required
+              pattern="[6789][0-9]{9}"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>EMAIL</td>
+          <td>
+            <input type="text" name="email" value="{{ ob.email }}" required />
           </td>
         </tr>
 
@@ -49,6 +78,7 @@
             <input
               type="text"
               name="district"
+              value="{{ ob.district }}"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
@@ -61,6 +91,7 @@
             <input
               type="text"
               name="place"
+              value="{{ ob.place }}"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
@@ -73,6 +104,7 @@
             <input
               type="text"
               name="post"
+              value="{{ ob.post }}"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
@@ -81,40 +113,31 @@
 
         <tr>
           <td>PIN</td>
-          <td><input type="text" name="pin" required pattern="[0-9]{6}" /></td>
-        </tr>
-
-        <tr>
-          <td>CONTACT NO</td>
           <td>
             <input
               type="text"
-              name="contactNo"
+              name="pin"
+              value="{{ ob.pin }}"
               required
-              pattern="[6789][0-9]{9}"
+              pattern="[0-9]{6}"
             />
           </td>
-        </tr>
-
-        <tr>
-          <td>EMAIL</td>
-          <td><input type="email" name="email" required /></td>
         </tr>
 
         <tr>
           <td>PHOTO</td>
           <td>
-            <input
-              type="file"
-              name="photo"
-              required
-              accept=".jpg, .jpeg, .png, .gif"
+            <img
+              src="{{ ob.photo.url }}"
+              style="height: 100px; width: auto"
+              alt=""
             />
           </td>
         </tr>
-
         <tr>
-          <td colspan="2"><input type="submit" name="Submit" value="ADD" /></td>
+          <td colspan="2">
+            <input type="submit" name="Submit" value="EDIT" />
+          </td>
         </tr>
       </table>
     </form>

@@ -2,21 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <title>Untitled Document</title>
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>MANAGE VOLUNTEER - CRISIS GUARD</title>
   </head>
 
   <body>
-    <form id="form1" name="form1" method="post" action="search_volunteer">
+    <form id="form1" name="form1" method="post" action="coordinator_search_volunteer">
       <table border="1">
         <tr>
-          <td colspan="12">
-            <label>
-              <input type="text" name="name" />
-              <input type="submit" name="Submit" value="SEARCH" />
-            </label>
+          <td colspan="14">
+            <input
+              type="text"
+              name="name"
+              placeholder="Search by volunteer name"
+            />
+            <input type="submit" name="Submit" value="SEARCH" />
           </td>
         </tr>
         <tr>
+          <td>SNo.</td>
           <td>CAMP NAME</td>
           <td>NAME</td>
           <td>GENDER</td>
@@ -28,19 +33,20 @@
           <td>CONTACTNO</td>
           <td>EMAIL</td>
           <td>PHOTO</td>
-          <td colspan="2">&nbsp;</td>
+          <td colspan="2"></td>
         </tr>
         {% for i in val %}
         <tr>
+          <td>{{ forloop.counter }}</td>
           <td>{{i.COORDINATOR.CAMP.campName}}</td>
           <td>{{ i.name }}</td>
           <td>{{ i.gender }}</td>
-          <td>{{ i.dob }}&nbsp;</td>
+          <td>{{ i.dob }}</td>
           <td>{{ i.district }}</td>
           <td>{{ i.place}}</td>
           <td>{{ i.post}}</td>
           <td>{{ i.pin}}</td>
-          <td>{{ i.ContactNo}}</td>
+          <td>{{ i.contactNo}}</td>
           <td>{{ i.email}}</td>
           <td>
             <img
@@ -49,11 +55,12 @@
               alt=""
             />
           </td>
-          <td><a href="/#/{{ i.id }}">EDIT</a></td>
-          <td><a href="/#/{{ i.id }}">DELETE</a></td>
+          <td><a href="/coordinator_edit_volunteer/{{ i.id }}">EDIT</a></td>
+          <td><a href="/coordinator_delete_volunteer/{{ i.id }}">DELETE</a></td>
         </tr>
         {% endfor %}
       </table>
+      <p><a href="/coordinator_volunteer_registration">ADD VOLUNTEER </a></p>
     </form>
   </body>
 </html>

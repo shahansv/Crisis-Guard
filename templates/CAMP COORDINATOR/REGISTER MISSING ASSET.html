@@ -1,59 +1,65 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Untitled Document</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>REGISTER MISSING ASSET - CRISIS GUARD</title>
+  </head>
 
-<body>
-<form id="form1" name="form1" method="post" action="coordinator_register_missing_asset_post">
-  <table width="200" border="1">
-
-    <tr>
-      <td>MEMBER NAME </td>
-      <td><label>
-        <select name="membername" >
-
-            {%  for i in names %}
-            <option value="{{ i.id }}">{{ i.name }}</option>
-            {% endfor %}
-        </select>
-      </label></td>
-    </tr>
-    <tr>
-      <td>CATEGORY</td>
-      <td><label>
-        <select name="category">
-            <option value="DOCUMENT">DOCUMENT</option>
-            <option value="GOLD">GOLD</option>
-            <option value="MONEY">MONEY</option>
-        </select>
-      </label></td>
-    </tr>
-    <tr>
-      <td>ASSET NAME </td>
-      <td><label>
-        <input type="text" name="assetname" />
-      </label></td>
-    </tr>
-    <tr>
-      <td>ASSET DESCRIPTION </td>
-      <td><label>
-        <textarea name="assetdescription"></textarea>
-      </label></td>
-    </tr>
-    <tr>
-      <td>DATE</td>
-      <td><label>
-        <input type="date" name="date" />
-      </label></td>
-    </tr>
-    <tr>
-      <td colspan="2"><label>
-        <input type="submit" name="Submit" value="Submit" />
-      </label></td>
-    </tr>
-  </table>
-</form>
-</body>
+  <body>
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="coordinator_register_missing_asset_post"
+    >
+      <table border="1">
+        <tr>
+          <td>MEMBER NAME</td>
+          <td>
+            <select name="membername">
+              {% for i in names %}
+              <option value="{{ i.id }}">{{ i.name }}</option>
+              {% endfor %}
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>CATEGORY</td>
+          <td>
+            <select name="category">
+              <option value="DOCUMENT">DOCUMENT</option>
+              <option value="GOLD">GOLD</option>
+              <option value="MONEY">MONEY</option>
+              <option value="OTHER">OTHER</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>ASSET NAME</td>
+          <td>
+            <input type="text" name="assetname" required />
+          </td>
+        </tr>
+        <tr>
+          <td>ASSET DESCRIPTION</td>
+          <td>
+            <textarea name="assetdescription" required></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td> MISSING DATE</td>
+          <td>
+            <input type="date" name="date" required/>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" name="Submit" value="Submit" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
 </html>

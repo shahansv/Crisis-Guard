@@ -1,51 +1,71 @@
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    {% load static %}
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
+    <title>EDIT MISSING ASSET REGISTRATION - CRISIS GUARD</title>
+  </head>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <title>Untitled Document</title>
-</head>
-
-<body>
-  <form id="form1" name="form1" method="post" action="/coordinator_edit_asset_registration_post">
-    <table width="200" border="1">
-      <tr>
-        <td>CATEGORY</td>
-        <td><label>
+  <body>
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="/coordinator_edit_asset_registration_post"
+    >
+      <table width="200" border="1">
+        <tr>
+          <td>CATEGORY</td>
+          <td>
             <select name="category">
-              <option value="{{ob.category}}" selected>{{ ob.category }}</option>
+              <option value="{{ob.category}}" selected>
+                {{ ob.category }}
+              </option>
               <option value="DOCUMENT">DOCUMENT</option>
               <option value="GOLD">GOLD</option>
               <option value="MONEY">MONEY</option>
             </select>
-          </label></td>
-      </tr>
-      <tr>
-        <td>ASSET NAME </td>
-        <td><label>
-            <input type="text" name="asset" value="{{ ob.asset }}" />
-          </label></td>
-      </tr>
-      <tr>
-        <td>DESCRIPTION</td>
-        <td><label>
-            <input type="text" name="description" value="{{ ob.description }}"></input>
-          </label></td>
-      </tr>
-      <tr>
-        <td>DATE</td>
-        <td><label>
-            <input type="date" name="date" value="{{ ob.date|date:'Y-m-d' }}" />
-          </label></td>
-      </tr>
-      <tr>
-        <td colspan="2"><label>
-            <input type="submit" name="Submit" value="EDIT" />
-          </label></td>
-      </tr>
-    </table>
-  </form>
-</body>
+          </td>
+        </tr>
 
+        <tr>
+          <td>ASSET NAME</td>
+          <td>
+            <input type="text" name="asset" value="{{ ob.asset }}" required />
+          </td>
+        </tr>
+
+        <tr>
+          <td>DESCRIPTION</td>
+          <td>
+            <input
+              type="text"
+              name="description"
+              value="{{ ob.description }}"
+              required
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td>DATE</td>
+          <td>
+            <input
+              type="date"
+              name="date"
+              value="{{ ob.date|date:'Y-m-d' }}"
+              required
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <input type="submit" name="Submit" value="EDIT" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
 </html>
