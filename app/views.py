@@ -22,7 +22,7 @@ def login_post(request):
             elif user.type =='coordinator':
                 return HttpResponse('''<script> alert ('Camp Coordinator Logged In');window.location='/coordinator_home_page';</script>''')
             elif user.type =='ERT':
-                return HttpResponse('''<script> alert ('Emergency Team Logged In');window.location='/emergency_response_team_home_page';</script>''')
+                return HttpResponse('''<script> alert ('Emergency Response Team Logged In');window.location='/emergency_response_team_home_page';</script>''')
         else:
             return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
     else:
@@ -31,8 +31,11 @@ def login_post(request):
     return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
 
 
+# REGISTER EMERGENCY RESPONSE TEAM AND CHECK STATUS 
+
 def register_emergency_response_team(request):
     return render (request,'EMERGENCY RESPONSE TEAM REGISTRATION.html')
+
 
 def register_emergency_response_team_post(request):
     department=request.POST["department"]
@@ -66,6 +69,7 @@ def ert_registration_status(request):
     ob=emergency_team_table.objects.all()
     return render(request,'ERT REGISTRATION STATUS.html', {'val': ob})
 
+
 def search_emergency_team_status(request):
     district = request.POST['textfield']
     ob = emergency_team_table.objects.filter(district__icontains=district)
@@ -76,12 +80,10 @@ def search_emergency_team_status(request):
 
 
 
-
 # ***** ADMIN *****
 
 def admin_home_page(request):
     return  render(request,'ADMIN/ADMIN HOME PAGE.html')
-
 
 
 # ADD & MANAGE CAMP
@@ -150,6 +152,7 @@ def admin_edit_camp_post(request):
 def admin_delete_camp(request,id):
     camp_table.objects.get(id=id).delete()
     return HttpResponse('''<script> alert('CAMP DELETED');window.location='/admin_manage_camp';</script>''')
+
 
 
 
@@ -252,6 +255,7 @@ def admin_delete_camp_coordinator(request,id):
 
 
 
+
 # ADD & MANAGE GUIDELINES
 
 def admin_add_guideline(request):
@@ -290,27 +294,30 @@ def admin_search_guideline(request):
 
 
 
-
 # VERIFY EMERGENCY TEAM
 
 def admin_verify_emergency_team(request):
     ob=emergency_team_table.objects.filter(LOGIN__type='Pending')
     return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
 
+
 def admin_manage_emergency_team(request):
     ob1=emergency_team_table.objects.filter(LOGIN__type='ert')
     ob2=emergency_team_table.objects.filter(LOGIN__type='reject')
     return render(request, 'ADMIN/MANAGE EMERGENCY TEAM.html', {'val1': ob1 ,'val2':ob2})
+
 
 def admin_search_verify_emergency_team(request):
     district = request.POST['textfield']
     ob = emergency_team_table.objects.filter(district__icontains=district,LOGIN__type='pending')
     return render(request, 'ADMIN/VERIFY EMERGENCY TEAM.html', {'val': ob})
 
+
 def admin_search_accept_emergency_team(request):
     district = request.POST['textfield']
     ob = emergency_team_table.objects.filter(district__icontains=district,LOGIN__type='ert')
     return render(request, 'ADMIN/MANAGE EMERGENCY TEAM.html', {'val1': ob})
+
 
 def admin_search_reject_emergency_team(request):
     district = request.POST['textfield']
@@ -324,6 +331,7 @@ def admin_accept_ERT(request,id):
     ob.type="ERT"
     ob.save()
     return HttpResponse('''<script> alert ('ACCEPTED');window.location='/admin_manage_emergency_team'</script>''')
+
 
 def admin_reject_ERT(request,id):
     request.session["ERTid"]=id
@@ -339,10 +347,12 @@ def admin_manage_camplaint(request):
     ob=complaint_table.objects.all()
     return render (request,'ADMIN/VIEW COMPLAINT.html',{'val':ob})
 
+
 def admin_reply_complaint(request,id):
     request.session["complaintid"]=id
     ob=complaint_table.objects.get(id=id)
     return render(request, 'ADMIN/REPLY COMPLAINT.html',{"ob":ob})
+
 
 def admin_reply_complaint_post(request):
     status=request.POST["status"]
@@ -353,17 +363,20 @@ def admin_reply_complaint_post(request):
     obj.save()
     return HttpResponse('''<script> alert('COMPLAINT REPLIED');window.location='/admin_manage_camplaint';</script>''')
 
+
 def search_complaint(request):
     status = request.POST['select'] 
     ob = complaint_table.objects.filter(status__icontains=status)
     return render(request, 'ADMIN/VIEW COMPLAINT.html', {'val': ob})
 
 
-# MANAGE NOTIFICATION
 
+
+# MANAGE NOTIFICATION
 
 def admin_add_notification(request):
     return render (request,'ADMIN/ADD NOTIFICATION.html')
+
 
 def admin_add_notification_post(request):
    title=request.POST["title"]
@@ -380,6 +393,7 @@ def admin_add_notification_post(request):
 def admin_manage_notification(request):
     ob=notification_table.objects.all()
     return render (request,'ADMIN/MANAGE NOTIFICATION.html', {"val": ob})
+
 
 def admin_delete_notification(request,id):
     notification_table.objects.get(id=id).delete()
@@ -414,15 +428,18 @@ def admin_search_notification(request):
 
 
 
+
 # ***** CAMP COORDINATOR *****
 
 def coordinator_home_page(request):
     return  render(request,'CAMP COORDINATOR/HOME PAGE.html')
 
+
 # ADD & MANAGE STOCK
 
 def coordinator_add_stock(request):
     return render(request, 'CAMP COORDINATOR/ADD STOCK.html')
+
 
 def coordinator_add_stock_post(request):
     category = request.POST["category"]
@@ -437,9 +454,11 @@ def coordinator_add_stock_post(request):
     obj.save()
     return HttpResponse('''<script> alert ('STOCK ADDED');window.location='/coordinator_manage_stock'</script>''')
 
+
 def coordinator_manage_stock(request):
     ob = stock_table.objects.all()
     return render(request, 'CAMP COORDINATOR/MANAGE STOCK.html', {"val": ob})
+
 
 def coordinator_edit_stock(request,id):
     request.session["stockid"]=id
@@ -459,6 +478,7 @@ def coordinator_edit_stock_post(request):
     obj.date=date
     obj.save()
     return HttpResponse('''<script> alert ('STOCK EDITED');window.location='/coordinator_manage_stock'</script>''')
+
 
 def coordinator_delete_stock(request,id):
     stock_table.objects.get(id=id).delete()
@@ -508,6 +528,7 @@ def coordinator_add_member_post(request):
     obj.COORDINATOR = camp_coordinator_table.objects.get(LOGIN__id=request.session['lid'])
     obj.save()
     return HttpResponse('''<script> alert ('MEMBER ADDED');window.location='/coordinator_manage_members'</script>''')
+
 
 def coordinator_manage_members(request):
     ob = member_table.objects.all()
@@ -563,6 +584,7 @@ def coordinator_register_missing_asset(request):
     names=member_table.objects.filter(COORDINATOR__LOGIN_id=request.session['lid'])
     return render(request,'CAMP COORDINATOR/REGISTER MISSING ASSET.html',{'names':names})
 
+
 def coordinator_register_missing_asset_post(request):
     membername = request.POST["membername"]
     category = request.POST["category"]
@@ -596,6 +618,7 @@ def coordinator_edit_asset_registration(request,id):
     ob = asset_table.objects.get(id=id)
     return render(request, 'CAMP COORDINATOR/EDIT ASSET REGISTRATION.html', {"ob": ob})
 
+
 def coordinator_edit_asset_registration_post(request):
     category = request.POST["category"]
     asset = request.POST["asset"]
@@ -609,18 +632,20 @@ def coordinator_edit_asset_registration_post(request):
     obj.save()
     return HttpResponse('''<script> alert('ASSET REGISTRATION EDITED');window.location='/coordinator_view_missing_asset_registration';</script>''')
 
+
 def coordinator_search_asset_registration(request):
     name=request.POST['textfield']
     ob=asset_table.objects.filter(MEMBER__name__icontains=name)
     return render (request,'CAMP COORDINATOR/VIEW ASSET REGISTRATION.html', {'val': ob})
 
 
-# ADD AND MANAGE NEEDS
 
+# ADD AND MANAGE NEEDS
 
 def coordinator_add_needs(request):
     ob=camp_coordinator_table.objects.get(LOGIN=request.session["lid"])
     return render(request, 'CAMP COORDINATOR/ADD NEEDS.html',{"ob":ob})
+
 
 def coordinator_add_needs_post(request):
     category = request.POST["category"]
@@ -635,14 +660,17 @@ def coordinator_add_needs_post(request):
     obj.save()
     return HttpResponse( '''<script> alert('NEED ADDED');window.location='/coordinator_view_needs';</script>''')
 
+
 def coordinator_view_needs(request):
     ob = needs_table.objects.all()
     return render(request, 'CAMP COORDINATOR/VIEW NEEDS.html', {"val": ob})
+
 
 def coordinator_edit_needs(request,id):
     request.session["needsid"] = id
     ob = needs_table.objects.get(id=id)
     return render(request, 'CAMP COORDINATOR/EDIT NEEDS.html', {"ob": ob})
+
 
 def coordinator_edit_needs_post(request):
     category = request.POST["category"]
@@ -662,17 +690,40 @@ def coordinator_delete_needs(request,id):
     return HttpResponse('''<script> alert('NEED DELETED');window.location='/coordinator_view_needs';</script>''')
 
 
-
 def coordinator_search_needs(request):
     category = request.POST['select']
     ob = needs_table.objects.filter(category__icontains=category)
     return render(request, 'CAMP COORDINATOR/VIEW NEEDS.html', {"val": ob})
 
 
+
 # MEDICAL SUPPORT REQUEST
 
-def camp_coordinator_view_medical_request(request):
-    return render (request,'CAMP COORDINATOR/VIEW MEDICAL REQUEST.html')
+
+def coordinator_manage_medical_request(request):
+    ob = medical_request_table.objects.all()
+    return render (request,'CAMP COORDINATOR/MANAGE MEDICAL REQUEST.html', {"val": ob})
+
+
+def coordinator_search_medical_request(request):
+    status = request.POST['status']
+    ob = medical_request_table.objects.filter(status__icontains=status)
+    return render(request, 'CAMP COORDINATOR/MANAGE MEDICAL REQUEST.html', {"val": ob})
+
+
+def coordinator_edit_medical_request_status(request,id):
+    request.session["medicalrequestid"] = id
+    ob = medical_request_table.objects.get(id=id)
+    return render(request, 'CAMP COORDINATOR/EDIT MEDICAL REQUEST STATUS.html', {"ob": ob})
+
+
+def coordinator_edit_medical_request_status_post(request):
+    status = request.POST["status"]
+    obj = medical_request_table.objects.get(id=request.session["medicalrequestid"])
+    obj.status = status
+    obj.save()
+    return HttpResponse('''<script> alert('STATUS UPDATED');window.location='/coordinator_manage_medical_request';</script>''')
+
 
 
 # ADD AND MANAGE VOLUNTEER
@@ -719,8 +770,6 @@ def coordinator_volunteer_registration_post(request):
     return HttpResponse('''<script> alert ('VOLUNTEER ADDED');window.location='/coordinator_manage_volunteer'</script>''')
 
 
-
-
 def coordinator_manage_volunteer(request):
     ob = volunteer_table.objects.all()
     return render (request,'CAMP COORDINATOR/MANAGE VOLUNTEER.html', {"val": ob})
@@ -731,10 +780,12 @@ def coordinator_search_volunteer(request):
     ob = volunteer_table.objects.filter(name__icontains=name)
     return render(request, 'CAMP COORDINATOR/MANAGE VOLUNTEER.html', {"val": ob})
 
+
 def coordinator_edit_volunteer(request,id):
     request.session["volunteerid"] = id
     ob = volunteer_table.objects.get(id=id)
     return render(request, 'CAMP COORDINATOR/EDIT VOLUNTEER.html', {"ob": ob})
+
 
 def coordinator_edit_volunteer_post(request):
     name=request.POST["name"]
@@ -763,45 +814,39 @@ def coordinator_delete_volunteer(request,id):
     volunteer_table.objects.get(id=id).delete()
     return HttpResponse('''<script> alert('VOLUNTEER DELETED');window.location='/coordinator_manage_volunteer';</script>''')
 
-def coordinator_manage_medical_request(request):
-    ob = medical_request_table.objects.all()
-    return render (request,'CAMP COORDINATOR/MANAGE MEDICAL REQUEST.html', {"val": ob})
-
-def coordinator_search_medical_request(request):
-    status = request.POST['status']
-    ob = medical_request_table.objects.filter(status__icontains=status)
-    return render(request, 'CAMP COORDINATOR/MANAGE MEDICAL REQUEST.html', {"val": ob})
 
 
-def coordinator_edit_medical_request_status(request,id):
-    request.session["medicalrequestid"] = id
-    ob = medical_request_table.objects.get(id=id)
-    return render(request, 'CAMP COORDINATOR/EDIT MEDICAL REQUEST STATUS.html', {"ob": ob})
 
-def coordinator_edit_medical_request_status_post(request):
-    status = request.POST["status"]
-    obj = medical_request_table.objects.get(id=request.session["medicalrequestid"])
-    obj.status = status
-    obj.save()
-    return HttpResponse('''<script> alert('STATUS UPDATED');window.location='/coordinator_manage_medical_request';</script>''')
 
 
 # ***** EMERGENCY RESPONCE TEAM *****
 
-
+# MANAGE EMERGENCY RESPONSE
 
 def emergency_response_team_home_page(request):
     return render (request,'EMERGENCY RESPONSE TEAM/ERT HOME PAGE.html')
 
-def emergency_response_tean_add_emergency_request(request):
-    return render (request,'EMERGENCY RESPONSE TEAM/ADD EMERGENCY REQUEST.html')
 
 def emergency_response_tean_view_emergency_request(request):
-    return render (request,'EMERGENCY RESPONSE TEAM/VIEW EMERGENCY REQUEST.html')
+    ob = emergency_request_table.objects.all()
+    return render (request,'EMERGENCY RESPONSE TEAM/VIEW EMERGENCY REQUEST.html', {"val": ob})
 
 
+def emergency_response_team_search_emergency_request(request):
+    status = request.POST['status']
+    ob = emergency_request_table.objects.filter(status__icontains=status)
+    return render(request, 'EMERGENCY RESPONSE TEAM/VIEW EMERGENCY REQUEST.html', {"val": ob})
 
 
+def emergency_response_edit_emergency_request_status(request,id):
+    request.session["emergencyrequestid"] = id
+    ob = emergency_request_table.objects.get(id=id)
+    return render(request, 'EMERGENCY RESPONSE TEAM/EDIT EMERGENCY REQUEST STATUS.html', {"ob": ob})
 
 
-
+def emergency_response_edit_emergency_request_status_post(request):
+    status = request.POST["status"]
+    obj = emergency_request_table.objects.get(id=request.session["emergencyrequestid"])
+    obj.status = status
+    obj.save()
+    return HttpResponse('''<script> alert('STATUS UPDATED');window.location='/emergency_response_tean_view_emergency_request';</script>''')

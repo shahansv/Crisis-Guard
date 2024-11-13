@@ -4,52 +4,101 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     {% load static %}
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>EDIT MEDICAL REQUEST STATUS - CRISIS GUARD</title>
+    <title>EDIT EMERGENCY REQUEST STATUS - CRISIS GUARD</title>
   </head>
 
   <body>
-    <form id="form1" name="form1" method="post" action="/coordinator_edit_medical_request_status_post">
+    <form
+      id="form1"
+      name="form1"
+      method="post"
+      action="/emergency_response_edit_emergency_request_status_post"
+    >
       <table border="1">
         <tr>
-          <td>CAMP</td>
+          <td>NAME</td>
           <td>
             <input
               type="text"
-              name="camp"
-              value="{{ ob.VOLUNTEER.COORDINATOR.CAMP.campName }}"
+              name="name"
+              value="{{ ob.PUBLIC.name }}"
               disabled
             />
           </td>
         </tr>
         <tr>
-          <td>VOLUNTEER</td>
+          <td>DISTRICT</td>
           <td>
             <input
               type="text"
-              name="volunteer"
-              value="{{ ob.VOLUNTEER.name }}"
+              name="district"
+              value="{{ ob.PUBLIC.district }}"
               disabled
             />
           </td>
         </tr>
         <tr>
-          <td>VOLUNTEER's NUMBER</td>
+          <td>PLACE</td>
+          <td>
+            <input
+              type="text"
+              name="place"
+              value="{{ ob.PUBLIC.place }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>POST</td>
+          <td>
+            <input
+              type="text"
+              name="post"
+              value="{{ ob.PUBLIC.post }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>PIN</td>
+          <td>
+            <input
+              type="text"
+              name="pin"
+              value="{{ ob.PUBLIC.pin }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>CONTACT NO</td>
           <td>
             <input
               type="text"
               name="contactno"
-              value="{{ ob.VOLUNTEER.contactNo }}"
+              value="{{ ob.PUBLIC.contactNo }}"
               disabled
             />
           </td>
         </tr>
         <tr>
-          <td>VOLUNTEER's EMAIL</td>
+          <td>EMAIL</td>
           <td>
             <input
               type="text"
               name="email"
-              value="{{ ob.VOLUNTEER.email }}"
+              value="{{ ob.PUBLIC.email }}"
+              disabled
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>EMERGENCY REQUEST</td>
+          <td>
+            <input
+              type="text"
+              name="request"
+              value="{{ ob.request }}"
               disabled
             />
           </td>
@@ -67,17 +116,6 @@
           </td>
         </tr>
         <tr>
-          <td>REQUEST</td>
-          <td>
-            <input
-              type="text"
-              name="request"
-              value="{{ ob.request }}"
-              disabled
-            />
-          </td>
-        </tr>
-        <tr>
           <td>STATUS</td>
           <td>
             <select name="status">
@@ -88,9 +126,10 @@
             </select>
           </td>
         </tr>
+        <tr></tr>
         <tr>
           <td colspan="2">
-            <input type="submit" name="Submit" value="EDIT" />
+            <input type="submit" name="Submit" value="UPDATE" />
           </td>
         </tr>
       </table>

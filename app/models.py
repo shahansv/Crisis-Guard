@@ -89,7 +89,7 @@ class goods_table(models.Model):
     time = models.TimeField()
 
 class emergency_request_table(models.Model):
-    EMERGENCY_TEAM = models.ForeignKey(emergency_team_table, on_delete=models.CASCADE)
+    PUBLIC = models.ForeignKey(public_table, on_delete=models.CASCADE)
     request = models.CharField(max_length=200)
     status = models.CharField(max_length=200)
     date = models.DateField()
