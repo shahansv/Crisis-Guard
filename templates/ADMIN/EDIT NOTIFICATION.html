@@ -1,12 +1,49 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>EDIT NOTIFICATION - CRISIS GUARD</title>
-  </head>
+{% extends 'admin/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      Edit Notification
+    </div>
+    <div class="card-body">
+      <form
+        id="form1"
+        name="form1"
+        method="post"
+        action="/admin_edit_notification_post"
+      >
+        <div class="mb-3">
+          <label for="title" class="form-label">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="form-control"
+            value="{{ ob.title }}"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="subject" class="form-label">Subject</label>
+          <input
+            type="text"
+            id="subject"
+            name="subject"
+            class="form-control"
+            value="{{ ob.subject }}"
+            required
+          />
+        </div>
+        <button type="submit" name="Submit" class="btn btn-primary">Edit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
 
+
+{% comment %} {% extends 'admin/ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -40,4 +77,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

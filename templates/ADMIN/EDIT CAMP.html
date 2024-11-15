@@ -1,94 +1,209 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>EDIT CAMP - CRISIS GUARD</title>
-  </head>
+{% extends 'admin/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <form id="form1" name="form1" method="post" action="/admin_edit_camp_post" class="needs-validation" novalidate>
+    <div class="mb-3">
+      <label for="campName" class="form-label">CAMP NAME</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="campName" 
+        name="camp" 
+        value="{{ ob.campName }}" 
+        required 
+      />
+      <div class="invalid-feedback">Camp Name is required.</div>
+    </div>
 
-  <body>
-    <form id="form1" name="form1" method="post" action="/admin_edit_camp_post">
-      <table border="1">
-        <tr>
-          <td>CAMP NAME</td>
-          <td>
-            <input type="text" name="camp" value="{{ ob.campName }}" required />
-          </td>
-        </tr>
-        <tr>
-          <td>DISTRICT</td>
-          <td>
-            <input
-              type="text"
-              name="district"
-              value="{{ ob.district }}"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>PLACE</td>
-          <td>
-            <input
-              type="text"
-              name="place"
-              value="{{ ob.place }}"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>POST</td>
-          <td>
-            \
-            <input
-              type="text"
-              name="post"
-              value="{{ ob.post }}"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>PIN</td>
-          <td>
-            <input
-              type="text"
-              name="pin"
-              value="{{ ob.pin }}"
-              required
-              pattern="[0-9]{6}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>CONTACT No.</td>
-          <td>
-            <input
-              type="text"
-              name="contactno"
-              value="{{ ob.contactno }}"
-              required
-              pattern="[6789][0-9]{9}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>EMAIL</td>
-          <td>
-            <input type="email" name="email" value="{{ ob.email }}" required />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input type="submit" name="Submit" value="EDIT" />
-          </td>
-        </tr>
-      </table>
-    </form>
-  </body>
-</html>
+    <div class="mb-3">
+      <label for="district" class="form-label">DISTRICT</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="district" 
+        name="district" 
+        value="{{ ob.district }}" 
+        required 
+        pattern="[A-Z a-z.]{3,25}" 
+      />
+      <div class="invalid-feedback">Please enter a valid district (3-25 characters).</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="place" class="form-label">PLACE</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="place" 
+        name="place" 
+        value="{{ ob.place }}" 
+        required 
+        pattern="[A-Z a-z.]{3,25}" 
+      />
+      <div class="invalid-feedback">Please enter a valid place (3-25 characters).</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="post" class="form-label">POST</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="post" 
+        name="post" 
+        value="{{ ob.post }}" 
+        required 
+        pattern="[A-Z a-z.]{3,25}" 
+      />
+      <div class="invalid-feedback">Please enter a valid post (3-25 characters).</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="pin" class="form-label">PIN</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="pin" 
+        name="pin" 
+        value="{{ ob.pin }}" 
+        required 
+        pattern="[0-9]{6}" 
+      />
+      <div class="invalid-feedback">Please enter a 6-digit PIN code.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="contactno" class="form-label">CONTACT No.</label>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="contactno" 
+        name="contactno" 
+        value="{{ ob.contactno }}" 
+        required 
+        pattern="[6789][0-9]{9}" 
+      />
+      <div class="invalid-feedback">Please enter a valid 10-digit contact number starting with 6, 7, 8, or 9.</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">EMAIL</label>
+      <input 
+        type="email" 
+        class="form-control" 
+        id="email" 
+        name="email" 
+        value="{{ ob.email }}" 
+        required 
+      />
+      <div class="invalid-feedback">Please enter a valid email address.</div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">EDIT</button>
+  </form>
+</div>
+
+<script>
+  // Bootstrap validation script
+  (function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+{% endblock %}
+
+
+{% comment %} {% extends 'admin/ui.html' %}
+{% block body %}
+<body>
+  <form id="form1" name="form1" method="post" action="/admin_edit_camp_post">
+    <table border="1">
+      <tr>
+        <td>CAMP NAME</td>
+        <td>
+          <input type="text" name="camp" value="{{ ob.campName }}" required />
+        </td>
+      </tr>
+      <tr>
+        <td>DISTRICT</td>
+        <td>
+          <input
+            type="text"
+            name="district"
+            value="{{ ob.district }}"
+            required
+            pattern="[A-Z a-z.]{3,25}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>PLACE</td>
+        <td>
+          <input
+            type="text"
+            name="place"
+            value="{{ ob.place }}"
+            required
+            pattern="[A-Z a-z.]{3,25}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>POST</td>
+        <td>
+          <input
+            type="text"
+            name="post"
+            value="{{ ob.post }}"
+            required
+            pattern="[A-Z a-z.]{3,25}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>PIN</td>
+        <td>
+          <input
+            type="text"
+            name="pin"
+            value="{{ ob.pin }}"
+            required
+            pattern="[0-9]{6}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>CONTACT No.</td>
+        <td>
+          <input
+            type="text"
+            name="contactno"
+            value="{{ ob.contactno }}"
+            required
+            pattern="[6789][0-9]{9}"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>EMAIL</td>
+        <td>
+          <input type="email" name="email" value="{{ ob.email }}" required />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="submit" name="Submit" value="EDIT" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>
+{% endblock %} {% endcomment %}

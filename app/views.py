@@ -8,30 +8,27 @@ from app.models import *
 # LOGIN PAGE
 
 def login(request):
-    return render(request,'LOGIN PAGE.html')
+    return render(request,'index.html')
 
 def login_post(request):
-    name=request.POST['textfield']
-    password=request.POST['textfield2']
-    if name and password:
-        user=login_table.objects.get(username=name,password=password)
-        request.session['lid']=user.id
-        if user:
+    name=request.POST['uname']
+    password=request.POST['pass']
+    if name and password: 
+        try:
+            user = login_table.objects.get(username=name, password=password)
+            request.session['lid'] = user.id
+            
             if user.type == 'admin':
                 return HttpResponse('''<script> alert ('Admin Logged In');window.location='/admin_home_page';</script>''')
-            elif user.type =='coordinator':
+            elif user.type == 'coordinator':
                 return HttpResponse('''<script> alert ('Camp Coordinator Logged In');window.location='/coordinator_home_page';</script>''')
-            elif user.type =='ERT':
+            elif user.type == 'ERT':
                 return HttpResponse('''<script> alert ('Emergency Response Team Logged In');window.location='/emergency_response_team_home_page';</script>''')
-        else:
-            return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
+        except login_table.DoesNotExist:
+            return HttpResponse('''<script> alert ('Invalid username or password');window.location='/';</script>''')
     else:
-        return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
+        return HttpResponse('''<script> alert ('Please enter both username and password');window.location='/';</script>''')
 
-    return HttpResponse('''<script> alert ('Login Failed');window.location='/';</script>''')
-
-
-# REGISTER EMERGENCY RESPONSE TEAM AND CHECK STATUS 
 
 def register_emergency_response_team(request):
     return render (request,'EMERGENCY RESPONSE TEAM REGISTRATION.html')
@@ -83,7 +80,7 @@ def search_emergency_team_status(request):
 # ***** ADMIN *****
 
 def admin_home_page(request):
-    return  render(request,'ADMIN/ADMIN HOME PAGE.html')
+    return  render(request,'ADMIN/index.html')
 
 
 # ADD & MANAGE CAMP

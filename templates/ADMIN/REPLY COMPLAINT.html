@@ -1,12 +1,76 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>REPLY COMPLAINT - CRISIS GUARD</title>
-  </head>
+{% extends 'admin/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-primary text-white">
+      Reply to Complaint
+    </div>
+    <div class="card-body">
+      <form id="form1" name="form1" method="post" action="/admin_reply_complaint_post">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" disabled value="{{ ob.PUBLIC.name }}" />
+        </div>
+        <div class="mb-3">
+          <label for="district" class="form-label">District</label>
+          <input type="text" class="form-control" name="district" disabled value="{{ ob.PUBLIC.district }}" />
+        </div>
+        <div class="mb-3">
+          <label for="place" class="form-label">Place</label>
+          <input type="text" class="form-control" name="place" disabled value="{{ ob.PUBLIC.place }}" />
+        </div>
+        <div class="mb-3">
+          <label for="post" class="form-label">Post</label>
+          <input type="text" class="form-control" name="post" disabled value="{{ ob.PUBLIC.post }}" />
+        </div>
+        <div class="mb-3">
+          <label for="pin" class="form-label">PIN</label>
+          <input type="text" class="form-control" name="pin" disabled value="{{ ob.PUBLIC.pin }}" />
+        </div>
+        <div class="mb-3">
+          <label for="contactno" class="form-label">Contact No</label>
+          <input type="text" class="form-control" name="contactno" disabled value="{{ ob.PUBLIC.contactNo }}" />
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="text" class="form-control" name="email" disabled value="{{ ob.PUBLIC.email }}" />
+        </div>
+        <div class="mb-3">
+          <label for="complaint" class="form-label">Complaint</label>
+          <input type="text" class="form-control" name="complaint" disabled value="{{ ob.complaint }}" />
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Date</label>
+          <input type="date" class="form-control" name="date" disabled value="{{ ob.date }}" />
+        </div>
+        <div class="mb-3">
+          <label for="time" class="form-label">Time</label>
+          <input type="text" class="form-control" name="time" disabled value="{{ ob.time }}" />
+        </div>
+        <div class="mb-3">
+          <label for="status" class="form-label">Status</label>
+          <select class="form-select" name="status">
+            <option value="{{ ob.status }}" selected>{{ ob.status }}</option>
+            <option value="PENDING">PENDING</option>
+            <option value="WORKING ON">WORKING ON</option>
+            <option value="RESOLVED">RESOLVED</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="reply" class="form-label">Reply</label>
+          <textarea class="form-control" name="reply" rows="3"></textarea>
+        </div>
+        <div class="text-end">
+          <button type="submit" name="Submit" class="btn btn-primary">REPLY</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
 
+{% comment %} {% extends 'admin/ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -62,7 +126,7 @@
         <tr>
           <td>PIN</td>
           <td>
-            \
+            
             <input
               type="text"
               name="pin"
@@ -141,4 +205,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

@@ -1,51 +1,91 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>MANAGE CAMP - CRISIS GUARD</title>
-  </head>
+{#{% extends 'admin/ui.html' %}#}
+{#{% block body %}#}
+{#  <body>#}
+{#    <form id="form1" name="form1" method="post" action="admin_search_camp" >#}
+{#      <table border="1" class="table table-hover">#}
+{#        <tr>#}
+{#          <td colspan="9">#}
+{#            <input#}
+{#              type="text"#}
+{#              name="textfield"#}
+{#              placeholder="Search by camp name" class="form-control"#}
+{#            />#}
+{#            <input type="submit" name="Submit" value="SEARCH" class="btn btn-primary"/>#}
+{#          </td>#}
+{#        </tr>#}
+{#        <tr>#}
+{#          <td>CAMP NAME</td>#}
+{#          <td>DISTRICT</td>#}
+{#          <td>PLACE</td>#}
+{#          <td>POST</td>#}
+{#          <td>PIN</td>#}
+{#          <td>CONTACT NO</td>#}
+{#          <td>EMAIL</td>#}
+{#          <td>&nbsp;</td>#}
+{#          <td>&nbsp;</td>#}
+{#        </tr>#}
+{#        {% for i in val %}#}
+{#        <tr>#}
+{#          <td>{{ i.campName}}</td>#}
+{#          <td>{{ i.district }}</td>#}
+{#          <td>{{ i.place }}</td>#}
+{#          <td>{{ i.post }}</td>#}
+{#          <td>{{ i.pin }}</td>#}
+{#          <td>{{ i.email }}</td>#}
+{#          <td>{{ i.contactno }}</td>#}
+{#          <td><a href="/admin_delete_camp/{{ i.id }}" class="btn btn-danger">DELETE</a></td>#}
+{#          <td><a href="/admin_edit_camp/{{ i.id }}" class="btn btn-info">EDIT</a></td>#}
+{#        </tr>#}
+{#        {% endfor %}#}
+{#      </table>#}
+{#      <p><a href="/admin_add_camp" class="btn btn-primary"> ADD CAMP </a></p>#}
+{#    </form>#}
+{#  </body>#}
+{#{% endblock %}#}
 
-  <body>
-    <form id="form1" name="form1" method="post" action="admin_search_camp">
-      <table border="1">
-        <tr>
-          <td colspan="9">
-            <input
-              type="text"
-              name="textfield"
-              placeholder="Search by camp name"
-            />
-            <input type="submit" name="Submit" value="SEARCH" />
-          </td>
-        </tr>
-        <tr>
-          <td>CAMP NAME</td>
-          <td>DISTRICT</td>
-          <td>PLACE</td>
-          <td>POST</td>
-          <td>PIN</td>
-          <td>CONTACT NO</td>
-          <td>EMAIL</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
+
+{% extends 'admin/ui.html' %}
+{% block body %}
+<body>
+  <form id="form1" name="form1" method="post" action="admin_search_camp">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-md-8">
+          <input
+            type="text"
+            name="textfield"
+            placeholder="Search by camp name" class="form-control"
+          />
+        </div>
+        <div class="col-md-4">
+          <input type="submit" name="Submit" value="SEARCH" class="btn btn-primary"/>
+        </div>
+      </div>
+
+      <div class="row">
         {% for i in val %}
-        <tr>
-          <td>{{ i.campName}}</td>
-          <td>{{ i.district }}</td>
-          <td>{{ i.place }}</td>
-          <td>{{ i.post }}</td>
-          <td>{{ i.pin }}</td>
-          <td>{{ i.email }}</td>
-          <td>{{ i.contactno }}</td>
-          <td><a href="/admin_delete_camp/{{ i.id }}">DELETE</a></td>
-          <td><a href="/admin_edit_camp/{{ i.id }}">EDIT</a></td>
-        </tr>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ i.campName }}</h5>
+              <p class="card-text"><strong>District:</strong> {{ i.district }}</p>
+              <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
+              <p class="card-text"><strong>Post:</strong> {{ i.post }}</p>
+              <p class="card-text"><strong>Pin:</strong> {{ i.pin }}</p>
+              <p class="card-text"><strong>Contact No:</strong> {{ i.contactno }}</p>
+              <p class="card-text"><strong>Email:</strong> {{ i.email }}</p>
+              <a href="/admin_delete_camp/{{ i.id }}" class="btn btn-danger">DELETE</a>
+              <a href="/admin_edit_camp/{{ i.id }}" class="btn btn-info">EDIT</a>
+            </div>
+          </div>
+        </div>
         {% endfor %}
-      </table>
-      <p><a href="/admin_add_camp">ADD CAMP </a></p>
-    </form>
-  </body>
-</html>
+      </div>
+
+      <div class="text-center mt-4">
+        <a href="/admin_add_camp" class="btn btn-primary">ADD CAMP</a>
+      </div>
+    </div>
+  </form>
+</body>
+{% endblock %}

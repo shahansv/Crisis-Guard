@@ -1,12 +1,66 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>MANAGE CAMP COORDINATOR - CRISIS GUARD</title>
-  </head>
+{% extends 'admin/ui.html' %}
+{% block body %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Search Camp Coordinator</h2>
+  <form id="form1" name="form1" method="post" action="admin_search_camp_coordinator">
+    <div class="input-group mb-3">
+      <input type="text" name="textfield" class="form-control" placeholder="Search by name" aria-label="Search by name">
+      <button type="submit" name="Submit" class="btn btn-primary">Search</button>
+    </div>
+  </form>
 
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th>CAMP</th>
+          <th>NAME</th>
+          <th>GENDER</th>
+          <th>DOB</th>
+          <th>CONTACT NO</th>
+          <th>EMAIL</th>
+          <th>DISTRICT</th>
+          <th>PLACE</th>
+          <th>POST</th>
+          <th>PIN</th>
+          <th>PHOTO</th>
+          <th>EDIT</th>
+          <th>DELETE</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in val %}
+        <tr>
+          <td>{{ i.CAMP.campName }}</td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.gender }}</td>
+          <td>{{ i.dob }}</td>
+          <td>{{ i.contactNo }}</td>
+          <td>{{ i.email }}</td>
+          <td>{{ i.district }}</td>
+          <td>{{ i.place }}</td>
+          <td>{{ i.post }}</td>
+          <td>{{ i.pin }}</td>
+          <td>
+            <img src="{{ i.photo.url }}" class="img-thumbnail" style="height: 100px; width: auto" alt="Coordinator Photo">
+          </td>
+          <td><a href="/admin_edit_camp_coordinator/{{ i.id }}" class="btn btn-warning btn-sm">Edit</a></td>
+          <td><a href="/admin_delete_camp_coordinator/{{ i.LOGIN.id }}" class="btn btn-danger btn-sm">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-end mt-3">
+    <a href="/admin_add_camp_coordinator" class="btn btn-success">Add Camp Coordinator</a>
+  </div>
+</div>
+{% endblock %}
+
+
+{% comment %} {% extends 'admin/ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -65,4 +119,4 @@
       <p><a href="/admin_add_camp_coordinator">ADD CAMP COORDINATOR </a></p>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

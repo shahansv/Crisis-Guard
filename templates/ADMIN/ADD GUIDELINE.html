@@ -1,13 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>ADD GUIDELINE - CRISIS GUARD</title>
-  </head>
-
-  <body>
+{% extends 'admin/ui.html' %} 
+{% block body %}
+<body>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">Add Camp Guideline</h2>
     <form
       action="/admin_add_guideline_post"
       method="post"
@@ -15,36 +10,81 @@
       name="form1"
       id="form1"
     >
-      <table border="1">
-        <tr>
-          <td>CAMP</td>
-          <td>
-            <select name="camp">
-              {% for i in data %}
-              <option value="{{ i.id }}">
-                {{ i.CAMP.campName }} --{{ i.name }}
-              </option>
-              {% endfor %}
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>GUIDELINE</td>
-          <td>
-            <input
-              type="file"
-              name="guideline"
-              required
-              accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input type="submit" name="Submit" value="Submit" />
-          </td>
-        </tr>
-      </table>
+      <div class="mb-3">
+        <label for="camp" class="form-label">Camp</label>
+        <select name="camp" id="camp" class="form-select" required>
+          {% for i in data %}
+          <option value="{{ i.id }}">
+            {{ i.CAMP.campName }} -- {{ i.name }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="guideline" class="form-label">Guideline</label>
+        <input
+          type="file"
+          class="form-control"
+          name="guideline"
+          id="guideline"
+          required
+          accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
+        />
+      </div>
+
+      <div class="text-end">
+        <button type="submit" name="Submit" class="btn btn-primary">
+          Submit
+        </button>
+      </div>
     </form>
-  </body>
-</html>
+  </div>
+</body>
+{% endblock %} 
+
+
+
+
+{% comment %} {% extends 'admin/ui.html' %} {% block body %}
+<body>
+  <form
+    action="/admin_add_guideline_post"
+    method="post"
+    enctype="multipart/form-data"
+    name="form1"
+    id="form1"
+  >
+    <table border="1">
+      <tr>
+        <td>CAMP</td>
+        <td>
+          <select name="camp">
+            {% for i in data %}
+            <option value="{{ i.id }}">
+              {{ i.CAMP.campName }} --{{ i.name }}
+            </option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>GUIDELINE</td>
+        <td>
+          <input
+            type="file"
+            name="guideline"
+            required
+            accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="submit" name="Submit" value="Submit" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</body>
+{% endblock %} {% endcomment %}

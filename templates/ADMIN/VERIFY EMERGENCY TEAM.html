@@ -1,12 +1,73 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>VERIFY EMERGENCY RESPONSE TEAM - CRISIS GUARD</title>
-  </head>
+{% extends 'admin/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <form
+    id="form1"
+    name="form1"
+    method="post"
+    action="/admin_search_verify_emergency_team"
+    class="mb-3"
+  >
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control"
+        name="textfield"
+        placeholder="Search by district"
+        aria-label="Search by district"
+        required
+      />
+      <button class="btn btn-primary" type="submit" name="Submit">SEARCH</button>
+    </div>
+  </form>
 
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">DEPARTMENT</th>
+          <th scope="col">DISTRICT</th>
+          <th scope="col">PLACE</th>
+          <th scope="col">POST</th>
+          <th scope="col">PIN</th>
+          <th scope="col">CONTACT NO</th>
+          <th scope="col">EMAIL</th>
+          <th scope="col">ACCEPT</th>
+          <th scope="col">REJECT</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in val %}
+        <tr>
+          <td>{{ i.department }}</td>
+          <td>{{ i.district }}</td>
+          <td>{{ i.place }}</td>
+          <td>{{ i.post }}</td>
+          <td>{{ i.pin }}</td>
+          <td>{{ i.ContactNo }}</td>
+          <td>{{ i.email }}</td>
+          <td>
+            <a href="/admin_accept_ERT/{{ i.LOGIN.id }}" class="btn btn-success btn-sm">ACCEPT</a>
+          </td>
+          <td>
+            <a href="/admin_reject_ERT/{{ i.LOGIN.id }}" class="btn btn-danger btn-sm">REJECT</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-3">
+    <a href="/admin_manage_emergency_team" class="btn btn-secondary">MANAGE EMERGENCY TEAM</a>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% comment %} {% extends 'admin/ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -53,4 +114,4 @@
       <p><a href="/admin_manage_emergency_team">MANAGE EMERGENCY TEAM </a></p>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

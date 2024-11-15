@@ -1,12 +1,62 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>ADD NOTIFICATION - CRISIS GUARD</title>
-  </head>
+{% extends 'admin/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <form
+    id="form1"
+    name="form1"
+    method="post"
+    action="admin_add_notification_post"
+    class="needs-validation"
+    novalidate
+  >
+    <div class="mb-3">
+      <label for="title" class="form-label">TITLE</label>
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+      />
+      <div class="invalid-feedback">Please enter a title.</div>
+    </div>
 
+    <div class="mb-3">
+      <label for="subject" class="form-label">SUBJECT</label>
+      <input
+        type="text"
+        class="form-control"
+        id="subject"
+        name="subject"
+        required
+      />
+      <div class="invalid-feedback">Please enter a subject.</div>
+    </div>
+
+    <button type="submit" name="Submit" class="btn btn-primary">POST</button>
+  </form>
+</div>
+
+<script>
+  // Bootstrap validation script
+  (function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
+{% endblock %}
+
+{% comment %} {% extends 'admin/ui.html' %} 
+{% block body %}
   <body>
     <form
       id="form1"
@@ -33,6 +83,7 @@
           </td>
         </tr>
       </table>
+
     </form>
   </body>
-</html>
+  {% endblock %}  {% endcomment %}

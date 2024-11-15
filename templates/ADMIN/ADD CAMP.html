@@ -1,83 +1,99 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>ADD CAMP - CRISIS GUARD</title>
-  </head>
 
-  <body>
-    <form id="form1" name="form1" method="post" action="admin_add_camp_post">
-      <table border="1">
-        <tr>
-          <td>CAMP NAME</td>
-          <td>
-            <input type="text" name="camp" required />
-          </td>
-        </tr>
-        <tr>
-          <td>DISTRICT</td>
-          <td>
+
+{% extends 'admin/ui.html' %}
+{% block body %}
+<body>
+  <div class="container my-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Add Camp Details</h5>
+      </div>
+      <div class="card-body">
+        <form id="form1" name="form1" method="post" action="admin_add_camp_post">
+          <div class="mb-3">
+            <label for="camp" class="form-label">Camp Name</label>
+            <input type="text" id="camp" name="camp" class="form-control" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="district" class="form-label">District</label>
             <input
               type="text"
+              id="district"
               name="district"
+              class="form-control"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
-          </td>
-        </tr>
-        <tr>
-          <td>PLACE</td>
-          <td>
+          </div>
+
+          <div class="mb-3">
+            <label for="place" class="form-label">Place</label>
             <input
               type="text"
+              id="place"
               name="place"
+              class="form-control"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
-          </td>
-        </tr>
-        <tr>
-          <td>POST</td>
-          <td>
+          </div>
+
+          <div class="mb-3">
+            <label for="post" class="form-label">Post</label>
             <input
               type="text"
+              id="post"
               name="post"
+              class="form-control"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
-          </td>
-        </tr>
-        <tr>
-          <td>PIN</td>
-          <td>
-            <input type="text" name="pin" required pattern="[0-9]{6}" />
-          </td>
-        </tr>
-        <tr>
-          <td>CONTACT No.</td>
-          <td>
+          </div>
+
+          <div class="mb-3">
+            <label for="pin" class="form-label">PIN</label>
             <input
               type="text"
+              id="pin"
+              name="pin"
+              class="form-control"
+              required
+              pattern="[0-9]{6}"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="contactno" class="form-label">Contact No.</label>
+            <input
+              type="text"
+              id="contactno"
               name="contactno"
+              class="form-control"
               required
               pattern="[6789][0-9]{9}"
             />
-          </td>
-        </tr>
-        <tr>
-          <td>EMAIL</td>
-          <td>
-            <input type="email" name="email" required />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input type="submit" name="Submit" value="ADD" />
-          </td>
-        </tr>
-      </table>
-    </form>
-  </body>
-</html>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" name="Submit" class="btn btn-success">
+              Add Camp
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
