@@ -821,7 +821,7 @@ def coordinator_delete_volunteer(request,id):
 # MANAGE EMERGENCY RESPONSE
 
 def emergency_response_team_home_page(request):
-    return render (request,'EMERGENCY RESPONSE TEAM/ERT HOME PAGE.html')
+    return render (request,'EMERGENCY RESPONSE TEAM/index.html')
 
 
 def emergency_response_tean_view_emergency_request(request):

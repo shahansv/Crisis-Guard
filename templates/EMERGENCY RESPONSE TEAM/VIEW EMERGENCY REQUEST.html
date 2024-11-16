@@ -1,11 +1,95 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>VIEW EMERGENCY REQUEST - CRISIS GUARD</title>
-  </head>
+{% extends 'emergency response team/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-danger text-white text-center">
+      <h4>Emergency Requests</h4>
+    </div>
+    <div class="card-body">
+      <form
+        id="form1"
+        name="form1"
+        method="post"
+        action="/emergency_response_team_search_emergency_request"
+      >
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <select name="status" class="form-select">
+              <option value="PENDING">PENDING</option>
+              <option value="ON THE WAY">ON THE WAY</option>
+              <option value="RESOLVED">RESOLVED</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <button type="submit" name="Submit" class="btn btn-primary w-100">
+              Search
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>SNo</th>
+              <th>Name</th>
+              <th>District</th>
+              <th>Place</th>
+              <th>Post</th>
+              <th>PIN</th>
+              <th>Contact No</th>
+              <th>Email</th>
+              <th>Emergency Request</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in val %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ i.PUBLIC.name }}</td>
+              <td>{{ i.PUBLIC.district }}</td>
+              <td>{{ i.PUBLIC.place }}</td>
+              <td>{{ i.PUBLIC.post }}</td>
+              <td>{{ i.PUBLIC.pin }}</td>
+              <td>{{ i.PUBLIC.contactNo }}</td>
+              <td>{{ i.PUBLIC.email }}</td>
+              <td>{{ i.request }}</td>
+              <td>{{ i.date }}</td>
+              <td>{{ i.time }}</td>
+              <td>
+                <span
+                  class="badge {% if i.status == 'PENDING' %}bg-warning text-dark{% elif i.status == 'ON THE WAY' %}bg-info{% else %}bg-success{% endif %}"
+                >
+                  {{ i.status }}
+                </span>
+              </td>
+              <td>
+                <a
+                  href="/emergency_response_edit_emergency_request_status/{{ i.id }}"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  Edit
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% comment %} {% extends 'emergency response team/ui.html' %}
+{% block body %}
 
   <body>
     <form id="form1" name="form1" method="post" action="/emergency_response_team_search_emergency_request">
@@ -55,4 +139,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}
