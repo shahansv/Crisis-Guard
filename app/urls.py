@@ -33,6 +33,7 @@ urlpatterns = [
     path('admin_edit_camp/<id>',views.admin_edit_camp),
     path('admin_edit_camp_post',views.admin_edit_camp_post),
     path('admin_delete_camp/<id>',views.admin_delete_camp),
+    path('logout',views.logout),
 
 
 # ADD & MANAGE CAMP COORDINATOR

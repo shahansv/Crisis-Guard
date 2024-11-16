@@ -1,12 +1,65 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>EMERGENCY RESPONESE TEAM REGISTRATION STATUS - CRISIS GUARD</title>
-  </head>
+{% extends 'ui.html' %}
+{% block body %}
+  <body>
+    <div class="container my-4">
+      <form
+        id="form1"
+        name="form1"
+        method="post"
+        action="search_emergency_team_status"
+        class="mb-3"
+      >
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            name="textfield"
+            placeholder="Search by district"
+            aria-label="Search by district"
+          />
+          <button class="btn btn-primary" type="submit" name="Submit">
+            SEARCH
+          </button>
+        </div>
+      </form>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">SNo</th>
+              <th scope="col">DEPARTMENT</th>
+              <th scope="col">DISTRICT</th>
+              <th scope="col">PLACE</th>
+              <th scope="col">POST</th>
+              <th scope="col">PIN</th>
+              <th scope="col">CONTACT NO</th>
+              <th scope="col">EMAIL</th>
+              <th scope="col">STATUS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in val %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ i.department }}</td>
+              <td>{{ i.district }}</td>
+              <td>{{ i.place }}</td>
+              <td>{{ i.post }}</td>
+              <td>{{ i.pin }}</td>
+              <td>{{ i.ContactNo }}</td>
+              <td>{{ i.email }}</td>
+              <td>{{ i.LOGIN.type }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+{% endblock %}
 
+{% comment %} {% extends 'ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -52,4 +105,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}
