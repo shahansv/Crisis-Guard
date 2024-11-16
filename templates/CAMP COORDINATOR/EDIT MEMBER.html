@@ -1,12 +1,188 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>EDIT MEMBER - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<body>
+  <div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4>Edit Member</h4>
+      </div>
+      <div class="card-body">
+        <form
+          action="/coordinator_edit_member_post"
+          method="post"
+          enctype="multipart/form-data"
+          name="form1"
+          id="form1"
+        >
+          <!-- Name -->
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="form-control"
+              value="{{ ob.name }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+              placeholder="Enter full name"
+            />
+          </div>
 
+          <!-- Gender -->
+          <div class="mb-3">
+            <label class="form-label">Gender</label>
+            <div>
+              <input
+                type="radio"
+                name="gender"
+                value="Male"
+                id="gender-male"
+                {% if ob.gender == "Male" %}checked{% endif %}
+              />
+              <label for="gender-male" class="me-3">Male</label>
+              <input
+                type="radio"
+                name="gender"
+                value="Female"
+                id="gender-female"
+                {% if ob.gender == "Female" %}checked{% endif %}
+              />
+              <label for="gender-female">Female</label>
+            </div>
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input
+              type="date"
+              name="dob"
+              id="dob"
+              class="form-control"
+              value="{{ ob.dob|date:'Y-m-d' }}"
+              required
+            />
+          </div>
+
+          <!-- District -->
+          <div class="mb-3">
+            <label for="district" class="form-label">District</label>
+            <input
+              type="text"
+              name="district"
+              id="district"
+              class="form-control"
+              value="{{ ob.district }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+              placeholder="Enter district"
+            />
+          </div>
+
+          <!-- Place -->
+          <div class="mb-3">
+            <label for="place" class="form-label">Place</label>
+            <input
+              type="text"
+              name="place"
+              id="place"
+              class="form-control"
+              value="{{ ob.place }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+              placeholder="Enter place"
+            />
+          </div>
+
+          <!-- Post -->
+          <div class="mb-3">
+            <label for="post" class="form-label">Post</label>
+            <input
+              type="text"
+              name="post"
+              id="post"
+              class="form-control"
+              value="{{ ob.post }}"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+              placeholder="Enter post"
+            />
+          </div>
+
+          <!-- PIN -->
+          <div class="mb-3">
+            <label for="pin" class="form-label">PIN</label>
+            <input
+              type="text"
+              name="pin"
+              id="pin"
+              class="form-control"
+              value="{{ ob.pin }}"
+              required
+              pattern="[0-9]{6}"
+              placeholder="Enter 6-digit PIN code"
+            />
+          </div>
+
+          <!-- Contact No -->
+          <div class="mb-3">
+            <label for="contactNo" class="form-label">Contact Number</label>
+            <input
+              type="text"
+              name="contactNo"
+              id="contactNo"
+              class="form-control"
+              value="{{ ob.contactNo }}"
+              required
+              pattern="[6789][0-9]{9}"
+              placeholder="Enter 10-digit mobile number"
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="form-control"
+              value="{{ ob.email }}"
+              required
+              placeholder="Enter email address"
+            />
+          </div>
+
+          <!-- Photo -->
+          <div class="mb-3">
+            <label class="form-label">Photo</label>
+            <div class="mb-2">
+              <img
+                src="{{ ob.photo.url }}"
+                class="img-thumbnail"
+                style="height: 200px; width: auto"
+                alt="Member Photo"
+              />
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-end">
+            <button type="submit" name="Submit" class="btn btn-success">
+              EDIT MEMBER
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
+
+
+{% comment %} {% extends 'camp coordinator/ui.html' %}
+{% block body %}
   <body>
     <form
       action="/coordinator_edit_member_post"
@@ -138,4 +314,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

@@ -429,7 +429,7 @@ def admin_search_notification(request):
 # ***** CAMP COORDINATOR *****
 
 def coordinator_home_page(request):
-    return  render(request,'CAMP COORDINATOR/HOME PAGE.html')
+    return  render(request,'CAMP COORDINATOR/index.html')
 
 
 # ADD & MANAGE STOCK

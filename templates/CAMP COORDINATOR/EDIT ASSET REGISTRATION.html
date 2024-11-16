@@ -1,12 +1,91 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>EDIT MISSING ASSET REGISTRATION - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<body>
+  <div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4>Edit Asset Registration</h4>
+      </div>
+      <div class="card-body">
+        <!-- Form -->
+        <form
+          id="form1"
+          name="form1"
+          method="post"
+          action="/coordinator_edit_asset_registration_post"
+        >
+          <!-- Category -->
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select
+              name="category"
+              id="category"
+              class="form-select"
+              required
+            >
+              <option value="{{ ob.category }}" selected>
+                {{ ob.category }}
+              </option>
+              <option value="DOCUMENT">DOCUMENT</option>
+              <option value="GOLD">GOLD</option>
+              <option value="MONEY">MONEY</option>
+            </select>
+          </div>
 
+          <!-- Asset Name -->
+          <div class="mb-3">
+            <label for="asset" class="form-label">Asset Name</label>
+            <input
+              type="text"
+              name="asset"
+              id="asset"
+              class="form-control"
+              value="{{ ob.asset }}"
+              required
+            />
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              class="form-control"
+              value="{{ ob.description }}"
+              required
+            />
+          </div>
+
+          <!-- Date -->
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input
+              type="date"
+              name="date"
+              id="date"
+              class="form-control"
+              value="{{ ob.date|date:'Y-m-d' }}"
+              required
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center">
+            <button type="submit" name="Submit" class="btn btn-primary">
+              Edit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
+
+{% comment %} {% extends 'camp coordinator/ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -68,4 +147,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

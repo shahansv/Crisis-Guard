@@ -1,12 +1,110 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>MANAGE MEMBER - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<body>
+  <div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4>Search and Manage Members</h4>
+      </div>
+      <div class="card-body">
+        <!-- Search Form -->
+        <form
+          id="form1"
+          name="form1"
+          method="post"
+          action="coordinator_search_member"
+          class="mb-4"
+        >
+          <div class="input-group">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              placeholder="Enter member name"
+            />
+            <button type="submit" name="Submit" class="btn btn-primary">
+              SEARCH
+            </button>
+          </div>
+        </form>
 
+        <!-- Members Table -->
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped align-middle">
+            <thead class="table-primary">
+              <tr>
+                <th>SNo</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>District</th>
+                <th>Place</th>
+                <th>Post</th>
+                <th>PIN</th>
+                <th>Contact No</th>
+                <th>Email</th>
+                <th>Photo</th>
+                <th colspan="2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in val %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.name }}</td>
+                <td>{{ i.gender }}</td>
+                <td>{{ i.dob }}</td>
+                <td>{{ i.district }}</td>
+                <td>{{ i.place }}</td>
+                <td>{{ i.post }}</td>
+                <td>{{ i.pin }}</td>
+                <td>{{ i.contactNo }}</td>
+                <td>{{ i.email }}</td>
+                <td>
+                  <img
+                    src="{{ i.photo.url }}"
+                    alt="Member Photo"
+                    class="img-thumbnail"
+                    style="height: 100px; width: auto"
+                  />
+                </td>
+                <td>
+                  <a
+                    href="/coordinator_edit_member/{{ i.id }}"
+                    class="btn btn-warning btn-sm"
+                  >
+                    EDIT
+                  </a>
+                </td>
+                <td>
+                  <a
+                    href="/coordinator_delete_member/{{ i.id }}"
+                    class="btn btn-danger btn-sm"
+                  >
+                    DELETE
+                  </a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Add Member Button -->
+        <div class="text-end mt-3">
+          <a href="/coordinator_add_member" class="btn btn-success">
+            ADD MEMBER
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
+
+
+{% comment %} {% extends 'camp coordinator/ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -62,4 +160,4 @@
       <p><a href="/coordinator_add_member">ADD MEMBER </a></p>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

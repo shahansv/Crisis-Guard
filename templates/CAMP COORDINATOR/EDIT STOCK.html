@@ -1,12 +1,80 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>EDIT STOCK - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<body>
+  <div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-header bg-primary text-white">
+        <h4>Edit Stock</h4>
+      </div>
+      <div class="card-body">
+        <form
+          id="form1"
+          name="form1"
+          method="post"
+          action="/coordinator_edit_stock_post"
+        >
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select name="category" id="category" class="form-select">
+              <option value="{{ ob.category }}" selected>
+                {{ ob.category }}
+              </option>
+              <option value="FOOD">FOOD</option>
+              <option value="WATER">WATER</option>
+              <option value="CLOTH">CLOTH</option>
+              <option value="FRUITS">FRUITS</option>
+              <option value="VEGETABLES">VEGETABLES</option>
+              <option value="OTHER">OTHER</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="product" class="form-label">Product</label>
+            <input
+              type="text"
+              id="product"
+              name="product"
+              value="{{ ob.product }}"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input
+              type="text"
+              id="quantity"
+              name="quantity"
+              value="{{ ob.quantity }}"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value="{{ ob.date|date:'Y-m-d' }}"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="text-end">
+            <button type="submit" name="Submit" class="btn btn-success">
+              Edit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+{% endblock %}
 
+
+{% comment %} {% extends 'admin/ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -72,4 +140,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

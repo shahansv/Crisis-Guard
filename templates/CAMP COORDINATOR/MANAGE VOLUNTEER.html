@@ -1,12 +1,113 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>MANAGE VOLUNTEER - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-primary text-white text-center">
+      <h4>Search Volunteers</h4>
+    </div>
+    <div class="card-body">
+      <!-- Search Form -->
+      <form
+        id="form1"
+        name="form1"
+        method="post"
+        action="coordinator_search_volunteer"
+        class="mb-4"
+      >
+        <div class="row">
+          <div class="col-md-10">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              placeholder="Search by volunteer name"
+            />
+          </div>
+          <div class="col-md-2">
+            <button type="submit" name="Submit" class="btn btn-primary w-100">
+              SEARCH
+            </button>
+          </div>
+        </div>
+      </form>
 
+      <!-- Volunteer Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>SNo.</th>
+              <th>CAMP NAME</th>
+              <th>NAME</th>
+              <th>GENDER</th>
+              <th>DOB</th>
+              <th>DISTRICT</th>
+              <th>PLACE</th>
+              <th>POST</th>
+              <th>PIN</th>
+              <th>CONTACTNO</th>
+              <th>EMAIL</th>
+              <th>PHOTO</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in val %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ i.COORDINATOR.CAMP.campName }}</td>
+              <td>{{ i.name }}</td>
+              <td>{{ i.gender }}</td>
+              <td>{{ i.dob }}</td>
+              <td>{{ i.district }}</td>
+              <td>{{ i.place }}</td>
+              <td>{{ i.post }}</td>
+              <td>{{ i.pin }}</td>
+              <td>{{ i.contactNo }}</td>
+              <td>{{ i.email }}</td>
+              <td>
+                <img
+                  src="{{ i.photo.url }}"
+                  class="img-fluid"
+                  style="height: 100px; width: auto"
+                  alt="Volunteer Photo"
+                />
+              </td>
+              <td>
+                <div class="d-flex gap-2">
+                  <a
+                    href="/coordinator_edit_volunteer/{{ i.id }}"
+                    class="btn btn-warning btn-sm"
+                  >
+                    EDIT
+                  </a>
+                  <a
+                    href="/coordinator_delete_volunteer/{{ i.id }}"
+                    class="btn btn-danger btn-sm"
+                  >
+                    DELETE
+                  </a>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Add Volunteer Link -->
+      <div class="text-center mt-3">
+        <a href="/coordinator_volunteer_registration" class="btn btn-success">
+          ADD VOLUNTEER
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% comment %} {% extends 'camp coordinator/ui.html' %}
+{% block body %}
   <body>
     <form id="form1" name="form1" method="post" action="coordinator_search_volunteer">
       <table border="1">
@@ -63,4 +164,4 @@
       <p><a href="/coordinator_volunteer_registration">ADD VOLUNTEER </a></p>
     </form>
   </body>
-</html>
+  {% endblock %}  {% endcomment %}

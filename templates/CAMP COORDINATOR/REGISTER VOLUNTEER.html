@@ -1,12 +1,210 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>VOLUNTEER REGISTRATION - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-primary text-white text-center">
+      <h4>Volunteer Registration</h4>
+    </div>
+    <div class="card-body">
+      <form
+        action="coordinator_volunteer_registration_post"
+        method="post"
+        enctype="multipart/form-data"
+        name="form1"
+        id="form1"
+      >
+        <!-- Name -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            required
+            pattern="[A-Z a-z.]{3,25}"
+            placeholder="Enter volunteer's name"
+          />
+        </div>
 
+        <!-- Gender -->
+        <div class="mb-3">
+          <label class="form-label">Gender</label>
+          <div>
+            <div class="form-check form-check-inline">
+              <input
+                name="gender"
+                type="radio"
+                value="Male"
+                class="form-check-input"
+                checked
+              />
+              <label class="form-check-label">Male</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                name="gender"
+                type="radio"
+                value="Female"
+                class="form-check-input"
+              />
+              <label class="form-check-label">Female</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="mb-3">
+          <label for="dob" class="form-label">Date of Birth</label>
+          <input
+            type="date"
+            name="dob"
+            class="form-control"
+            required
+            min="1965-01-01"
+            max="2007-12-31"
+          />
+        </div>
+
+        <!-- Contact No -->
+        <div class="mb-3">
+          <label for="contactNo" class="form-label">Contact No</label>
+          <input
+            type="text"
+            name="contactNo"
+            class="form-control"
+            required
+            pattern="[6789][0-9]{9}"
+            placeholder="Enter contact number"
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            required
+            placeholder="Enter email address"
+          />
+        </div>
+
+        <!-- Address Details -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="district" class="form-label">District</label>
+            <input
+              type="text"
+              name="district"
+              class="form-control"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+              placeholder="Enter district"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="place" class="form-label">Place</label>
+            <input
+              type="text"
+              name="place"
+              class="form-control"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+              placeholder="Enter place"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="post" class="form-label">Post</label>
+            <input
+              type="text"
+              name="post"
+              class="form-control"
+              required
+              pattern="[A-Z a-z.]{3,25}"
+              placeholder="Enter post"
+            />
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="pin" class="form-label">PIN</label>
+            <input
+              type="text"
+              name="pin"
+              class="form-control"
+              required
+              pattern="[0-9]{6}"
+              placeholder="Enter PIN code"
+            />
+          </div>
+        </div>
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            name="username"
+            class="form-control"
+            required
+            pattern="[a-zA-Z0-9]{5,15}"
+            title="Username should be 5-15 characters long and contain only letters and numbers."
+            placeholder="Enter username"
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters."
+            placeholder="Enter password"
+          />
+        </div>
+
+        <!-- Photo -->
+        <div class="mb-3">
+          <label for="photo" class="form-label">Photo</label>
+          {% if ob.photo.url %}
+          <div class="mb-2">
+            <img
+              src="{{ ob.photo.url }}"
+              class="img-thumbnail"
+              style="height: 100px; width: auto"
+              alt="Volunteer Photo"
+            />
+          </div>
+          {% endif %}
+          <input
+            type="file"
+            name="photo"
+            class="form-control"
+            required
+            accept=".jpg, .jpeg, .png, .gif"
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" name="Submit" class="btn btn-success">
+            ADD VOLUNTEER
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% comment %} {% extends 'camp coordinator/ui.html' %}
+{% block body %}
   <body>
     <form
       action="coordinator_volunteer_registration_post"
@@ -156,4 +354,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

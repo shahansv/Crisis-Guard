@@ -1,12 +1,126 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>EDIT MEDICAL REQUEST STATUS - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-success text-white text-center">
+      <h4>Edit Medical Request Status</h4>
+    </div>
+    <div class="card-body">
+      <form
+        id="form1"
+        name="form1"
+        method="post"
+        action="/coordinator_edit_medical_request_status_post"
+      >
+        <!-- CAMP -->
+        <div class="mb-3">
+          <label for="camp" class="form-label">CAMP</label>
+          <input
+            type="text"
+            class="form-control"
+            id="camp"
+            name="camp"
+            value="{{ ob.VOLUNTEER.COORDINATOR.CAMP.campName }}"
+            disabled
+          />
+        </div>
+        <!-- VOLUNTEER -->
+        <div class="mb-3">
+          <label for="volunteer" class="form-label">VOLUNTEER</label>
+          <input
+            type="text"
+            class="form-control"
+            id="volunteer"
+            name="volunteer"
+            value="{{ ob.VOLUNTEER.name }}"
+            disabled
+          />
+        </div>
+        <!-- VOLUNTEER'S NUMBER -->
+        <div class="mb-3">
+          <label for="contactno" class="form-label">VOLUNTEER'S NUMBER</label>
+          <input
+            type="text"
+            class="form-control"
+            id="contactno"
+            name="contactno"
+            value="{{ ob.VOLUNTEER.contactNo }}"
+            disabled
+          />
+        </div>
+        <!-- VOLUNTEER'S EMAIL -->
+        <div class="mb-3">
+          <label for="email" class="form-label">VOLUNTEER'S EMAIL</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value="{{ ob.VOLUNTEER.email }}"
+            disabled
+          />
+        </div>
+        <!-- DATE -->
+        <div class="mb-3">
+          <label for="date" class="form-label">DATE</label>
+          <input
+            type="text"
+            class="form-control"
+            id="date"
+            name="date"
+            value="{{ ob.date }}"
+            disabled
+          />
+        </div>
+        <!-- TIME -->
+        <div class="mb-3">
+          <label for="time" class="form-label">TIME</label>
+          <input
+            type="text"
+            class="form-control"
+            id="time"
+            name="time"
+            value="{{ ob.time }}"
+            disabled
+          />
+        </div>
+        <!-- REQUEST -->
+        <div class="mb-3">
+          <label for="request" class="form-label">REQUEST</label>
+          <input
+            type="text"
+            class="form-control"
+            id="request"
+            name="request"
+            value="{{ ob.request }}"
+            disabled
+          />
+        </div>
+        <!-- STATUS -->
+        <div class="mb-3">
+          <label for="status" class="form-label">STATUS</label>
+          <select class="form-select" id="status" name="status">
+            <option value="{{ ob.status }}" selected>{{ ob.status }}</option>
+            <option value="PENDING">PENDING</option>
+            <option value="ON THE WAY">ON THE WAY</option>
+            <option value="RESOLVED">RESOLVED</option>
+          </select>
+        </div>
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-success w-100" name="Submit">
+            EDIT
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
 
+
+{% comment %} {% extends 'camp coordinator/ui.html' %}
+{% block body %}
   <body>
     <form id="form1" name="form1" method="post" action="/coordinator_edit_medical_request_status_post">
       <table border="1">
@@ -96,4 +210,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

@@ -1,12 +1,85 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>VIEW MEDICAL REQUEST - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-info text-white text-center">
+      <h4>Search Medical Requests</h4>
+    </div>
+    <div class="card-body">
+      <!-- Search Form -->
+      <form
+        id="form1"
+        name="form1"
+        method="post"
+        action="coordinator_search_medical_request"
+        class="mb-4"
+      >
+        <div class="row">
+          <div class="col-md-8">
+            <select name="status" class="form-select">
+              <option value="PENDING">PENDING</option>
+              <option value="ON THE WAY">ON THE WAY</option>
+              <option value="RESOLVED">RESOLVED</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <button type="submit" name="Submit" class="btn btn-primary w-100">
+              SEARCH
+            </button>
+          </div>
+        </div>
+      </form>
 
+      <!-- Results Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="table-dark">
+            <tr>
+              <th>Sno</th>
+              <th>CAMP</th>
+              <th>VOLUNTEER</th>
+              <th>VOLUNTEER'S NUMBER</th>
+              <th>VOLUNTEER'S EMAIL</th>
+              <th>DATE</th>
+              <th>TIME</th>
+              <th>REQUEST</th>
+              <th>STATUS</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in val %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>{{ i.VOLUNTEER.COORDINATOR.CAMP.campName }}</td>
+              <td>{{ i.VOLUNTEER.name }}</td>
+              <td>{{ i.VOLUNTEER.contactNo }}</td>
+              <td>{{ i.VOLUNTEER.email }}</td>
+              <td>{{ i.date }}</td>
+              <td>{{ i.time }}</td>
+              <td>{{ i.request }}</td>
+              <td>{{ i.status }}</td>
+              <td>
+                <a
+                  href="/coordinator_edit_medical_request_status/{{ i.id }}"
+                  class="btn btn-warning btn-sm"
+                >
+                  EDIT
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% comment %} {% extends 'camp coordinator/ui.html' %}
+{% block body %}
   <body>
     <form id="form1" name="form1" method="post" action="coordinator_search_medical_request">
       <table border="1">
@@ -50,4 +123,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}

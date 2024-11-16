@@ -1,12 +1,72 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon" />
-    <title>ADD NEEDS - CRISIS GUARD</title>
-  </head>
+{% extends 'camp coordinator/ui.html' %}
+{% block body %}
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header bg-primary text-white text-center">
+      <h4>Add Needs for Camp</h4>
+    </div>
+    <div class="card-body">
+      <form
+        id="form1"
+        name="form1"
+        method="post"
+        action="/coordinator_add_needs_post"
+      >
+        <div class="mb-3">
+          <label for="campName" class="form-label">CAMP</label>
+          <input
+            type="text"
+            class="form-control"
+            id="campName"
+            name="textfield"
+            value="{{ob.CAMP.campName}}"
+            readonly
+          />
+        </div>
+        <div class="mb-3">
+          <label for="category" class="form-label">CATEGORY</label>
+          <select class="form-select" id="category" name="category">
+            <option value="WATER">WATER</option>
+            <option value="VEGETABLES">VEGETABLES</option>
+            <option value="FRUITS">FRUITS</option>
+            <option value="FOOD">FOOD</option>
+            <option value="CLOTH">CLOTH</option>
+            <option value="OTHER">OTHER</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="product" class="form-label">PRODUCT</label>
+          <input
+            type="text"
+            class="form-control"
+            id="product"
+            name="product"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="quantity" class="form-label">QUANTITY</label>
+          <input
+            type="text"
+            class="form-control"
+            id="quantity"
+            name="quantity"
+            required
+          />
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary w-100" name="Submit">
+            ADD
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
 
+{% comment %} {% extends 'camp coordinator/ui.html' %}
+{% block body %}
   <body>
     <form
       id="form1"
@@ -54,4 +114,4 @@
       </table>
     </form>
   </body>
-</html>
+  {% endblock %} {% endcomment %}
