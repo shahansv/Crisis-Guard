@@ -1,81 +1,123 @@
-{#<!doctype html>#}
 <html lang="en">
-  <head>
-  	<title>Login 05</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crisis Guard - Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #0d47a1, #42a5f5);
+            color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
 
-	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+        .login-container {
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
 
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	
-	<link rel="stylesheet" href="static/login/login-form-15/css/style.css">
+        .login-container h2 {
+            font-weight: 700;
+            color: #58a6ff; 
+            margin-bottom: 1rem;
+            text-align: center;
+        }
 
-	</head>
-	<body>
-	<section class="ftco-section">
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-md-6 text-center mb-5">
-					<h2 class="heading-section">Login #05</h2>
-				</div>
-			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-7 col-lg-5">
-					<div class="wrap">
-						<div class="img" style="background-image: url(static/login/login-form-15/images/bg-1.jpg);"></div>
-						<div class="login-wrap p-4 p-md-5">
-			      	<div class="d-flex">
-			      		<div class="w-100">
-			      			<h3 class="mb-4">Sign In</h3>
-			      		</div>
-								<div class="w-100">
-									<p class="social-media d-flex justify-content-end">
-										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-facebook"></span></a>
-										<a href="#" class="social-icon d-flex align-items-center justify-content-center"><span class="fa fa-twitter"></span></a>
-									</p>
-								</div>
-			      	</div>
-							<form action="login_post"  method="post" class="signin-form">
-			      		<div class="form-group mt-3">
-			      			<input type="text" class="form-control"  name="uname" required>
-			      			<label class="form-control-placeholder"  for="username">Username</label>
-			      		</div>
-		            <div class="form-group">
-		              <input id="password-field" type="password" class="form-control"  name="pass" required>
-		              <label class="form-control-placeholder"  for="password">Password</label>
-		              <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-		            </div>
-		            <div class="form-group">
-		            	<button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign In</button>
-		            </div>
-		            <div class="form-group d-md-flex">
-		            	<div class="w-50 text-left">
-			            	<label class="checkbox-wrap checkbox-primary mb-0">Remember Me
-									  <input type="checkbox" checked>
-									  <span class="checkmark"></span>
-										</label>
-									</div>
-									<div class="w-50 text-md-right">
-										<a href="#">Forgot Password</a>
-									</div>
-		            </div>
-		          </form>
-				  <p> <a href="/register_emergency_response_team" >REGISTER AS EMERGENCY RESPONCE TEAM </a></p>
-				  <p><a href="/ert_registration_status"> REGISTRATION STATUS</a></p>
-				  
-		        </div>
-		      </div>
-				</div>
-			</div>
-		</div>
-	</section>
+        .login-container p {
+            font-size: 0.9rem;
+            color: #a9b3c1; 
+            text-align: center;
+        }
 
-	<script src="static/login/login-form-15/js/jquery.min.js"></script>
-  <script src="static/login/login-form-15/js/popper.js"></script>
-  <script src="static/login/login-form-15/js/bootstrap.min.js"></script>
-  <script src="static/login/login-form-15/js/main.js"></script>
+        .form-control {
+            border-radius: 10px;
+            height: 50px;
+        }
 
-	</body>
+        .form-control:focus {
+            box-shadow: none;
+            outline: none;
+            border-color: #58a6ff;
+        }
+
+        .btn-primary {
+            background: #58a6ff; 
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #3f98ff;
+        }
+
+        .footer-text {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            text-align: center;
+            color: #a9b3c1;
+        }
+
+        .footer-text a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .icon-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .icon-container i {
+            font-size: 50px;
+            color: #58a6ff; 
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container " >
+        <div class="icon-container">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h2>Crisis Guard</h2>
+        <p>Secure Disaster Management Portal</p>
+        <form  action="login_post"  method="post">
+            <div class="mb-3">
+                <label for="text" class="form-label visually-hidden">Username</label>
+                <input type="text" class="form-control" id="email" placeholder="Enter your username"  name="uname"required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label visually-hidden">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password" name="pass" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+        <div class="footer-text">
+            <p> <a href="/register_emergency_response_team" >REGISTER AS EMERGENCY RESPONSE TEAM </a></p>
+            <p><a href="/ert_registration_status"> REGISTRATION STATUS</a></p>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
-
