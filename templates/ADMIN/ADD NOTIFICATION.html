@@ -1,89 +1,76 @@
-{% extends 'admin/ui.html' %}
-{% block body %}
+{% extends 'admin/index.html' %} {% block body %}
 <div class="container mt-5">
-  <form
-    id="form1"
-    name="form1"
-    method="post"
-    action="admin_add_notification_post"
-    class="needs-validation"
-    novalidate
-  >
-    <div class="mb-3">
-      <label for="title" class="form-label">TITLE</label>
-      <input
-        type="text"
-        class="form-control"
-        id="title"
-        name="title"
-        required
-      />
-      <div class="invalid-feedback">Please enter a title.</div>
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">Add Notification</h5>
     </div>
+    <div class="card-body">
+      <form
+        id="notificationForm"
+        method="post"
+        action="admin_add_notification_post"
+        class="needs-validation"
+        novalidate
+      >
+        {% csrf_token %}
 
-    <div class="mb-3">
-      <label for="subject" class="form-label">SUBJECT</label>
-      <input
-        type="text"
-        class="form-control"
-        id="subject"
-        name="subject"
-        required
-      />
-      <div class="invalid-feedback">Please enter a subject.</div>
+        <!-- Title Input -->
+        <div class="mb-3">
+          <label for="title" class="form-label fw-bold">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            placeholder="Enter notification title"
+            required
+          />
+          <div class="invalid-feedback">Please enter a title.</div>
+        </div>
+
+        <!-- Subject Input -->
+        <div class="mb-3">
+          <label for="subject" class="form-label fw-bold">Subject</label>
+          <textarea
+            class="form-control"
+            id="subject"
+            name="subject"
+            rows="4"
+            placeholder="Enter notification subject"
+            required
+          ></textarea>
+          <div class="invalid-feedback">Please enter a subject.</div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid mt-4 text-center">
+          <button type="submit" class="btn btn-primary">
+            Post Notification
+          </button>
+        </div>
+      </form>
     </div>
-
-    <button type="submit" name="Submit" class="btn btn-primary">POST</button>
-  </form>
+  </div>
 </div>
 
 <script>
-  // Bootstrap validation script
+  // Frontend form validation script
   (function () {
-    'use strict'
-    var forms = document.querySelectorAll('.needs-validation')
+    "use strict";
+    var forms = document.querySelectorAll(".needs-validation");
     Array.prototype.slice.call(forms).forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
-        form.classList.add('was-validated')
-      }, false)
-    })
-  })()
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
 </script>
 {% endblock %}
-
-{% comment %} {% extends 'admin/ui.html' %} 
-{% block body %}
-  <body>
-    <form
-      id="form1"
-      name="form1"
-      method="post"
-      action="admin_add_notification_post"
-    >
-      <table border="1">
-        <tr>
-          <td>TITLE</td>
-          <td>
-            <input type="text" name="title" required />
-          </td>
-        </tr>
-        <tr>
-          <td>SUBJECT</td>
-          <td>
-            <input type="text" name="subject" required />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input type="submit" name="Submit" value="POST" />
-          </td>
-        </tr>
-      </table>
-
-    </form>
-  </body>
-  {% endblock %}  {% endcomment %}

@@ -1,17 +1,21 @@
-{% extends 'admin/ui.html' %}
+{% extends 'admin/index.html' %}
 {% block body %}
 <div class="container mt-5">
-  <div class="card">
-    <div class="card-header bg-primary text-white">
-      Edit Notification
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white text-center">
+      <h4 class="mb-0">Edit Notification</h4>
     </div>
     <div class="card-body">
       <form
-        id="form1"
-        name="form1"
+        id="editNotificationForm"
+        name="editNotificationForm"
         method="post"
         action="/admin_edit_notification_post"
+        class="needs-validation"
+        novalidate
       >
+        {% csrf_token %}
+        <!-- Title Field -->
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
           <input
@@ -22,7 +26,10 @@
             value="{{ ob.title }}"
             required
           />
+          <div class="invalid-feedback">Please provide a valid title.</div>
         </div>
+        
+        <!-- Subject Field -->
         <div class="mb-3">
           <label for="subject" class="form-label">Subject</label>
           <input
@@ -33,48 +40,39 @@
             value="{{ ob.subject }}"
             required
           />
+          <div class="invalid-feedback">Please provide a valid subject.</div>
         </div>
-        <button type="submit" name="Submit" class="btn btn-primary">Edit</button>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" name="Submit" class="btn btn-primary">
+            Save Changes
+          </button>
+        </div>
       </form>
     </div>
   </div>
 </div>
+
+<!-- Bootstrap Validation Script -->
+<script>
+  // Bootstrap form validation
+  (function () {
+    "use strict";
+    var forms = document.querySelectorAll(".needs-validation");
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>
 {% endblock %}
-
-
-{% comment %} {% extends 'admin/ui.html' %}
-{% block body %}
-  <body>
-    <form
-      id="form1"
-      name="form1"
-      method="post"
-      action="/admin_edit_notification_post"
-    >
-      <table border="1">
-        <tr>
-          <td>TITLE</td>
-          <td>
-            <input type="text" name="title" value="{{ ob.title }}" required />
-          </td>
-        </tr>
-        <tr>
-          <td>SUBJECT</td>
-          <td>
-            <input
-              type="text"
-              name="subject"
-              value="{{ ob.subject }}"
-              required
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input type="submit" name="Submit" value="EDIT" />
-          </td>
-        </tr>
-      </table>
-    </form>
-  </body>
-  {% endblock %} {% endcomment %}

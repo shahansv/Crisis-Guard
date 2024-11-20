@@ -1,152 +1,176 @@
-{% extends 'admin/ui.html' %}
+{% extends 'admin/index.html' %}
+
 {% block body %}
 <div class="container mt-5">
-  <form
-    action="/admin_edit_camp_coordinator_post"
-    method="post"
-    enctype="multipart/form-data"
-    name="form1"
-    id="form1"
-    class="needs-validation"
-    novalidate
-  >
-    <div class="mb-3">
-      <label for="camp" class="form-label">CAMP</label>
-      <select name="camp" id="camp" class="form-select" required>
-        {% for i in camp %}
-          <option value="{{ i.id }}" {% if i.id == ob.CAMP.id %} selected {% endif %}>{{ i.campName }}</option>
-        {% endfor %}
-      </select>
-      <div class="invalid-feedback">Please select a camp.</div>
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">Edit Camp Coordinator</h4>
     </div>
+    <div class="card-body">
+      <form
+        action="/admin_edit_camp_coordinator_post"
+        method="post"
+        enctype="multipart/form-data"
+        name="form1"
+        id="form1"
+        class="needs-validation"
+        novalidate
+      >
+        {% csrf_token %}
 
-    <div class="mb-3">
-      <label for="name" class="form-label">NAME</label>
-      <input
-        type="text"
-        class="form-control"
-        id="name"
-        name="name"
-        value="{{ ob.name }}"
-        required
-        pattern="[A-Z a-z.]{3,25}"
-      />
-      <div class="invalid-feedback">Please enter a valid name (3-25 characters).</div>
+        <!-- Camp Selection -->
+        <div class="mb-3">
+          <label for="camp" class="form-label">Camp</label>
+          <select name="camp" id="camp" class="form-select" required>
+            {% for i in camp %}
+              <option value="{{ i.id }}" {% if i.id == ob.CAMP.id %} selected {% endif %}>{{ i.campName }}</option>
+            {% endfor %}
+          </select>
+          <div class="invalid-feedback">Please select a camp.</div>
+        </div>
+
+        <!-- Name -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="{{ ob.name }}"
+            required
+            pattern="[A-Z a-z.]{3,25}"
+          />
+          <div class="invalid-feedback">Please enter a valid name (3-25 characters).</div>
+        </div>
+
+        <!-- Gender -->
+        <div class="mb-3">
+          <label class="form-label">Gender</label><br>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="male" value="Male" {% if ob.gender == "Male" %}checked{% endif %} required>
+            <label class="form-check-label" for="male">MALE</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="gender" id="female" value="Female" {% if ob.gender == "Female" %}checked{% endif %} required>
+            <label class="form-check-label" for="female">FEMALE</label>
+          </div>
+          <div class="invalid-feedback d-block">Please select a gender.</div>
+        </div>
+        
+
+        <!-- Date of Birth -->
+        <div class="mb-3">
+          <label for="dob" class="form-label">Date of Birth</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dob"
+            name="dob"
+            value="{{ ob.dob }}"
+            required
+            min="1965-01-01"
+            max="2007-12-31"
+          />
+          <div class="invalid-feedback">Please enter a valid date of birth.</div>
+        </div>
+
+        <!-- Contact Number -->
+        <div class="mb-3">
+          <label for="contactNo" class="form-label">Contact No</label>
+          <input
+            type="text"
+            class="form-control"
+            id="contactNo"
+            name="contactNo"
+            value="{{ ob.contactNo }}"
+            required
+            pattern="[6789][0-9]{9}"
+          />
+          <div class="invalid-feedback">Please enter a valid 10-digit contact number.</div>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            value="{{ ob.email }}"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid email address.</div>
+        </div>
+
+        <!-- District -->
+        <div class="mb-3">
+          <label for="district" class="form-label">District</label>
+          <input
+            type="text"
+            class="form-control"
+            id="district"
+            name="district"
+            value="{{ ob.district }}"
+            required
+            pattern="[A-Z a-z.]{3,25}"
+          />
+          <div class="invalid-feedback">Please enter a valid district name (3-25 characters).</div>
+        </div>
+
+        <!-- Place -->
+        <div class="mb-3">
+          <label for="place" class="form-label">Place</label>
+          <input
+            type="text"
+            class="form-control"
+            id="place"
+            name="place"
+            value="{{ ob.place }}"
+            required
+            pattern="[A-Z a-z.]{3,25}"
+          />
+          <div class="invalid-feedback">Please enter a valid place name (3-25 characters).</div>
+        </div>
+
+        <!-- Post -->
+        <div class="mb-3">
+          <label for="post" class="form-label">Post</label>
+          <input
+            type="text"
+            class="form-control"
+            id="post"
+            name="post"
+            value="{{ ob.post }}"
+            required
+            pattern="[A-Z a-z.]{3,25}"
+          />
+          <div class="invalid-feedback">Please enter a valid post name (3-25 characters).</div>
+        </div>
+
+        <!-- PIN -->
+        <div class="mb-3">
+          <label for="pin" class="form-label">pin</label>
+          <input
+            type="text"
+            class="form-control"
+            id="pin"
+            name="pin"
+            value="{{ ob.pin }}"
+            required
+            pattern="[0-9]{6}"
+          />
+          <div class="invalid-feedback">Please enter a valid 6-digit PIN code.</div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary ">EDIT</button>
+        </div>
+      </form>
     </div>
-
-    <div class="mb-3">
-      <label class="form-label">GENDER</label><br>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="gender" id="male" value="Male" {% if ob.gender == "Male" %}checked{% endif %}>
-        <label class="form-check-label" for="male">MALE</label>
-      </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="gender" id="female" value="Female" {% if ob.gender == "Female" %}checked{% endif %}>
-        <label class="form-check-label" for="female">FEMALE</label>
-      </div>
-      <div class="invalid-feedback d-block">Please select a gender.</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="dob" class="form-label">DATE OF BIRTH</label>
-      <input
-        type="date"
-        class="form-control"
-        id="dob"
-        name="dob"
-        value="{{ ob.dob }}"
-        required
-        min="1965-01-01"
-        max="2007-12-31"
-      />
-      <div class="invalid-feedback">Please enter a valid date of birth.</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="contactNo" class="form-label">CONTACT NO</label>
-      <input
-        type="text"
-        class="form-control"
-        id="contactNo"
-        name="contactNo"
-        value="{{ ob.contactNo }}"
-        required
-        pattern="[6789][0-9]{9}"
-      />
-      <div class="invalid-feedback">Please enter a valid 10-digit contact number.</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="email" class="form-label">EMAIL</label>
-      <input
-        type="email"
-        class="form-control"
-        id="email"
-        name="email"
-        value="{{ ob.email }}"
-        required
-      />
-      <div class="invalid-feedback">Please enter a valid email address.</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="district" class="form-label">DISTRICT</label>
-      <input
-        type="text"
-        class="form-control"
-        id="district"
-        name="district"
-        value="{{ ob.district }}"
-        required
-        pattern="[A-Z a-z.]{3,25}"
-      />
-      <div class="invalid-feedback">Please enter a valid district name (3-25 characters).</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="place" class="form-label">PLACE</label>
-      <input
-        type="text"
-        class="form-control"
-        id="place"
-        name="place"
-        value="{{ ob.place }}"
-        required
-        pattern="[A-Z a-z.]{3,25}"
-      />
-      <div class="invalid-feedback">Please enter a valid place name (3-25 characters).</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="post" class="form-label">POST</label>
-      <input
-        type="text"
-        class="form-control"
-        id="post"
-        name="post"
-        value="{{ ob.post }}"
-        required
-        pattern="[A-Z a-z.]{3,25}"
-      />
-      <div class="invalid-feedback">Please enter a valid post name (3-25 characters).</div>
-    </div>
-
-    <div class="mb-3">
-      <label for="pin" class="form-label">PIN</label>
-      <input
-        type="text"
-        class="form-control"
-        id="pin"
-        name="pin"
-        value="{{ ob.pin }}"
-        required
-        pattern="[0-9]{6}"
-      />
-      <div class="invalid-feedback">Please enter a valid 6-digit PIN code.</div>
-    </div>
-
-    <button type="submit" class="btn btn-primary">EDIT</button>
-  </form>
+  </div>
 </div>
 
 <script>
@@ -165,137 +189,5 @@
     })
   })()
 </script>
+
 {% endblock %}
-
-  {% comment %} {% extends 'admin/ui.html' %} 
-  {% block body %}
-  <body>
-    <form
-      action="/admin_edit_camp_coordinator_post"
-      method="post"
-      enctype="multipart/form-data"
-      name="form1"
-      id="form1"
-    >
-      <table border="1">
-        <tr>
-          <td>CAMP</td>
-          <td>  <select name="camp" size="1">
-            {% for i in camp %}
-                <option value="{{ i.id }}" {% if i.id == ob.CAMP.id %} selected {% endif %} > {{ i.campName }} </option> 
-                
-            {% endfor %}
-        </select>
-      </td>
-        </tr>
-        <tr>
-          <td>NAME</td>
-          <td>
-            <input
-              type="text"
-              name="name"
-              value="{{ ob.name }}"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td>GENDER</td>
-          <td>
-            <input name="gender" type="radio" value="Male" {% if ob.gender == "Male" %}checked{% endif %}/> MALE 
-            <input name="gender" type="radio" value="Female" {% if ob.gender == "Female" %}checked{% endif %} />
-            FEMALE
-          </td>
-        </tr>
-
-        <tr>
-          <td>DATE OF BIRTH</td>
-          <td>
-            <input
-              type="date"
-              name="dob"
-              value="{{ ob.dob }}"
-              required
-              min="1965-01-01"
-              max="2007-12-31"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td>CONTACT NO</td>
-          <td>
-            <input
-              type="text"
-              name="contactNo"
-              value="{{ ob.contactNo }}"
-              required
-              pattern="[6789][0-9]{9}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>EMAIL</td>
-          <td>
-            <input type="email" name="email" value="{{ ob.email }}" required />
-          </td>
-        </tr>
-        <tr>
-          <td>DISTRICT</td>
-          <td>
-            <input
-              type="text"
-              name="district"
-              value="{{ ob.district }}"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>PLACE</td>
-          <td>
-            <input
-              type="text"
-              name="place"
-              value="{{ ob.place }}"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>POST</td>
-          <td>
-            <input
-              type="text"
-              name="post"
-              value="{{ ob.post }}"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>PIN</td>
-          <td>
-            <input
-              type="text"
-              name="pin"
-              value="{{ ob.pin }}"
-              required
-              pattern="[0-9]{6}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input type="submit" name="Submit" value="EDIT" />
-          </td>
-        </tr>
-      </table>
-    </form>
-  </body>
-  {% endblock %}  {% endcomment %}

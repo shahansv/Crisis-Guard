@@ -1,378 +1,285 @@
-{% extends 'admin/ui.html' %}
+{% extends 'admin/index.html' %}
 {% block body %}
-<div class="container mt-4">
-  <h2 class="text-center mb-4">Add Camp Coordinator</h2>
-  <form
-    action="admin_add_camp_coordinator_post"
-    method="post"
-    enctype="multipart/form-data"
-    name="form1"
-    id="form1"
-  >
-    <div class="row mb-3">
-      <label for="camp" class="col-sm-2 col-form-label">Camp</label>
-      <div class="col-sm-10">
-        <select class="form-select" name="camp" id="camp" required>
-          {% for i in data %}
-          <option value="{{ i.id }}">{{ i.campName }}</option>
-          {% endfor %}
-        </select>
-      </div>
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">Add Camp Coordinator</h4>
     </div>
-
-    <div class="row mb-3">
-      <label for="name" class="col-sm-2 col-form-label">Name</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          name="name"
-          id="name"
-          required
-          pattern="[A-Z a-z.]{3,25}"
-        />
-      </div>
-    </div>
-
-    <fieldset class="row mb-3">
-      <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
-      <div class="col-sm-10">
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            id="male"
-            value="Male"
-            checked
-          />
-          <label class="form-check-label" for="male">Male</label>
+    <div class="card-body">
+      <form id="form1" name="form1" method="post" action="/admin_add_camp_coordinator_post" class="needs-validation" enctype="multipart/form-data" novalidate>
+        
+        <!-- Camp Selection -->
+      
+        <div class="mb-3">
+          <label for="camp" class="form-label">Select a Camp</label>
+          <select class="form-select" name="camp" id="camp" required>
+            {% for i in data %}
+            <option value="{{ i.id }}">{{ i.campName }}</option>
+            {% endfor %}
+          </select>
+          <div class="invalid-feedback">Please select a camp.</div>
         </div>
-        <div class="form-check">
+        
+
+        <!-- Name Input -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
           <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            id="female"
-            value="Female"
+            type="text"
+            class="form-control"
+            name="name"
+            id="name"
+            value="{{ ob.name }}"
+            required
+            pattern="[A-Za-z. ]{3,25}"
+            placeholder="Enter full name"
           />
-          <label class="form-check-label" for="female">Female</label>
+          <div class="invalid-feedback">Please enter a valid name (3-25 characters).</div>
         </div>
-      </div>
-    </fieldset>
 
-    <div class="row mb-3">
-      <label for="dob" class="col-sm-2 col-form-label">Date of Birth</label>
-      <div class="col-sm-10">
-        <input
-          type="date"
-          class="form-control"
-          name="dob"
-          id="dob"
-          required
-          min="1965-01-01"
-          max="2007-12-31"
-        />
-      </div>
-    </div>
+        <!-- Gender Selection -->
+        <fieldset class="mb-3">
+          <legend class="form-label" style="font-size: 1rem;">Gender</legend>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              id="male"
+              value="Male"
+              checked
+            />
+            <label class="form-check-label" for="male">Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              id="female"
+              value="Female"
+            />
+            <label class="form-check-label" for="female">Female</label>
+          </div>
+        </fieldset>
 
-    <div class="row mb-3">
-      <label for="contactNo" class="col-sm-2 col-form-label">Contact No</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          name="contactNo"
-          id="contactNo"
-          required
-          pattern="[6789][0-9]{9}"
-        />
-      </div>
-    </div>
+        <!-- Date of Birth -->
+        <div class="mb-3">
+          <label for="dob" class="form-label">Date of Birth</label>
+          <input
+            type="date"
+            class="form-control"
+            name="dob"
+            id="dob"
+            required
+            min="1965-01-01"
+            max="2007-12-31"
+          />
+          <div class="invalid-feedback">Please enter a valid date of birth.</div>
+        </div>
 
-    <div class="row mb-3">
-      <label for="email" class="col-sm-2 col-form-label">Email</label>
-      <div class="col-sm-10">
-        <input type="email" class="form-control" name="email" id="email" required />
-      </div>
-    </div>
+        <!-- Contact Number -->
+        <div class="mb-3">
+          <label for="contactNo" class="form-label">Contact No.</label>
+          <input
+            type="text"
+            class="form-control"
+            name="contactNo"
+            id="contactNo"
+            value="{{ ob.contactNo }}"
+            required
+            pattern="[6789][0-9]{9}"
+            placeholder="Enter contact number"
+          />
+          <div class="invalid-feedback">Please enter a valid 10-digit contact number starting with 6, 7, 8, or 9.</div>
+        </div>
 
-    <div class="row mb-3">
-      <label for="district" class="col-sm-2 col-form-label">District</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          name="district"
-          id="district"
-          required
-          pattern="[A-Z a-z.]{3,25}"
-        />
-      </div>
-    </div>
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            id="email"
+            value="{{ ob.email }}"
+            required
+            placeholder="Enter email address"
+          />
+          <div class="invalid-feedback">Please enter a valid email address.</div>
+        </div>
 
-    <div class="row mb-3">
-      <label for="place" class="col-sm-2 col-form-label">Place</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          name="place"
-          id="place"
-          required
-          pattern="[A-Z a-z.]{3,25}"
-        />
-      </div>
-    </div>
+        <!-- District -->
+        <div class="mb-3">
+          <label for="district" class="form-label">District</label>
+          <input
+            type="text"
+            class="form-control"
+            name="district"
+            id="district"
+            value="{{ ob.district }}"
+            required
+            pattern="[A-Za-z. ]{3,25}"
+            placeholder="Enter district"
+          />
+          <div class="invalid-feedback">Please enter a valid district (3-25 characters).</div>
+        </div>
 
-    <div class="row mb-3">
-      <label for="post" class="col-sm-2 col-form-label">Post</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          name="post"
-          id="post"
-          required
-          pattern="[A-Z a-z.]{3,25}"
-        />
-      </div>
-    </div>
+        <!-- Place -->
+        <div class="mb-3">
+          <label for="place" class="form-label">Place</label>
+          <input
+            type="text"
+            class="form-control"
+            name="place"
+            id="place"
+            value="{{ ob.place }}"
+            required
+            pattern="[A-Za-z. ]{3,25}"
+            placeholder="Enter place"
+          />
+          <div class="invalid-feedback">Please enter a valid place (3-25 characters).</div>
+        </div>
 
-    <div class="row mb-3">
-      <label for="pin" class="col-sm-2 col-form-label">PIN</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          name="pin"
-          id="pin"
-          required
-          pattern="[0-9]{6}"
-        />
-      </div>
-    </div>
+        <!-- Post -->
+        <div class="mb-3">
+          <label for="post" class="form-label">Post</label>
+          <input
+            type="text"
+            class="form-control"
+            name="post"
+            id="post"
+            value="{{ ob.post }}"
+            required
+            pattern="[A-Za-z. ]{3,25}"
+            placeholder="Enter post"
+          />
+          <div class="invalid-feedback">Please enter a valid post (3-25 characters).</div>
+        </div>
 
-    <div class="row mb-3">
-      <label for="username" class="col-sm-2 col-form-label">Username</label>
-      <div class="col-sm-10">
-        <input
-          type="text"
-          class="form-control"
-          name="username"
-          id="username"
-          required
-          pattern="[a-zA-Z0-9]{5,15}"
-          title="Username should be 5-15 characters long and contain only letters and numbers."
-        />
-      </div>
-    </div>
+        <!-- PIN -->
+        <div class="mb-3">
+          <label for="pin" class="form-label">PIN</label>
+          <input
+            type="text"
+            class="form-control"
+            name="pin"
+            id="pin"
+            value="{{ ob.pin }}"
+            required
+            pattern="[0-9]{6}"
+            placeholder="Enter PIN"
+          />
+          <div class="invalid-feedback">Please enter a valid 6-digit PIN code.</div>
+        </div>
 
-    <div class="row mb-3">
-      <label for="password" class="col-sm-2 col-form-label">Password</label>
-      <div class="col-sm-10">
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          id="password"
-          required
-          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-        />
-      </div>
-    </div>
+        <!-- Username -->
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            id="username"
+            value="{{ ob.username }}"
+            required
+            pattern="[a-zA-Z0-9]{5,15}"
+            title="Username should be 5-15 characters long and contain only letters and numbers."
+            placeholder="Enter username"
+          />
+          <div class="invalid-feedback">Please enter a valid username (5-15 characters).</div>
+        </div>
 
-    <div class="row mb-3">
-      <label for="photo" class="col-sm-2 col-form-label">Photo</label>
-      <div class="col-sm-10">
-        {% if ob.photo %}
-        <img
-          src="{{ ob.photo.url }}"
-          class="img-thumbnail mb-2"
-          style="height: 100px; width: auto"
-          alt="Current Photo"
-        />
-        {% endif %}
-        <input
-          type="file"
-          class="form-control"
-          name="photo"
-          id="photo"
-          required
-          accept=".jpg, .jpeg, .png, .gif"
-        />
-      </div>
-    </div>
+        <!-- Password -->
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            required
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters."
+            placeholder="Enter password"
+          />
+          <div class="invalid-feedback">Please enter a valid password (at least 8 characters, with letters and numbers).</div>
+        </div>
 
-    <div class="row mb-3">
-      <div class="col-sm-10 offset-sm-2">
-        <button type="submit" class="btn btn-primary">Add</button>
-      </div>
+        <!-- Photo Upload -->
+        <div class="mb-3">
+          <label for="photo" class="form-label">Photo</label>
+        
+          <!-- Image Preview -->
+          <div class="mb-3" id="image-preview-container" style="display: none;">
+            <img 
+              id="image-preview" 
+              class="img-thumbnail d-block mx-auto" 
+              style="height: 120px; width: auto;" 
+              alt="Selected Photo Preview" 
+            />
+          </div>
+        
+          <!-- File Input -->
+          <input 
+            type="file" 
+            class="form-control" 
+            name="photo" 
+            id="photo" 
+            accept=".jpg, .jpeg, .png, .gif" 
+            onchange="previewImage(event)" 
+          />
+          <div class="invalid-feedback">Please upload a valid photo (JPEG, PNG, GIF).</div>
+        </div>
+        
+        <script>
+          // JavaScript for Image Preview
+          function previewImage(event) {
+            const input = event.target;
+            const previewContainer = document.getElementById("image-preview-container");
+            const previewImage = document.getElementById("image-preview");
+        
+            // Ensure a file is selected and is an image
+            if (input.files && input.files[0]) {
+              const reader = new FileReader();
+        
+              reader.onload = function (e) {
+                previewImage.src = e.target.result; // Set the preview image's source
+                previewContainer.style.display = "block"; // Show the preview container
+              };
+        
+              reader.readAsDataURL(input.files[0]); // Read the file as a data URL
+            } else {
+              previewContainer.style.display = "none"; // Hide the preview if no file is selected
+            }
+          }
+        </script>
+        
+        
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary ">ADD </button>
+        </div>
+      </form>
     </div>
-  </form>
+  </div>
 </div>
+
+<script>
+  // Bootstrap validation script
+  (function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>
 {% endblock %}
-
-
-{% comment %} {% extends 'admin/ui.html' %}
-{% block body %}
-  <body>
-    <form
-      action="admin_add_camp_coordinator_post"
-      method="post"
-      enctype="multipart/form-data"
-      name="form1"
-      id="form1"
-    >
-      <table border="1">
-        <tr>
-          <td>CAMP</td>
-          <td>
-            <select name="camp" size="1">
-              {% for i in data %}
-              <option value="{{ i.id }}">{{ i.campName }}</option>
-              {% endfor %}
-            </select>
-          </td>
-        </tr>
-        <tr>
-          <td>NAME</td>
-          <td>
-            <input
-              type="text"
-              name="name"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td>GENDER</td>
-          <td>
-            <input name="gender" type="radio" value="Male" checked />
-            MALE
-            <input name="gender" type="radio" value="Female" />
-            FEMALE
-          </td>
-        </tr>
-
-        <tr>
-          <td>DATE OF BIRTH</td>
-          <td>
-            <input
-              type="date"
-              name="dob"
-              required
-              min="1965-01-01"
-              max="2007-12-31"
-            />
-          </td>
-        </tr>
-
-        <tr>
-          <td>CONTACT NO</td>
-          <td>
-            <input
-              type="text"
-              name="contactNo"
-              required
-              pattern="[6789][0-9]{9}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>EMAIL</td>
-          <td>
-            <input type="email" name="email" required />
-          </td>
-        </tr>
-        <tr>
-          <td>DISTRICT</td>
-          <td>
-            <input
-              type="text"
-              name="district"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>PLACE</td>
-          <td>
-            <input
-              type="text"
-              name="place"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>POST</td>
-          <td>
-            <input
-              type="text"
-              name="post"
-              required
-              pattern="[A-Z a-z.]{3,25}"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>PIN</td>
-          <td>
-            <input type="text" name="pin" required pattern="[0-9]{6}" />
-          </td>
-        </tr>
-        <tr>
-          <td>USERNAME</td>
-          <td>
-            <input
-              type="text"
-              name="username"
-              required
-              pattern="[a-zA-Z0-9]{5,15}"
-              title="Username should be 5-15 characters long and contain only letters and numbers."
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>PASSWORD</td>
-          <td>
-            <input
-              type="password"
-              name="password"
-              required
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td>PHOTO</td>
-          <td>
-            <img
-              src="{{ ob.photo.url }}"
-              style="height: 100px; width: auto"
-              alt=""
-            />
-            <input
-              type="file"
-              name="photo"
-              required
-              accept=".jpg, .jpeg, .png, .gif"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <input type="submit" name="Submit" value="ADD" />
-          </td>
-        </tr>
-      </table>
-    </form>
-  </body>
-  {% endblock %} {% endcomment %}

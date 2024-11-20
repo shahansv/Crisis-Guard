@@ -1,46 +1,51 @@
-{% extends 'admin/ui.html' %}
+{% extends 'admin/index.html' %}
 {% block body %}
 <div class="container mt-5">
-  <div class="card">
+  <div class="card shadow">
     <div class="card-header bg-primary text-white">
-      Search Complaints by Status
+      <h4 class="mb-0">Search Complaints by Status</h4>
     </div>
     <div class="card-body">
-      <form id="form1" name="form1" method="post" action="search_complaint">
-        <div class="mb-3 d-flex align-items-center">
-          <select name="select" class="form-select me-3" style="width: auto;">
-            <option>SELECT BY STATUS</option>
-            <option value="PENDING">PENDING</option>
-            <option value="WORKING ON">WORKING ON</option>
-            <option value="RESOLVED">RESOLVED</option>
-          </select>
-          <button type="submit" name="Submit" class="btn btn-primary">SEARCH</button>
+      <form id="form1" name="form1" method="post" action="search_complaint" class="mb-4">
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <select name="select" class="form-select" style="min-width: 200px;">
+              <option disabled selected>SELECT BY STATUS</option>
+              <option value="PENDING">PENDING</option>
+              <option value="WORKING ON">WORKING ON</option>
+              <option value="RESOLVED">RESOLVED</option>
+            </select>
+          </div>
+          <div class="col-auto">
+            <button type="submit" name="Submit" class="btn btn-primary">SEARCH</button>
+          </div>
         </div>
       </form>
 
+      {% if val %}
       <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-          <thead class="table-dark">
+        <table class="table table-bordered table-striped align-middle">
+          <thead class="table-dark text-center">
             <tr>
-              <th>SNo</th>
-              <th>NAME</th>
-              <th>DISTRICT</th>
-              <th>PLACE</th>
-              <th>POST</th>
+              <th>#</th>
+              <th>Name</th>
+              <th>District</th>
+              <th>Place</th>
+              <th>Post</th>
               <th>PIN</th>
-              <th>CONTACT NO</th>
-              <th>EMAIL</th>
-              <th>COMPLAINT</th>
-              <th>DATE</th>
-              <th>TIME</th>
-              <th>STATUS</th>
-              <th>ACTION</th>
+              <th>Contact No</th>
+              <th>Email</th>
+              <th>Complaint</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {% for i in val %}
             <tr>
-              <td>{{ forloop.counter }}</td>
+              <td class="text-center">{{ forloop.counter }}</td>
               <td>{{ i.PUBLIC.name }}</td>
               <td>{{ i.PUBLIC.district }}</td>
               <td>{{ i.PUBLIC.place }}</td>
@@ -49,77 +54,30 @@
               <td>{{ i.PUBLIC.contactNo }}</td>
               <td>{{ i.PUBLIC.email }}</td>
               <td>{{ i.complaint }}</td>
-              <td>{{ i.date }}</td>
-              <td>{{ i.time }}</td>
-              <td>{{ i.status }}</td>
-              <td>
-                <a href="/admin_reply_complaint/{{ i.id }}" class="btn btn-sm btn-success">REPLY</a>
+              <td class="text-center">{{ i.date }}</td>
+              <td class="text-center">{{ i.time }}</td>
+              <td class="text-center">
+                <span class="badge px-3 py-2 text-dark 
+                  {% if i.status == 'PENDING' %}bg-danger text-dark
+                  {% elif i.status == 'WORKING ON' %}bg-warning text-white
+                  {% elif i.status == 'RESOLVED' %}bg-success text-white
+                  {% endif %}">
+                  {{ i.status }}
+                </span>
+              </td>
+              
+              <td class="text-center">
+                <a href="/admin_reply_complaint/{{ i.id }}" class="btn btn-sm btn-primary">Reply</a>
               </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
+      {% else %}
+      <p class="text-center text-muted">No complaints found. Please try a different status.</p>
+      {% endif %}
     </div>
   </div>
 </div>
 {% endblock %}
-
-
-
-{% comment %} {% extends 'admin/ui.html' %}
-{% block body %}
-  <body>
-    <form id="form1" name="form1" method="post" action="search_complaint">
-      <table border="1">
-        <tr>
-          <td colspan="13">
-            <label>
-              <select name="select">
-                <option>SELECT BY STATUS</option>
-                <option value="PENDING">PENDING</option>
-                <option value="WORKING ON">WORKING ON</option>
-                <option value="RESOLVED">RESOLVED</option>
-              </select>
-            </label>
-            <label>
-              <input type="submit" name="Submit" value="SEARCH" />
-            </label>
-          </td>
-        </tr>
-        <tr>
-          <td>SNo</td>
-          <td>NAME</td>
-          <td>DISTRICT</td>
-          <td>PLACE</td>
-          <td>POST</td>
-          <td>PIN</td>
-          <td>CONTACT NO</td>
-          <td>EMAIL</td>
-          <td>COMPLAINT</td>
-          <td>DATE</td>
-          <td>TIME</td>
-          <td>STATUS</td>
-          <td></td>
-        </tr>
-        <tr>
-          {% for i in val %}
-          <td>{{ forloop.counter }}</td>
-          <td>{{ i.PUBLIC.name }}</td>
-          <td>{{ i.PUBLIC.district }}</td>
-          <td>{{ i.PUBLIC.place }}</td>
-          <td>{{ i.PUBLIC.post }}</td>
-          <td>{{ i.PUBLIC.pin }}</td>
-          <td>{{ i.PUBLIC.contactNo }}</td>
-          <td>{{ i.PUBLIC.email }}</td>
-          <td>&nbsp;{{ i.complaint }}</td>
-          <td>{{ i.date }}</td>
-          <td>{{ i.time }}</td>
-          <td>{{ i.status }}</td>
-          <td><a href="/admin_reply_complaint/{{ i.id }}">REPLY</a></td>
-        </tr>
-        {% endfor %}
-      </table>
-    </form>
-  </body>
-  {% endblock %} {% endcomment %}

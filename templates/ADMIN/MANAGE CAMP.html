@@ -1,91 +1,96 @@
-{#{% extends 'admin/ui.html' %}#}
-{#{% block body %}#}
-{#  <body>#}
-{#    <form id="form1" name="form1" method="post" action="admin_search_camp" >#}
-{#      <table border="1" class="table table-hover">#}
-{#        <tr>#}
-{#          <td colspan="9">#}
-{#            <input#}
-{#              type="text"#}
-{#              name="textfield"#}
-{#              placeholder="Search by camp name" class="form-control"#}
-{#            />#}
-{#            <input type="submit" name="Submit" value="SEARCH" class="btn btn-primary"/>#}
-{#          </td>#}
-{#        </tr>#}
-{#        <tr>#}
-{#          <td>CAMP NAME</td>#}
-{#          <td>DISTRICT</td>#}
-{#          <td>PLACE</td>#}
-{#          <td>POST</td>#}
-{#          <td>PIN</td>#}
-{#          <td>CONTACT NO</td>#}
-{#          <td>EMAIL</td>#}
-{#          <td>&nbsp;</td>#}
-{#          <td>&nbsp;</td>#}
-{#        </tr>#}
-{#        {% for i in val %}#}
-{#        <tr>#}
-{#          <td>{{ i.campName}}</td>#}
-{#          <td>{{ i.district }}</td>#}
-{#          <td>{{ i.place }}</td>#}
-{#          <td>{{ i.post }}</td>#}
-{#          <td>{{ i.pin }}</td>#}
-{#          <td>{{ i.email }}</td>#}
-{#          <td>{{ i.contactno }}</td>#}
-{#          <td><a href="/admin_delete_camp/{{ i.id }}" class="btn btn-danger">DELETE</a></td>#}
-{#          <td><a href="/admin_edit_camp/{{ i.id }}" class="btn btn-info">EDIT</a></td>#}
-{#        </tr>#}
-{#        {% endfor %}#}
-{#      </table>#}
-{#      <p><a href="/admin_add_camp" class="btn btn-primary"> ADD CAMP </a></p>#}
-{#    </form>#}
-{#  </body>#}
-{#{% endblock %}#}
-
-
-{% extends 'admin/ui.html' %}
+{% extends 'admin/index.html' %}
 {% block body %}
-<body>
-  <form id="form1" name="form1" method="post" action="admin_search_camp">
-    <div class="container">
-      <div class="row mb-4">
-        <div class="col-md-8">
-          <input
-            type="text"
-            name="textfield"
-            placeholder="Search by camp name" class="form-control"
-          />
-        </div>
-        <div class="col-md-4">
-          <input type="submit" name="Submit" value="SEARCH" class="btn btn-primary"/>
-        </div>
-      </div>
+<div class="container my-5">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">Manage Camp</h4>
+    </div>
+    <form id="form1" name="form1" method="post" action="admin_search_camp">
+      <div class="container my-5">
+        <!-- Search Section -->
+        <form id="form1" name="form1" method="post" action="admin_search_camp">
+          <div class="input-group mb-4">
+            <input
+              type="text"
+              name="textfield"
+              class="form-control"
+              placeholder="Search by name"
+              aria-label="Search by name"
+              required
+            />
+            <button type="submit" name="Submit" class="btn btn-primary">Search</button>
+          </div>
+        </form>
 
-      <div class="row">
-        {% for i in val %}
-        <div class="col-md-4 mb-4">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">{{ i.campName }}</h5>
-              <p class="card-text"><strong>District:</strong> {{ i.district }}</p>
-              <p class="card-text"><strong>Place:</strong> {{ i.place }}</p>
-              <p class="card-text"><strong>Post:</strong> {{ i.post }}</p>
-              <p class="card-text"><strong>Pin:</strong> {{ i.pin }}</p>
-              <p class="card-text"><strong>Contact No:</strong> {{ i.contactno }}</p>
-              <p class="card-text"><strong>Email:</strong> {{ i.email }}</p>
-              <a href="/admin_delete_camp/{{ i.id }}" class="btn btn-danger">DELETE</a>
-              <a href="/admin_edit_camp/{{ i.id }}" class="btn btn-info">EDIT</a>
+        <!-- Camp Cards Section -->
+        <div class="row">
+          {% if val %} {% for i in val %}
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+              <div class="card-body">
+                <h5 class="card-title text-primary">{{ i.campName }}</h5>
+                <p class="card-text mb-1">
+                  <strong>District:</strong> {{ i.district }}
+                </p>
+                <p class="card-text mb-1">
+                  <strong>Place:</strong> {{ i.place }}
+                </p>
+                <p class="card-text mb-1">
+                  <strong>Post:</strong> {{ i.post }}
+                </p>
+                <p class="card-text mb-1"><strong>Pin:</strong> {{ i.pin }}</p>
+                <p class="card-text mb-1">
+                  <strong>Contact No:</strong> {{ i.contactno }}
+                </p>
+                <p class="card-text"><strong>Email:</strong> {{ i.email }}</p>
+                <div class="d-flex justify-content-between mt-3">
+                  <a
+                    href="/admin_edit_camp/{{ i.id }}"
+                    class="btn btn-primary btn-sm"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Edit Camp Details"
+                    >EDIT
+                  </a>
+                  <a
+                    href="/admin_delete_camp/{{ i.id }}"
+                    class="btn btn-danger btn-sm"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete Camp"
+                    >DELETE
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
+          {% endfor %} {% else %}
+          <div class="col-12 text-center">
+            <i class="fa-regular fa-face-frown-open"></i>
+            <p class="text-muted">No camps found. Please add a new camp.</p>
+          </div>
+          {% endif %}
         </div>
-        {% endfor %}
+        <!-- Add Camp Button -->
+        <div class="text-center mt-4">
+          <a href="/admin_add_camp" class="btn btn-primary btn-lg shadow-sm">
+            Add Camp
+          </a>
+        </div>
       </div>
+    </form>
+  </div>
+</div>
 
-      <div class="text-center mt-4">
-        <a href="/admin_add_camp" class="btn btn-primary">ADD CAMP</a>
-      </div>
-    </div>
-  </form>
-</body>
+<!-- Tooltip Initialization -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const tooltipTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    );
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  });
+</script>
 {% endblock %}

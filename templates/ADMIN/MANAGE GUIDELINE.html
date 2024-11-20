@@ -1,84 +1,67 @@
-{% extends 'admin/ui.html' %}
-{% block body %}
-<body>
-  <div class="container mt-5">
-    <form id="form1" name="form1" method="post" action="admin_search_guideline">
-      <div class="input-group mb-3">
-        <input 
-          type="text" 
-          class="form-control" 
-          name="textfield" 
-          placeholder="Search by Camp Coordinator" 
-          aria-label="Search by Camp Coordinator"
-        />
-        <button class="btn btn-primary" type="submit" name="Submit">SEARCH</button>
-      </div>
+{% extends 'admin/index.html' %} {% block body %}
+<div class="container my-5">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">Manage Guideline</h4>
+    </div>
+    <div class="card-body">
+      <form
+        id="form1"
+        name="form1"
+        method="post"
+        action="admin_search_guideline"
+      >
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            class="form-control"
+            name="textfield"
+            placeholder="Search by Camp Coordinator"
+            aria-label="Search by Camp Coordinator"
+          />
+          <button class="btn btn-primary" type="submit" name="Submit">
+            SEARCH
+          </button>
+        </div>
 
-      <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-          <tr>
-            <th>CAMP COORDINATOR</th>
-            <th>GUIDELINE</th>
-            <th>DATE</th>
-            <th>TIME</th>
-            <th>ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for i in val %}
-          <tr>
-            <td>{{ i.CAMP_COORDINATOR.name }}</td>
-            <td><a href="{{ i.guideline.url }}" download>{{ i.guideline }}</a></td>
-            <td>{{ i.date }}</td>
-            <td>{{ i.time }}</td>
-            <td><a href="/admin_delete_guideline/{{ i.id }}" class="btn btn-danger btn-sm">DELETE</a></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+        <table class="table table-bordered table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th>CAMP COORDINATOR</th>
+              <th>GUIDELINE</th>
+              <th>DATE</th>
+              <th>TIME</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in val %}
+            <tr>
+              <td>{{ i.CAMP_COORDINATOR.name }}</td>
+              <td>
+                <a href="{{ i.guideline.url }}" download>{{ i.guideline }}</a>
+              </td>
+              <td>{{ i.date }}</td>
+              <td>{{ i.time }}</td>
+              <td>
+                <a
+                  href="/admin_delete_guideline/{{ i.id }}"
+                  class="btn btn-danger btn-sm"
+                  >DELETE</a
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
 
-      <div class="mt-3">
-        <a href="/admin_add_guideline" class="btn btn-success">ADD GUIDELINE</a>
-      </div>
-    </form>
+        <div class="d-grid mt-4 text-center">
+          <button type="submit" name="Submit" class="btn btn-primary">
+            Add Guideline
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-</body>
+</div>
 {% endblock %}
-
-
-{% comment %} {% extends 'admin/ui.html' %} 
-{% block body %}
-  <body>
-    <form id="form1" name="form1" method="post" action="admin_search_guideline">
-      <table border="1">
-        <tr>
-          <td colspan="5">
-            <input
-              type="text"
-              name="textfield"
-              placeholder="Search by Camp Coordinator"
-            />
-            <input type="submit" name="Submit" value="SEARCH" />
-          </td>
-        </tr>
-        <tr>
-          <td>CAMP COORDINATOR</td>
-          <td>GUIDELINE</td>
-          <td>DATE</td>
-          <td>TIME</td>
-          <td>&nbsp;</td>
-        </tr>
-        {% for i in val %}
-        <tr>
-          <td>{{ i.CAMP_COORDINATOR.name }}</td>
-          <td><a href="{{ i.guideline.url}}" download>{{ i.guideline}}</a></td>
-          <td>{{ i.date }}</td>
-          <td>{{ i.time }}</td>
-          <td><a href="/admin_delete_guideline/{{ i.id }}">DELETE</a></td>
-        </tr>
-        {% endfor %}
-      </table>
-      <p><a href="/admin_add_guideline">ADD GUIDELINE </a></p>
-    </form>
-  </body>
-  {% endblock %}  {% endcomment %}

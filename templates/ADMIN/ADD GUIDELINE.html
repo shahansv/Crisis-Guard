@@ -1,90 +1,103 @@
-{% extends 'admin/ui.html' %} 
-{% block body %}
-<body>
-  <div class="container mt-4">
-    <h2 class="text-center mb-4">Add Camp Guideline</h2>
-    <form
-      action="/admin_add_guideline_post"
-      method="post"
-      enctype="multipart/form-data"
-      name="form1"
-      id="form1"
-    >
-      <div class="mb-3">
-        <label for="camp" class="form-label">Camp</label>
-        <select name="camp" id="camp" class="form-select" required>
-          {% for i in data %}
-          <option value="{{ i.id }}">
-            {{ i.CAMP.campName }} -- {{ i.name }}
-          </option>
-          {% endfor %}
-        </select>
-      </div>
-
-      <div class="mb-3">
-        <label for="guideline" class="form-label">Guideline</label>
-        <input
-          type="file"
-          class="form-control"
-          name="guideline"
-          id="guideline"
-          required
-          accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
-        />
-      </div>
-
-      <div class="text-end">
-        <button type="submit" name="Submit" class="btn btn-primary">
-          Submit
-        </button>
-      </div>
-    </form>
-  </div>
-</body>
-{% endblock %} 
-
-
-
-
-{% comment %} {% extends 'admin/ui.html' %} {% block body %}
-<body>
-  <form
-    action="/admin_add_guideline_post"
-    method="post"
-    enctype="multipart/form-data"
-    name="form1"
-    id="form1"
-  >
-    <table border="1">
-      <tr>
-        <td>CAMP</td>
-        <td>
-          <select name="camp">
+{% extends 'admin/index.html' %} {% block body %}
+<div class="container mt-4">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">Add Guideline</h4>
+    </div>
+    <div class="card-body">
+      <form
+        action="/admin_add_guideline_post"
+        method="post"
+        enctype="multipart/form-data"
+        name="form1"
+        id="form1"
+        class="needs-validation"
+        novalidate
+      >
+        <!-- Camp Dropdown -->
+        <div class="mb-3">
+          <label for="camp" class="form-label">Camp</label>
+          <select name="camp" id="camp" class="form-select" required>
+            <option value="" disabled selected>Select a Camp</option>
             {% for i in data %}
             <option value="{{ i.id }}">
-              {{ i.CAMP.campName }} --{{ i.name }}
+              {{ i.CAMP.campName }} -- {{ i.name }}
             </option>
             {% endfor %}
           </select>
-        </td>
-      </tr>
-      <tr>
-        <td>GUIDELINE</td>
-        <td>
+          <div class="invalid-feedback">Please select a camp.</div>
+        </div>
+
+        <!-- Guideline File Upload -->
+        <div class="mb-3">
+          <label for="guideline" class="form-label">Guideline</label>
           <input
             type="file"
+            class="form-control"
             name="guideline"
+            id="guideline"
             required
             accept=".pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .txt"
+            onchange="validateFile()"
           />
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <input type="submit" name="Submit" value="Submit" />
-        </td>
-      </tr>
-    </table>
-  </form>
-</body>
-{% endblock %} {% endcomment %}
+          <div class="invalid-feedback">
+            Please upload a valid guideline file.
+          </div>
+          <div id="fileError" class="invalid-feedback">
+            File size should not exceed 10 MB. Allowed formats: PDF, DOC, DOCX,
+            XLS, PPT, TXT.
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid mt-4 text-center">
+          <button type="submit" name="Submit" class="btn btn-primary">
+            ADD
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // Bootstrap 5 validation
+      (function () {
+        "use strict";
+        var forms = document.querySelectorAll(".needs-validation");
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+
+      // Validate file size and format
+      function validateFile() {
+        var fileInput = document.getElementById("guideline");
+        var file = fileInput.files[0];
+        var errorMsg = document.getElementById("fileError");
+
+        if (file) {
+          // Check file size (max 10MB)
+          if (file.size > 10 * 1024 * 1024) {
+            fileInput.setCustomValidity(
+              "File size exceeds the maximum limit of 10MB."
+            );
+            errorMsg.style.display = "block";
+          } else {
+            fileInput.setCustomValidity("");
+            errorMsg.style.display = "none";
+          }
+        }
+      }
+    </script>
+  </div>
+</div>
+{% endblock %}

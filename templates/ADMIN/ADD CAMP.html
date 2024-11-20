@@ -1,99 +1,120 @@
-
-
-{% extends 'admin/ui.html' %}
+{% extends 'admin/index.html' %}
 {% block body %}
-<body>
-  <div class="container my-4">
-    <div class="card">
-      <div class="card-header bg-primary text-white">
-        <h5 class="mb-0">Add Camp Details</h5>
-      </div>
-      <div class="card-body">
-        <form id="form1" name="form1" method="post" action="admin_add_camp_post">
-          <div class="mb-3">
+<div class="container my-5">
+  <div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0 text-center">Add Camp</h4>
+    </div>
+    <div class="card-body">
+      <form id="form1" name="form1" method="post" action="admin_add_camp_post">
+        <div class="row g-3">
+          <!-- Camp Name -->
+          <div class="col-md-6">
             <label for="camp" class="form-label">Camp Name</label>
-            <input type="text" id="camp" name="camp" class="form-control" required />
+            <input
+              type="text"
+              id="camp"
+              name="camp"
+              class="form-control"
+              placeholder="Enter camp name"
+              required
+            />
           </div>
-
-          <div class="mb-3">
+          <!-- District -->
+          <div class="col-md-6">
             <label for="district" class="form-label">District</label>
             <input
               type="text"
               id="district"
               name="district"
               class="form-control"
+              placeholder="Enter district"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
           </div>
+        </div>
 
-          <div class="mb-3">
+        <div class="row g-3 mt-3">
+          <!-- Place -->
+          <div class="col-md-6">
             <label for="place" class="form-label">Place</label>
             <input
               type="text"
               id="place"
               name="place"
               class="form-control"
+              placeholder="Enter place"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
           </div>
-
-          <div class="mb-3">
+          <!-- Post -->
+          <div class="col-md-6">
             <label for="post" class="form-label">Post</label>
             <input
               type="text"
               id="post"
               name="post"
               class="form-control"
+              placeholder="Enter post"
               required
               pattern="[A-Z a-z.]{3,25}"
             />
           </div>
+        </div>
 
-          <div class="mb-3">
+        <div class="row g-3 mt-3">
+          <!-- PIN -->
+          <div class="col-md-6">
             <label for="pin" class="form-label">PIN</label>
             <input
               type="text"
               id="pin"
               name="pin"
               class="form-control"
+              placeholder="Enter PIN"
               required
               pattern="[0-9]{6}"
             />
           </div>
-
-          <div class="mb-3">
+          <!-- Contact No -->
+          <div class="col-md-6">
             <label for="contactno" class="form-label">Contact No.</label>
             <input
               type="text"
               id="contactno"
               name="contactno"
               class="form-control"
+              placeholder="Enter contact number"
               required
               pattern="[6789][0-9]{9}"
             />
           </div>
+        </div>
 
-          <div class="mb-3">
+        <div class="row g-3 mt-3">
+          <!-- Email -->
+          <div class="col-md-12">
             <label for="email" class="form-label">Email</label>
             <input
               type="email"
               id="email"
               name="email"
               class="form-control"
+              placeholder="Enter email address"
               required
             />
           </div>
+        </div>
 
-          <div class="d-grid">
-            <button type="submit" name="Submit" class="btn btn-success">
-              Add Camp
-            </button>
-          </div>
-        </form>
-      </div>
+        <div class="d-grid mt-4 text-center">
+          <button type="submit" name="Submit" class="btn btn-primary">
+            ADD
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-</body>
+</div>
 {% endblock %}

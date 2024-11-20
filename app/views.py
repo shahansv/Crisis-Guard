@@ -97,11 +97,17 @@ def search_emergency_team_status(request):
 
 
 
-
 # ***** ADMIN *****
 @login_required(login_url='/')
 def admin_home_page(request):
-    return  render(request,'ADMIN/index.html')
+    total_camp = camp_table.objects.count()
+    total_coordinator=camp_coordinator_table.objects.count()
+    total_ert=login_table.objects.filter(type='ERT').count()
+    total_user=public_table.objects.count()
+    total_volunteer=volunteer_table.objects.count()
+    total_member=member_table.objects.count()
+    context = {'total_camp': total_camp, 'total_coordinator':total_coordinator,'total_ert':total_ert,'total_user':total_user,'total_volunteer':total_volunteer,'total_member':total_member}
+    return render(request, 'ADMIN/index.html', context)
 
 
 # ADD & MANAGE CAMP
