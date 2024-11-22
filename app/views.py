@@ -2,181 +2,200 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
-from django.shortcuts import render
-import datetime
+from django.shortcuts import render, redirect, get_object_or_404
 from app.models import *
-
-
+from django.contrib.auth.models import User
 
 # LOGIN PAGE
 
 def login(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
 
 def logout(request):
     auth.logout(request)
-    return render(request,"index.html")
+    return redirect('/')
 
 def login_post(request):
-    name=request.POST['uname']
-    password=request.POST['pass']
-    if name and password: 
-        try:
-            user = login_table.objects.get(username=name, password=password)
-            
-            if user.type == 'admin':
-                ob1=auth.authenticate(username='admin',password='admin')
-                if ob1 is not None:
-                    auth.login(request,ob1)
-                request.session['lid'] = user.id
-                return HttpResponse('''<script> alert ('Admin Logged In');window.location='/admin_home_page';</script>''')
-            elif user.type == 'coordinator':
-                ob1=auth.authenticate(username='admin', password='admin')
-                if ob1 is not None:
-                    auth.login(request, ob1)
-                request.session['lid'] = user.id
+    if request.method == "POST":
+        username = request.POST.get('uname')
+        password = request.POST.get('pass')
+        if username and password:
+            try:
+                user = login_table.objects.get(username=username, password=password)
+                if user.type == 'admin':
+                    auth.login(request, User.objects.get(username='admin'))
+                    request.session['lid'] = user.id
+                    return HttpResponse(
+                        '''<script>alert('Admin Logged In');window.location='/admin_home_page';</script>'''
+                    )
+                elif user.type == 'coordinator':
+                    auth.login(request, User.objects.get(username='admin'))
+                    request.session['lid'] = user.id
+                    return HttpResponse(
+                        '''<script>alert('Camp Coordinator Logged In');window.location='/coordinator_home_page';</script>'''
+                    )
+                elif user.type == 'ERT':
+                    auth.login(request, User.objects.get(username='admin'))
+                    request.session['lid'] = user.id
+                    return HttpResponse(
+                        '''<script>alert('Emergency Response Team Logged In');window.location='/emergency_response_team_home_page';</script>'''
+                    )
+                else:
+                    return HttpResponse(
+                        '''<script>alert('User type not authorized.');window.location='/';</script>'''
+                    )
+            except login_table.DoesNotExist:
+                return HttpResponse(
+                    '''<script>alert('Invalid username or password.');window.location='/';</script>'''
+                )
+        return HttpResponse(
+            '''<script>alert('Please enter both username and password.');window.location='/';</script>'''
+        )
+    return redirect('/')
 
-                return HttpResponse('''<script> alert ('Camp Coordinator Logged In');window.location='/coordinator_home_page';</script>''')
-            elif user.type == 'ERT':
-                ob1=auth.authenticate(username='admin', password='admin')
-                if ob1 is not None:
-                    auth.login(request, ob1)
-                request.session['lid'] = user.id
 
-                return HttpResponse('''<script> alert ('Emergency Response Team Logged In');window.location='/emergency_response_team_home_page';</script>''')
-        except login_table.DoesNotExist:
-            return HttpResponse('''<script> alert ('Invalid username or password');window.location='/';</script>''')
-    else:
-        return HttpResponse('''<script> alert ('Please enter both username and password');window.location='/';</script>''')
-
-
+# EMERGENCY RESPONSE TEAM REGISTRATION
 
 def register_emergency_response_team(request):
-    return render (request,'EMERGENCY RESPONSE TEAM REGISTRATION.html')
-
+    return render(request, 'EMERGENCY RESPONSE TEAM REGISTRATION.html')
 
 def register_emergency_response_team_post(request):
-    department=request.POST["department"]
-    district=request.POST["district"]
-    place=request.POST["place"]
-    post=request.POST["post"]
-    pin = request.POST["pin"]
-    contactno=request.POST["contactno"]
-    email = request.POST["email"]
-    username=request.POST["username"]
-    password=request.POST["password"]
-    ob=login_table()
-    ob.username=username
-    ob.password=password
-    ob.type="Pending"
-    ob.save()
-    obj=emergency_team_table()
-    obj.LOGIN=ob
-    obj.department=department
-    obj.district=district
-    obj.place=place
-    obj.post=post
-    obj.pin=pin
-    obj.ContactNo=contactno
-    obj.email=email
-    obj.save()
-    return HttpResponse('''<script> alert ('EMERGENCY RESPONSE TEAM REGISTERED');window.location='/'</script>''')
+    if request.method == "POST":
+        department = request.POST.get("department")
+        district = request.POST.get("district")
+        place = request.POST.get("place")
+        post = request.POST.get("post")
+        pin = request.POST.get("pin")
+        contactno = request.POST.get("contactno")
+        email = request.POST.get("email")
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        
+        # Create login instance
+        login_instance = login_table(username=username, password=password, type="Pending")
+        login_instance.save()
+
+        # Create emergency team instance
+        emergency_team = emergency_team_table(
+            LOGIN=login_instance,
+            department=department,
+            district=district,
+            place=place,
+            post=post,
+            pin=pin,
+            ContactNo=contactno,
+            email=email
+        )
+        emergency_team.save()
+        
+        return HttpResponse(
+            '''<script>alert('Emergency Response Team Registered');window.location='/';</script>'''
+        )
+    return redirect('/')
 
 
 def ert_registration_status(request):
-    ob=emergency_team_table.objects.all()
-    return render(request,'ERT REGISTRATION STATUS.html', {'val': ob})
-
+    teams = emergency_team_table.objects.all()
+    return render(request, 'ERT REGISTRATION STATUS.html', {'val': teams})
 
 def search_emergency_team_status(request):
-    district = request.POST['textfield']
-    ob = emergency_team_table.objects.filter(district__icontains=district)
-    return render(request,'ERT REGISTRATION STATUS.html', {'val': ob})
+    if request.method == "POST":
+        district = request.POST.get('textfield', '')
+        teams = emergency_team_table.objects.filter(district__icontains=district)
+        return render(request, 'ERT REGISTRATION STATUS.html', {'val': teams})
+    return redirect('/ert_registration_status')
 
 
+# ADMIN DASHBOARD
 
-
-
-# ***** ADMIN *****
 @login_required(login_url='/')
 def admin_home_page(request):
-    total_camp = camp_table.objects.count()
-    total_coordinator=camp_coordinator_table.objects.count()
-    total_ert=login_table.objects.filter(type='ERT').count()
-    total_user=public_table.objects.count()
-    total_volunteer=volunteer_table.objects.count()
-    total_member=member_table.objects.count()
-    context = {'total_camp': total_camp, 'total_coordinator':total_coordinator,'total_ert':total_ert,'total_user':total_user,'total_volunteer':total_volunteer,'total_member':total_member}
+    user_id = request.session.get('lid')
+    logged_in_user = login_table.objects.get(id=user_id).username
+    context = {
+        'total_camp': camp_table.objects.count(),
+        'total_coordinator': camp_coordinator_table.objects.count(),
+        'total_ert': login_table.objects.filter(type='ERT').count(),
+        'total_user': public_table.objects.count(),
+        'total_volunteer': volunteer_table.objects.count(),
+        'total_member': member_table.objects.count(),
+        'logged_in_user': logged_in_user,
+    }
     return render(request, 'ADMIN/index.html', context)
 
 
-# ADD & MANAGE CAMP
+# CAMP MANAGEMENT
+
 @login_required(login_url='/')
 def admin_add_camp(request):
-    return render (request,'ADMIN/ADD CAMP.html')
+    return render(request, 'ADMIN/ADD CAMP.html')
 
 @login_required(login_url='/')
 def admin_add_camp_post(request):
-    camp=request.POST["camp"]
-    place=request.POST["place"]
-    pin=request.POST["pin"]
-    post=request.POST["post"]
-    district=request.POST["district"]
-    contactno=request.POST["contactno"]
-    email=request.POST["email"]
-    obj=camp_table()
-    obj.campName=camp
-    obj.place=place
-    obj.pin=pin
-    obj.post=post
-    obj.district=district
-    obj.contactno=contactno
-    obj.email=email
-    obj.save()
-    return HttpResponse('''<script> alert ('CAMP ADDED');window.location='/admin_manage_camp'</script>''')
+    if request.method == "POST":
+        camp = request.POST.get("camp")
+        place = request.POST.get("place")
+        pin = request.POST.get("pin")
+        post = request.POST.get("post")
+        district = request.POST.get("district")
+        contactno = request.POST.get("contactno")
+        email = request.POST.get("email")
+
+        camp_instance = camp_table(
+            campName=camp, place=place, pin=pin, post=post, district=district, contactno=contactno, email=email
+        )
+        camp_instance.save()
+
+        return HttpResponse(
+            '''<script>alert('Camp Added');window.location='/admin_manage_camp';</script>'''
+        )
+    return redirect('/admin_add_camp')
 
 @login_required(login_url='/')
 def admin_manage_camp(request):
-    ob=camp_table.objects.all()
-    return render (request,'ADMIN/MANAGE CAMP.html',{'val':ob})
+    camps = camp_table.objects.all()
+    return render(request, 'ADMIN/MANAGE CAMP.html', {'val': camps})
 
 @login_required(login_url='/')
 def admin_search_camp(request):
-    campName=request.POST['textfield']
-    ob=camp_table.objects.filter(campName__icontains=campName)
-    return render (request,'ADMIN/MANAGE CAMP.html',{'val':ob})
+    if request.method == "POST":
+        campName = request.POST.get('textfield', '')
+        camps = camp_table.objects.filter(campName__icontains=campName)
+        return render(request, 'ADMIN/MANAGE CAMP.html', {'val': camps})
+    return redirect('/admin_manage_camp')
 
 @login_required(login_url='/')
-def admin_edit_camp(request,id):
-    request.session["campid"]=id
-    ob=camp_table.objects.get(id=id)
-    return render(request, 'ADMIN/EDIT CAMP.html',{"ob":ob})
+def admin_edit_camp(request, id):
+    camp = get_object_or_404(camp_table, id=id)
+    return render(request, 'ADMIN/EDIT CAMP.html', {"ob": camp})
 
 @login_required(login_url='/')
 def admin_edit_camp_post(request):
-    camp=request.POST["camp"]
-    place=request.POST["place"]
-    pin=request.POST["pin"]
-    post=request.POST["post"]
-    district=request.POST["district"]
-    contactno=request.POST["contactno"]
-    email=request.POST["email"]
-    obj = camp_table.objects.get(id=request.session["campid"])
-    obj.campName=camp
-    obj.place=place
-    obj.pin=pin
-    obj.post=post
-    obj.district=district
-    obj.contactno=contactno
-    obj.email=email
-    obj.save()
-    return HttpResponse('''<script> alert('CAMP EDITED');window.location='/admin_manage_camp';</script>''')
+    if request.method == "POST":
+        camp_id = request.session.get("campid")
+        camp = get_object_or_404(camp_table, id=camp_id)
+        
+        camp.campName = request.POST.get("camp")
+        camp.place = request.POST.get("place")
+        camp.pin = request.POST.get("pin")
+        camp.post = request.POST.get("post")
+        camp.district = request.POST.get("district")
+        camp.contactno = request.POST.get("contactno")
+        camp.email = request.POST.get("email")
+        camp.save()
+
+        return HttpResponse(
+            '''<script>alert('Camp Edited');window.location='/admin_manage_camp';</script>'''
+        )
+    return redirect('/admin_manage_camp')
 
 @login_required(login_url='/')
-def admin_delete_camp(request,id):
-    camp_table.objects.get(id=id).delete()
-    return HttpResponse('''<script> alert('CAMP DELETED');window.location='/admin_manage_camp';</script>''')
-
+def admin_delete_camp(request, id):
+    camp = get_object_or_404(camp_table, id=id)
+    camp.delete()
+    return HttpResponse(
+        '''<script>alert('Camp Deleted');window.location='/admin_manage_camp';</script>'''
+    )
 
 
 
